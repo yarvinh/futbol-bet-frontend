@@ -1,27 +1,22 @@
 import {useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchLoginLogOut } from '../../actions/loginActions'
+import { fetchLogout } from '../../actions/loginActions'
 import {Navigate} from 'react-router-dom'
 
-
-
-
-const LogOut = (props)=>{
+const LogOut = ({user,fetchLogout})=>{
     const handleLogOut = () => {
-        props.user.user && props.fetchLoginLogOut(props.user.user.user,'LOADING_LOGOUT')
+      user.user && fetchLogout()
     }
 
     useEffect(() => {
       handleLogOut()
     },[])
 
-
-      return(
-        <div>
-           {props.user.user && !props.user.logged_in && <Navigate to='/games'/>}     
-        </div>
-      );    
-
+    return(
+      <div>
+          {<Navigate to='/games'/>}     
+      </div>
+    );    
 };
 
 const mapStateToProps = state => { 
@@ -33,7 +28,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchLoginLogOut: (action,type) => dispatch(fetchLoginLogOut(action,type)),
+    fetchLogout: (action) => dispatch(fetchLogout(action)),
   }
 }
 

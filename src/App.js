@@ -4,7 +4,7 @@ import {useEffect, useState } from 'react';
 import './App.css';
 import Teams from './components/Teams'
 import GamesContainer from './containers/GamesContainer'
-import CreateUsersContainer from './containers/CreateUsersContainer'
+import UsersContainer from './containers/UsersContainer'
 import Login from './components/users/Login'
 import { fetchCurrentUser} from './actions/userAction'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
@@ -16,12 +16,7 @@ import { fetchGames } from './actions/gameActions';
 import NavBar from './components/nav-bar/NavBar';
 import NavBarButton from './components/nav-bar/NavButton';
 
-const  App = (props)=> {
-// navigator.geolocation.getCurrentPosition((position)=>{ console.log(position)})
-  const fetchCurrentUser = () => {
-    props.fetchCurrentUser()  
-  }
-  
+const  App = ({user,loggedIn,fetchCurrentUser,fetchGames})=> {
   const [isDiplay, setIsDisplay] = useState(false)
 
   const handleonclick = (e)=>{
@@ -35,12 +30,12 @@ const  App = (props)=> {
 
   useEffect(()=>{
     fetchCurrentUser()  
-    props.fetchGames() 
+    fetchGames() 
   },[])
 
   const confirmLoggedIn=()=>{
     fetchCurrentUser()   
-    return  props.loggedIn
+    return  loggedIn
 
   }
 
@@ -48,19 +43,19 @@ const  App = (props)=> {
     <main id="main">   
         <BrowserRouter >
         <section className={!isDiplay ?'profile-inf': "none"}>
-         {props.loggedIn && !isDiplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>}
-         {props.loggedIn && !isDiplay && <strong>{props.user.name}</strong>}
+         {loggedIn && !isDiplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>}
+         {loggedIn && !isDiplay && <strong>{user.name}</strong>}
           <NavBarButton handleonclick={handleonclick} isDiplay={isDiplay}/>
         </section>
-        {isDiplay && <NavBar handleOnAcordion={handleOnAcordion} loggedIn={props.loggedIn}/>}
+        {isDiplay && <NavBar handleOnAcordion={handleOnAcordion} loggedIn={loggedIn}/>}
         <div className="App content-container">
           <Routes>
-            <Route exact path='/settings' element ={<Settings currentUser={props.user} loggedIn={props.loggedIn} />}/>
-            <Route exact path='/games/:id' element ={<GameDetail currentUser={props.user} loggedIn={props.loggedIn}/>}/>
-            <Route exact path='/signout' element={<LogOut currentUser={props.user} confirmLoggedIn={confirmLoggedIn}/>}/>
+            <Route exact path='/settings' element ={<Settings currentUser={user} loggedIn={loggedIn} />}/>
+            <Route exact path='/games/:id' element ={<GameDetail />}/>
+            <Route exact path='/signout' element={<LogOut/>}/>
             <Route exact path='/login' element={<Login  confirmLoggedIn={confirmLoggedIn}/>}>
             </Route>
-            <Route exact path='/signup'element={<CreateUsersContainer />}/>
+            <Route exact path='/signup'element={<UsersContainer />}/>
             <Route exact path='/games' element={<GamesContainer/>}/>
             <Route exact path='/teams' element={<Teams/>}/>
           </Routes>
@@ -75,14 +70,12 @@ const  App = (props)=> {
 
 const mapStateToProps = state => { 
   return {
-     user:  state.user.user && state.user.user.user,
+     user:  state.user.user?.user,
      loggedIn:  state.user.user && state.user.user.logged_in,
      loading: state.loading
   }
 }
  
- 
-
 const mapDispatchToProps = dispatch => {
   return {
     fetchGames: ()=> dispatch(fetchGames()),

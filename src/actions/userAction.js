@@ -7,7 +7,7 @@ import axios from 'axios'
         axios.get('http://localhost:3000/islogged_in', 
         {withCredentials: true})    
         .then(response => {
-            dispatch({ type: 'ADD_USER', data: response.data})
+            dispatch({ type: 'ADD_USER', user: response.data})
         })
         .catch(error => console.log('api errors:', error))
 

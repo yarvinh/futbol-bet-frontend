@@ -1,75 +1,45 @@
-import React, { Component } from 'react';
+import React, { Component, useRef } from 'react';
 import { connect } from 'react-redux';
-import { fetchLoginLogOut } from '../../actions/loginActions'
+import { fetchLogin } from '../../actions/loginActions'
 import '../../styles/styles.css'
 import {Navigate} from 'react-router-dom'
+import ErrorsOrMsg from '../ErrosOrdMsg';
 
+const Login = ({fetchLogin,user})=>{
 
-class Login extends Component {
-    state = {
-       username: '',
-       password: '',
-       loggedIn: false,
-    }
+    const loginRef = useRef({
+      username: '',
+      password: '',
+      loggedIn: false,
+    })
 
-    redirect = ()=>{
-      return <Navigate to='/games' /> 
-    }
-    errorMessages = () => {
-      
-      if (this.props.user.user && this.props.user.user.messages){
-        if(!this.props.user.user.messages[0].includes("No user")){
-          return  <p>{this.props.user.user.messages[0]}</p> 
-        } else{
-          return null
-        }
+    const handleOnChange=(e)=>{
+      loginRef.current= {
+        ...loginRef.current,
+        [e.target.name]: e.target.value
       }
     }
    
-    handleOnChangePassword = (e) => {
-        this.setState({
-            password: e.target.value
-        })
-    }
-
-    handleOnChangeUsername = (e) => {
-        this.setState({
-            username: e.target.value
-        })
-
-    }
-
-    handleOnSubmit = (e) => {
+   const handleOnSubmit = (e) => {
        e.preventDefault()
-       this.props.fetchLoginLogOut(this.state, 'LOADING_LOGIN')
-
-      
+       fetchLogin(loginRef.current) 
     }
 
-  render() {
     return(
-      <div>
-      <div className="container h-100  d-flex  justify-content-center align-items-center">
-        <form onSubmit={this.handleOnSubmit} className="form">
-            <label className="mt-3 form-label">Username</label>
-            <input className="form-control" onChange={this.handleOnChangeUsername} type="text" value={this.state.username}/>
-            <label className="form-label">Password</label >
-            <input className="form-control" onChange={this.handleOnChangePassword } type="password" value={this.state.password}/>
-          <button  className="my-4 btn btn-primary" type="submit">Login</button>
-        </form>
-         {this.props.user.user && this.props.user.user.logged_in? this.redirect():null}     
-      
-      </div>
-      <div>{this.errorMessages()}</div>
-      </div>
+        <section className="container h-100  d-flex  justify-content-center align-items-center login-form">
+          <form onSubmit={handleOnSubmit} className="form">
+              <label className="mt-3 form-label">Username</label>
+              <input className="form-control" onChange={handleOnChange} name="username" type="text"/>
+              <label className="form-label">Password</label >
+              <input className="form-control" onChange={handleOnChange} name="password" type="password" />
+            <button  className="my-4 btn btn-primary" type="submit">Login</button>
+          </form>
+          {user?.user?.messages && <ErrorsOrMsg errorsOrMsg={user.user?.messages}/>}
+          {user?.user?.logged_in && <Navigate to='/games'/> }     
+        </section>
     );
 
-    
-  }
-
 };
-
-
 
 const mapStateToProps = state => { 
   return {
@@ -77,11 +47,10 @@ const mapStateToProps = state => {
      loading: state.user.loading
   }
 }
- 
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchLoginLogOut: (action,type) => dispatch(fetchLoginLogOut(action,type)),
+    fetchLogin: (action) => dispatch(fetchLogin(action)),
   }
 }
 

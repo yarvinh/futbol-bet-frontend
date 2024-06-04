@@ -2,8 +2,10 @@ import React from 'react';
 import { createRoot } from "react-dom/client";
 import './index.css';
 import App from './App';
-import rootReducer from "./reducers/manageAllReducer";
+// import rootReducer from "./reducers/manageAllReducer";
 import { createStore, applyMiddleware } from 'redux';
+import rootReducer from "./reducers/manageAllReducer";
+// import thunk from "redux-thunk";
 import {thunk} from 'redux-thunk';
 import { Provider } from 'react-redux';
 
@@ -16,3 +18,6 @@ root.render(
     <App />
   </Provider>
 );
+
+// 
+

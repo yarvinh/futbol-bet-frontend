@@ -107,15 +107,16 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
     }
 
 
-  const UserReducer = (state = { user: {}, loading: false }, action) => {
+  const UserReducer = (state = { user: {}, loading: true }, action) => {
 
     switch(action.type) {
       case 'LOADING_USER':
         return state = {
           ...state,
-          user: state.data,
+          user: state.user,
           loading: true
         } 
+
         case 'LOADING_NEW_USER':
         return state ={
           ...state,
@@ -137,7 +138,7 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
         case 'ADD_USER':
         return {
            ...state,
-          user: action.data,
+          user: action.user,
           loading: false
         } 
         case 'ADD_NEW_USER':

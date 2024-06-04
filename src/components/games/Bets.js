@@ -98,12 +98,11 @@ class Bets extends Component {
 
 
   renderBets = () => {
-
+// console.log(this.props.currentUser)
     
     const currentUserBet = this.props.bets.find((bet)=>{
-        return bet.user_id.toString() === this.props.currentUser.id.toString()
+        return bet.user_id.toString() === this.props.currentUser.id?.toString()
     })
-    
     if (!currentUserBet && this.props.game.status !== "LIVE" && this.props.game.pending && this.props.game.status !== "FINISH"){   
       return (
         <div className='bet_form p-3'>     
