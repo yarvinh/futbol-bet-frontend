@@ -1,5 +1,5 @@
 
-import { connect } from 'react-redux';
+import {useSelector, useDispatch } from 'react-redux';
 import {useEffect, useState } from 'react';
 import './App.css';
 import Teams from './components/Teams'
@@ -16,7 +16,15 @@ import { fetchGames } from './actions/gameActions';
 import NavBar from './components/nav-bar/NavBar';
 import NavBarButton from './components/nav-bar/NavButton';
 
-const  App = ({user,loggedIn,fetchCurrentUser,fetchGames})=> {
+const  App = ()=> {
+  const dispatch = useDispatch()
+  const {user,loggedIn} = useSelector( (state) => {
+     return {
+      user:  state.user.user?.user,
+      loggedIn:  state.user.user && state.user.user.logged_in,
+      loading: state.loading
+     }
+  })
   const [isDiplay, setIsDisplay] = useState(false)
 
   const handleonclick = (e)=>{
@@ -29,12 +37,12 @@ const  App = ({user,loggedIn,fetchCurrentUser,fetchGames})=> {
   }
 
   useEffect(()=>{
-    fetchCurrentUser()  
-    fetchGames() 
+    dispatch(fetchCurrentUser())  
+    dispatch(fetchGames())
   },[])
 
   const confirmLoggedIn=()=>{
-    fetchCurrentUser()   
+    dispatch(fetchCurrentUser()) 
     return  loggedIn
 
   }
@@ -66,20 +74,20 @@ const  App = ({user,loggedIn,fetchCurrentUser,fetchGames})=> {
   )
 }
 
+export default App
 
-
-const mapStateToProps = state => { 
-  return {
-     user:  state.user.user?.user,
-     loggedIn:  state.user.user && state.user.user.logged_in,
-     loading: state.loading
-  }
-}
+// const mapStateToProps = state => { 
+//   return {
+//      user:  state.user.user?.user,
+//      loggedIn:  state.user.user && state.user.user.logged_in,
+//      loading: state.loading
+//   }
+// }
  
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchGames: ()=> dispatch(fetchGames()),
-    fetchCurrentUser: (action) => dispatch(fetchCurrentUser(action)),
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     fetchGames: ()=> dispatch(fetchGames()),
+//     fetchCurrentUser: (action) => dispatch(fetchCurrentUser(action)),
+//   }
+// }
+// export default connect(mapStateToProps, mapDispatchToProps)(App)

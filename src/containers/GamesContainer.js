@@ -1,21 +1,23 @@
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch,useSelector} from 'react-redux';
 import { fetchGames,dispatchSetFilter} from '../actions/gameActions'
 import Game from '../components/games/Game'
 import {gameSelector} from '../selectors/gameSelector'
 
 const GamesContainer = (props)=>{
+  const  dispatch = useDispatch()
+  const games = useSelector(state=> gameSelector(state.games.games,state.games.filter))
 
   useEffect(()=> {
-      props.fetchGames()    
+      dispatch(fetchGames())   
   },[])
 
    const onClickHandle = (e) => {
-     props.dispatchSetFilter(e.target.value)
+     dispatch(dispatchSetFilter(e.target.value))
    }
 
    const renderGames = ()=>{
-        return props.games?.map((game)=>{
+        return games?.map((game)=>{
             return (      
              <Game teamEvents={game.team_events} fetchCurrentUser={props.fetchCurrentUser} loggedIn={props.loggedIn} key={game.id} currentUser={props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
             )
@@ -38,24 +40,7 @@ const GamesContainer = (props)=>{
         </div>
       </section>
      );
-  };
+};
 
+export default GamesContainer
 
-const mapStateToProps = state => { 
-  
-  return {
-     user: state.user.user,
-     teams: state.teams.teams,
-     games: gameSelector(state.games.games,state.games.filter),
-     loading: state.loading
-  }
-}
- 
-
-const mapDispatchToProps = dispatch => {
-  return {
-     fetchGames: (action) => dispatch(fetchGames(action)),
-      dispatchSetFilter: (action) => dispatch(dispatchSetFilter(action)),
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(GamesContainer)

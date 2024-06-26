@@ -1,10 +1,10 @@
 import  { useState } from 'react';
 import {dispatchComment} from '../actions/comments'
-import { connect } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import Comment from '../components/comments/Comment';
 
-const CommentsContainer = ( {game,currentUser,dispatchComment,comments,loggedIn} )=> {
-
+const CommentsContainer = ( {game,currentUser,comments,loggedIn} )=> {
+    const dispatch = useDispatch()
     const [newComment, setNewComment] = useState({
         game_id: '',
         user_id: '',
@@ -15,7 +15,7 @@ const CommentsContainer = ( {game,currentUser,dispatchComment,comments,loggedIn}
     const handleOnSubmit = (e)=>{
         e.preventDefault()
         const params = {comment: newComment.comment, user_id: currentUser.id, game_id: game.id}
-        dispatchComment(params)
+        dispatch(dispatchComment(params))
         setNewComment({
             ...newComment,
             comment: ""
@@ -77,19 +77,19 @@ const CommentsContainer = ( {game,currentUser,dispatchComment,comments,loggedIn}
         <div>
             {game && display10Comments().map(comment=> <Comment key={comment.id} comment={comment} currentUser={currentUser} loggedIn={loggedIn}/>)}
             {loggedIn && displayButton()}
-
         </div>
       </section>
     );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatchComment: (action) => dispatch(dispatchComment(action)),
-    // deleteComment: (action) => dispatch(deleteComment(action))
-  }
-}
+export default CommentsContainer
 
-export default connect(null , mapDispatchToProps)(CommentsContainer)
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     dispatchComment: (action) => dispatch(dispatchComment(action)),
+//   }
+// }
+
+// export default connect(null , mapDispatchToProps)(CommentsContainer)
 
 

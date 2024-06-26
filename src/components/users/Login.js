@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchLogin } from '../../actions/loginActions'
 import '../../styles/styles.css'
 import {Navigate} from 'react-router-dom'
-import ErrorsOrMsg from '../ErrosOrdMsg';
+import ErrorsOrMsg from '../ErrosOrMsg';
 
 const Login = ({fetchLogin,user})=>{
 

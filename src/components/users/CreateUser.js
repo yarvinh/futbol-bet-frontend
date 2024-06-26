@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import '../../styles/styles.css'
 import { createUser } from '../../actions/createUsersActions';
-import ErrorsOrMsg from '../ErrosOrdMsg';
+import ErrorsOrMsg from '../ErrosOrMsg';
 import { useRef } from 'react';
 
 const  CreateUser = ({user,createUser})=>{

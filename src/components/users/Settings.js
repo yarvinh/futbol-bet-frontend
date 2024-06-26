@@ -2,10 +2,10 @@ import {useRef } from 'react';
 import { connect } from 'react-redux';
 import { fetchEditUser} from '../../actions/settingsActions'
 import '../../styles/styles.css'
+import ErrorsOrMsg from '../ErrosOrMsg';
 
 
 const Settings = (props) =>{
-
     const editRef = useRef({
                password: '',
                old_password: '',
@@ -30,7 +30,8 @@ const Settings = (props) =>{
           userInfo = {password: editRef.current.password, old_password: editRef.current.old_password, user_id: props.currentUser.id}
         else
           userInfo = {[type]: editRef.current[type],user_id: props.currentUser.id}
-       props.fetchEditUser(userInfo)  
+          console.log(userInfo)
+          props.fetchEditUser(userInfo)  
        editRef.current = {
         new_password: '',
         old_password: '',
@@ -41,20 +42,11 @@ const Settings = (props) =>{
        }   
     }
 
-    const emptyObject = () => {
-        if (props.message && Object.keys(props.message).length === 0){
-            return true
-        }else if (props.message){
-           return false
-        }else{
-           return true
-        }
-    }
-
     return(
         <div>
-            {!emptyObject() && props.message.error_messages? <p className="alert alert-danger" >{props.message.error_messages}</p> : null}
-            {!emptyObject() && props.message.saved? <p className="alert alert-success" >{props.message.saved}</p> : null}
+            {props.erroreOrMsg?.from === "update_user" && 
+            <ErrorsOrMsg errorsOrMsg={props.erroreOrMsg.errors || props.erroreOrMsg.msg} 
+            className={props.erroreOrMsg.errors ?"alert alert-danger" : "alert alert-success" }/>}
             <div className="container h-100  d-flex flex-column justify-content-center align-items-center">
                 <h4 >Change your password</h4>
                 <form onSubmit={(event) => handleOnSubmit(event,"password")} className="form">
@@ -90,6 +82,7 @@ const Settings = (props) =>{
 const mapStateToProps = state => { 
 
   return {
+     erroreOrMsg: state.user.user?.errors_or_messages,
      message:  state.editedMessage.message,
      loading: state.loading
   }
