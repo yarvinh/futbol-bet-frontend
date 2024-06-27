@@ -84,12 +84,5 @@ const CommentsContainer = ( {game,currentUser,comments,loggedIn} )=> {
 
 export default CommentsContainer
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     dispatchComment: (action) => dispatch(dispatchComment(action)),
-//   }
-// }
-
-// export default connect(null , mapDispatchToProps)(CommentsContainer)
 
 

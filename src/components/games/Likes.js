@@ -1,3 +1,4 @@
+import "../../styles/likes.css"
 import { connect } from 'react-redux';
 import { dispatchLikes, dislike } from '../../actions/likesActions'
 import { LIKED_STYLE, NO_LIKE_STYLE } from '../../consts/likesConst';
@@ -11,11 +12,11 @@ const Likes = ({likes,dislike, dispatchLikes, user_id,game_id,comment_id, reply_
     const likedIt = likes.find(like => like.user_id  === user_id)
 
     return(
-        <div>     
-            <div>
+        <div className='like-container'>     
+            <div className='like'>
                 <img onClick={handleOnClick} src='/instagram-likes.svg'  style={likedIt? NO_LIKE_STYLE : LIKED_STYLE } /> 
             </div>
-            <span>Likes {likes.length}</span>
+            <span> Likes {likes.length}</span>
         </div>
     )
 }

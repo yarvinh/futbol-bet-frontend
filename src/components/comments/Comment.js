@@ -1,15 +1,13 @@
-import {dispatchComment,deleteComment} from '../../actions/comments'
-import { connect } from 'react-redux';
-import Reply from './Reply'
+import {deleteComment} from '../../actions/comments'
+import { useDispatch } from 'react-redux';
 import Likes from '../games/Likes'
 import { dateAndTime } from '../../heplers/functionsHelpers';
 import RepliesContainer from '../../containers/RepliesContainer';
 
-
-
-const Comment = ( {comment,currentUser,loggedIn,deleteComment} )=> {
+const Comment = ( {comment,currentUser,loggedIn} )=> {
+  const dispatch = useDispatch()
   const handleDeleteOnClick = (e) => {
-    deleteComment( {id: e.target.value})
+    dispatch(dispatch(deleteComment( {id: e.target.value})))
   }
 
   return  (    
@@ -31,14 +29,6 @@ const Comment = ( {comment,currentUser,loggedIn,deleteComment} )=> {
   )
 };
 
-
-
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatchComment: (action) => dispatch(dispatchComment(action)),
-    deleteComment: (action) => dispatch(deleteComment(action))
-  }
-}
-export default connect(null , mapDispatchToProps)(Comment)
+export default Comment
 
 

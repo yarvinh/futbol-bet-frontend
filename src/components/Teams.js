@@ -53,7 +53,7 @@ class Teams extends Component {
             <option value='Ligue 1'>Ligue 1</option>
             <option value='Bundesliga'>Bundesliga</option>
           </select> 
-        <ul className="d-flex flex-column align-items-center justify-content-center">
+        <ul className="d-flex flex-column align-items-center justify-content-center teams">
          {this.renderTeams()}
         </ul>
       </div>

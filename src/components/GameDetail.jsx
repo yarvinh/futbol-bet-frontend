@@ -2,8 +2,9 @@ import { Link, useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import Bets from "./games/Bets"
 import Likes from "./games/Likes"
-import Date from "./DateAndTime"
+// import Date from "./DateAndTime"
 import CommentsContainer from "../containers/CommentsContainer"
+import DateAndTime from "./DateAndTime"
 
 const GameDetail=({games,user})=>{
     const {logged_in} = user
@@ -34,7 +35,7 @@ const GameDetail=({games,user})=>{
                             </div>
                         </Link>
                         <div className="card-footer">
-                            {game && <Date date={game.date} time={game.time}/>}
+                            {game && <DateAndTime date={game.date} time={game.time}/>}
                         </div>
                     </div>
                     </div>
