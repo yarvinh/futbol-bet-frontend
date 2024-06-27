@@ -7,7 +7,7 @@ import RepliesContainer from '../../containers/RepliesContainer';
 const Comment = ( {comment,currentUser,loggedIn} )=> {
   const dispatch = useDispatch()
   const handleDeleteOnClick = (e) => {
-    dispatch(dispatch(deleteComment( {id: e.target.value})))
+    dispatch(deleteComment( {id: e.target.value}))
   }
 
   return  (    

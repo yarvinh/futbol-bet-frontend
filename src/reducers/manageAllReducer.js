@@ -20,7 +20,7 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
   }
 
   const GamesReducer = (state = { games: [],filter: 'all',loading: false }, action) => {
-    
+      console.log(action)
     switch(action.type) {
       case 'LOADING_GAMES':
        
@@ -192,7 +192,6 @@ const rootReducer = combineReducers({
   teams: TeamsReducer,
   games: GamesReducer,
   user: UserReducer,
- 
 });
  
 export default rootReducer;

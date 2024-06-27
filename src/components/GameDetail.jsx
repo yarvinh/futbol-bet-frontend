@@ -1,12 +1,15 @@
 import { Link, useParams } from "react-router-dom"
-import { connect } from "react-redux"
+import {useSelector } from "react-redux"
 import Bets from "./games/Bets"
 import Likes from "./games/Likes"
-// import Date from "./DateAndTime"
 import CommentsContainer from "../containers/CommentsContainer"
 import DateAndTime from "./DateAndTime"
 
-const GameDetail=({games,user})=>{
+const GameDetail=()=>{
+    const loading = useSelector(state =>  state.loading)
+    const user = useSelector(state => state.user.user)
+    const games = useSelector(state => state.games.games)
+
     const {logged_in} = user
     const {id} = useParams()
     const game = games?.find(game => game.id.toString() ===  id) 
@@ -55,14 +58,6 @@ const GameDetail=({games,user})=>{
 }
 
 
-const mapStateToProps = state => { 
-    return {
-       user: state.user.user,
-       games: state.games.games,
-       loading: state.loading
-    }
-  }
-
-  export default connect(mapStateToProps, null)(GameDetail)
+export default GameDetail
    
 

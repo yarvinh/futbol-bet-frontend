@@ -18,13 +18,9 @@ import NavBarButton from './components/nav-bar/NavButton';
 
 const  App = ()=> {
   const dispatch = useDispatch()
-  const {user,loggedIn} = useSelector( (state) => {
-     return {
-      user:  state.user.user?.user,
-      loggedIn:  state.user.user && state.user.user.logged_in,
-      loading: state.loading
-     }
-  })
+  const loading = useSelector(state => state.loading)
+  const user = useSelector(state => state.user.user?.user )
+  const loggedIn = useSelector(state =>  state.user.user && state.user.user.logged_in, )
   const [isDiplay, setIsDisplay] = useState(false)
 
   const handleonclick = (e)=>{
@@ -76,18 +72,3 @@ const  App = ()=> {
 
 export default App
 
-// const mapStateToProps = state => { 
-//   return {
-//      user:  state.user.user?.user,
-//      loggedIn:  state.user.user && state.user.user.logged_in,
-//      loading: state.loading
-//   }
-// }
- 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     fetchGames: ()=> dispatch(fetchGames()),
-//     fetchCurrentUser: (action) => dispatch(fetchCurrentUser(action)),
-//   }
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(App)
