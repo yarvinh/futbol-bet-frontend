@@ -185,6 +185,18 @@ const editUserReducer=(state = { message: {}, loading: false }, action)=>{
       return state;
   }
 }
+const erroreOrMsg = (state = { from: 'none', errors: [], msg: [], loading: false }, action)=>{
+  switch(action.type) {
+    case 'ERRORS_OR_MESSAGES':
+      return {
+         ...state,
+         erroreOrMsg: action.erroreOrMsg,
+        loading: false
+      } 
+      default:
+        return state;
+    }
+}
 
 
 const rootReducer = combineReducers({
@@ -192,6 +204,7 @@ const rootReducer = combineReducers({
   teams: TeamsReducer,
   games: GamesReducer,
   user: UserReducer,
+  erroreOrMsg: erroreOrMsg,
 });
  
 export default rootReducer;

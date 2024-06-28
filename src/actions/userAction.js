@@ -1,4 +1,5 @@
 import axios from 'axios'
+import ErrorsOrMsg from '../components/ErrosOrMsg'
 
 
   export const fetchCurrentUser = () => {
@@ -9,7 +10,9 @@ import axios from 'axios'
         .then(response => {
             dispatch({ type: 'ADD_USER', user: response.data})
         })
-        .catch(error => console.log('api errors:', error))
+        .catch((error) => {
+          dispatch({ type: 'ERRORS_OR_MESSAGES', ErrorsOrMsg: {from: 'server', errors: ['Somwthing went wrong with the server. Please try again later']}})
+        })
 
     }
 

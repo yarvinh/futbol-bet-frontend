@@ -98,8 +98,6 @@ class Bets extends Component {
 
 
   renderBets = () => {
-// console.log(this.props.currentUser)
-    
     const currentUserBet = this.props.bets.find((bet)=>{
         return bet.user_id.toString() === this.props.currentUser.id?.toString()
     })
