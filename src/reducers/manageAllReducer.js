@@ -185,7 +185,6 @@ const editUserReducer=(state = { message: {}, loading: false }, action)=>{
   }
 }
 const errorsOrMsg = (state = { errorsOrMsg: {from: 'none', errors: [], msg: []}, loading: true }, action)=>{
-  console.log(action)
   switch(action.type) {
     case 'ERRORS_OR_MESSAGES':
       return {

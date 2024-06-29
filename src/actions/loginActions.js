@@ -6,8 +6,9 @@ export const fetchLogin = (user) => {
     dispatch({ type: "LOADING_LOGIN"})
       axios.post('http://localhost:3000/login', {user}, {withCredentials: true})
       .then(response=> {
-        console.log(response)
-          dispatch({ type: 'LOGIN', user: response.data })
+
+          const errorsOrMsg = response.data.errors_or_messages
+          errorsOrMsg ? dispatch({ type: 'ERRORS_OR_MESSAGES', errorsOrMsg: errorsOrMsg }) : dispatch({ type: 'LOGIN', user: response.data })
     
       })
       .catch((error) => {
@@ -24,7 +25,7 @@ export const fetchLogout = (user)=>{
       dispatch({ type: 'LOGOUT', user: response.data })
     })        
     .catch((error) => {
-      dispatch({ type: 'ERRORS_OR_MESSAGES', ErrorsOrMsg:{from: 'server', errors: ['Something went wrong with the server. Please try again later']}})
+      dispatch({ type: 'ERRORS_OR_MESSAGES', ErrorsOrMsg: {from: 'server', errors: ['Something went wrong with the server. Please try again later']}})
     })
   }
 }

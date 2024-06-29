@@ -1,12 +1,15 @@
 import React, { Component, useRef } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch,useSelector} from 'react-redux';
 import { fetchLogin } from '../../actions/loginActions'
 import '../../styles/styles.css'
 import {Navigate} from 'react-router-dom'
 import ErrorsOrMsg from '../ErrosOrMsg';
 
-const Login = ({fetchLogin,user})=>{
-
+const Login = ()=>{
+    const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
+    const user = useSelector( state => state.user)
+    const loading = useSelector( state => state.user.loading)
+    const dispatch = useDispatch()
     const loginRef = useRef({
       username: '',
       password: '',
@@ -20,9 +23,9 @@ const Login = ({fetchLogin,user})=>{
       }
     }
    
-   const handleOnSubmit = (e) => {
+    const handleOnSubmit = (e) => {
        e.preventDefault()
-       fetchLogin(loginRef.current) 
+       dispatch(fetchLogin(loginRef.current))
     }
 
     return(
@@ -34,24 +37,11 @@ const Login = ({fetchLogin,user})=>{
               <input className="form-control" onChange={handleOnChange} name="password" type="password" />
             <button  className="my-4 btn btn-primary" type="submit">Login</button>
           </form>
-          {user?.user?.messages && <ErrorsOrMsg errorsOrMsg={user.user?.messages}/>}
+          {errorsOrMsg.from === 'login' && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
           {user?.user?.logged_in && <Navigate to='/games'/> }     
         </section>
     );
 
 };
 
-const mapStateToProps = state => { 
-  return {
-     user: state.user,
-     loading: state.user.loading
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchLogin: (action) => dispatch(fetchLogin(action)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login
