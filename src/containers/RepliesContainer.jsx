@@ -73,7 +73,7 @@ const RepliesContainer = ({dispatchReply,replies,currentUser,comment_id,loggedIn
       <div>
         <button onClick={handleOnclickReply} className={displayReplies.accordion}> {`${replies?.length} Replies`} </button>
         <div className={displayReplies.displayAcordion}>
-              {replies && display10Replies().map(reply => <Reply key={reply.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} user_id={currentUser.id}/>)}
+              {replies && display10Replies().map(reply => <Reply key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} user_id={currentUser?.id}/>)}
               <form onSubmit={displayOnSubmit} >  
                 <input  className='reload' type='submit' value='Reload more replies'/> 
               </form>
