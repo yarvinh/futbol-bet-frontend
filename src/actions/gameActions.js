@@ -1,5 +1,4 @@
 export const fetchGames = () => {
-  console.log("http://localhost:3000/games")
     return (dispatch) => {
       dispatch({ type: 'LOADING_GAMES'})
       fetch('http://localhost:3000/games').then(response => {

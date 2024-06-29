@@ -6,6 +6,7 @@ import { useRef } from 'react';
 
 const  CreateUser = ()=>{
   const dispatch = useDispatch()
+  const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
   const user = useSelector(state => state.user)
   const loading = useSelector(state => state.loading)
   const newUserRef = useRef({
@@ -31,7 +32,7 @@ const  CreateUser = ()=>{
   return (
       <div className="container d-flex justify-content-center align-items-center">
         <form onSubmit={handleOnSubmit} className="form">
-            {user.user?.errors_or_messages && <ErrorsOrMsg errors={user.user.errors_or_messages.errors}/>}
+          {errorsOrMsg.from === 'create_user' && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
           <label className="mt-5"> Name: </label>
           <input onChange={handleOnChange} className="form-control" name="name" type='text'/> <br/>
           <label >Email:</label >

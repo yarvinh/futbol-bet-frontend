@@ -20,7 +20,6 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
   }
 
   const GamesReducer = (state = { games: [],filter: 'all',loading: false }, action) => {
-      console.log(action)
     switch(action.type) {
       case 'LOADING_GAMES':
        
@@ -185,12 +184,13 @@ const editUserReducer=(state = { message: {}, loading: false }, action)=>{
       return state;
   }
 }
-const erroreOrMsg = (state = { from: 'none', errors: [], msg: [], loading: false }, action)=>{
+const errorsOrMsg = (state = { errorsOrMsg: {from: 'none', errors: [], msg: []}, loading: true }, action)=>{
+  console.log(action)
   switch(action.type) {
     case 'ERRORS_OR_MESSAGES':
       return {
          ...state,
-         erroreOrMsg: action.erroreOrMsg,
+        errorsOrMsg: action.errorsOrMsg,
         loading: false
       } 
       default:
@@ -204,7 +204,7 @@ const rootReducer = combineReducers({
   teams: TeamsReducer,
   games: GamesReducer,
   user: UserReducer,
-  erroreOrMsg: erroreOrMsg,
+  errorsOrMsg: errorsOrMsg,
 });
  
 export default rootReducer;

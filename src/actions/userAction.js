@@ -1,5 +1,6 @@
 import axios from 'axios'
 import ErrorsOrMsg from '../components/ErrosOrMsg'
+import { SERVER_ERRORS } from './constAction'
 
 
   export const fetchCurrentUser = () => {
@@ -11,7 +12,7 @@ import ErrorsOrMsg from '../components/ErrosOrMsg'
             dispatch({ type: 'ADD_USER', user: response.data})
         })
         .catch((error) => {
-          dispatch({ type: 'ERRORS_OR_MESSAGES', ErrorsOrMsg: {from: 'server', errors: ['Somwthing went wrong with the server. Please try again later']}})
+          dispatch({ type: 'ERRORS_OR_MESSAGES', ErrorsOrMsg: {from: 'server', errors: SERVER_ERRORS}})
         })
 
     }
