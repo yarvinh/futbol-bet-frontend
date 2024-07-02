@@ -1,10 +1,12 @@
+import { gamesLoading, gamesReceived, filterGames} from "../state/gamesReducers"
+
 export const fetchGames = () => {
     return (dispatch) => {
-      dispatch({ type: 'LOADING_GAMES'})
+      dispatch(gamesLoading())
       fetch('http://localhost:3000/games').then(response => {
         return response.json()
       }).then(responseJSON => {
-          dispatch({ type: 'ADD_GAMES', games: responseJSON })
+          dispatch(gamesReceived(responseJSON))
       })
     }
   }
@@ -13,5 +15,7 @@ export const fetchGames = () => {
 
 
   export const  dispatchSetFilter = (payload) => {
-      return ({ type: 'SET_FILTER', filterBy: payload })
+      return (dispatch) =>{
+        dispatch(filterGames(payload))
+      }
   }

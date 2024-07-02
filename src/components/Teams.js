@@ -5,25 +5,19 @@ import '../styles/styles.css'
 
 
 const  Teams = (props) => {
-   const teams = useSelector((state) => {
-    console.log(state)
-    // state.teams
-  })
+   const teams = useSelector(state => state.teams.teams)
    const dispatch = useDispatch()
-  //  const [filteredTeams, setTeams] = useState([])
-   const [league, setLeague] = useState([])
 
+   const [league, setLeague] = useState([])
     useEffect(()=>{
       dispatch(fetchTeams())
     },[])
 
    const onClickHandle = (e) => {
-      let  filteredTeams = teams.filter( (team)=>{
+      let  leagueTeams = teams.filter( (team)=>{
            return team.league === e.target.value
       })
-      setLeague({
-          league: filteredTeams,
-      })
+      setLeague(leagueTeams)
       
    }
 
@@ -59,21 +53,4 @@ const  Teams = (props) => {
   
 };
 
-
-
-// const mapStateToProps = state => {
-//   // console.log(state)
-//   return {
-//      teams: state.teams.teams,
-//      league: state.league,
-//      loading: state.loading
-//   }
-// }
- 
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//      fetchTeams: () => dispatch(fetchTeams())
-//   }
-// }
 export default Teams

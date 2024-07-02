@@ -6,7 +6,7 @@ import {gameSelector} from '../selectors/gameSelector'
 
 const GamesContainer = (props)=>{
   const  dispatch = useDispatch()
-  const games = useSelector(state=> gameSelector(state.games.games,state.games.filter))
+  const games = useSelector(state => gameSelector(state.games.games,state.games.filter))
 
   useEffect(()=> {
       dispatch(fetchGames())   
