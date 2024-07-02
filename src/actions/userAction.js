@@ -1,5 +1,5 @@
 import axios from 'axios'
-import ErrorsOrMsg from '../components/ErrosOrMsg'
+// import ErrorsOrMsg from '../components/ErrosOrMsg'
 import { SERVER_ERRORS } from './constAction'
 
 

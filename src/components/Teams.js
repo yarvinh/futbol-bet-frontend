@@ -1,33 +1,34 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { useEffect, useState } from 'react';
+import {  useDispatch, useSelector } from 'react-redux';
 import { fetchTeams } from '../actions/teamActions'
 import '../styles/styles.css'
 
 
-class Teams extends Component {
+const  Teams = (props) => {
+   const teams = useSelector((state) => {
+    console.log(state)
+    // state.teams
+  })
+   const dispatch = useDispatch()
+  //  const [filteredTeams, setTeams] = useState([])
+   const [league, setLeague] = useState([])
 
-    state = {
-        teams: [],
-        league: [],
-    }
+    useEffect(()=>{
+      dispatch(fetchTeams())
+    },[])
 
-    componentDidMount() {
-       this.props.fetchTeams()
-    }
-
-   onClickHandle = (e) => {
- 
-      let  teams = this.props.teams.filter( (team)=>{
+   const onClickHandle = (e) => {
+      let  filteredTeams = teams.filter( (team)=>{
            return team.league === e.target.value
       })
-      this.setState({
-          league: teams,
+      setLeague({
+          league: filteredTeams,
       })
       
    }
 
-   renderTeams = ()=>{
-       return this.state.league.map((team)=>{
+   const renderTeams = ()=>{
+       return league.map((team)=>{
            return (    
             <div className="card team-card my-2" key={team.id}>
                 <div className="card-header"><img src={team.logo_url} alt='' width="20" height="20"/> </div>
@@ -40,12 +41,9 @@ class Teams extends Component {
        })
    }
 
-  render() {
- 
-
     return (
       <div>   
-          <select onChange={this.onClickHandle} className="form-select form-select mx-auto"> 
+          <select onChange={onClickHandle} className="form-select form-select mx-auto"> 
             <option  value='all'>Select Competition</option>
             <option value='Premier League'>Premier league</option>
             <option value='La Liga'>La Liga Santander</option>
@@ -54,27 +52,28 @@ class Teams extends Component {
             <option value='Bundesliga'>Bundesliga</option>
           </select> 
         <ul className="d-flex flex-column align-items-center justify-content-center teams">
-         {this.renderTeams()}
+         {renderTeams()}
         </ul>
       </div>
     );
-  }
+  
 };
 
 
 
-const mapStateToProps = state => {
-  return {
-     teams: state.teams.teams,
-     league: state.league,
-     loading: state.loading
-  }
-}
+// const mapStateToProps = state => {
+//   // console.log(state)
+//   return {
+//      teams: state.teams.teams,
+//      league: state.league,
+//      loading: state.loading
+//   }
+// }
  
 
-const mapDispatchToProps = dispatch => {
-  return {
-     fetchTeams: () => dispatch(fetchTeams())
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Teams)
+// const mapDispatchToProps = dispatch => {
+//   return {
+//      fetchTeams: () => dispatch(fetchTeams())
+//   }
+// }
+export default Teams

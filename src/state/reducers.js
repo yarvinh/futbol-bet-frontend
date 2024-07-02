@@ -1,23 +1,26 @@
 import { combineReducers } from "redux";
+import teamsReducer  from "./teamsReducer";
 
-const TeamsReducer = (state = { teams: [], loading: false }, action) => {
-    switch(action.type) {
-      case 'LOADING_TEAMS':
-        return state = {
-           ...state,
-          teams: [...state.teams],
-          loading: true
-        }
-      case 'ADD_TEAMS':
-        return {
-           ...state,
-          teams: action.teams,
-          loading: false
-        }
-      default:
-        return state;
-    }
-  }
+// const teamsReducer = (state = { teams: [], loading: false }, action) => {
+//     switch(action.type) {
+//       case 'LOADING_TEAMS':
+//         return state = {
+//            ...state,
+//           teams: [...state.teams],
+//           loading: true
+//         }
+//       case 'ADD_TEAMS':
+//         return {
+//            ...state,
+//           teams: action.teams,
+//           loading: false
+//         }
+//       default:
+//         return state;
+//     }
+//   }
+
+
 
   const GamesReducer = (state = { games: [],filter: 'all',loading: false }, action) => {
     switch(action.type) {
@@ -167,7 +170,6 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
   }
 
 const editUserReducer=(state = { message: {}, loading: false }, action)=>{
-
   switch(action.type) {
   case 'LOADING_SETTINGS':
     return state = {
@@ -184,6 +186,8 @@ const editUserReducer=(state = { message: {}, loading: false }, action)=>{
       return state;
   }
 }
+
+
 const errorsOrMsg = (state = { errorsOrMsg: {from: 'none', errors: [], msg: []}, loading: true }, action)=>{
   switch(action.type) {
     case 'ERRORS_OR_MESSAGES':
@@ -200,7 +204,7 @@ const errorsOrMsg = (state = { errorsOrMsg: {from: 'none', errors: [], msg: []},
 
 const rootReducer = combineReducers({
   editedMessage: editUserReducer,
-  teams: TeamsReducer,
+  teams: teamsReducer,
   games: GamesReducer,
   user: UserReducer,
   errorsOrMsg: errorsOrMsg,
