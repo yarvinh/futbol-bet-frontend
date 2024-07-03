@@ -55,7 +55,7 @@ const  App = ()=> {
         <div className="App content-container">
           <Routes>
             <Route exact path='/settings' element ={<Settings currentUser={user} loggedIn={loggedIn} />}/>
-            <Route exact path='/games/:id' element ={<GameDetail />}/>
+            <Route exact path='/games/:gameId' element ={<GameDetail />}/>
             <Route exact path='/signout' element={<LogOut/>}/>
             <Route exact path='/login' element={<Login  confirmLoggedIn={confirmLoggedIn}/>}>
             </Route>

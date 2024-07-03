@@ -6,7 +6,8 @@ const gamesSlice = createSlice({
     initialState: {
         games: [],
         gamesLoading: true,
-        filter: "all"
+        filter: "all",
+        game: {}
     },
     reducers: {
       gamesLoading: (state)=>{
@@ -16,12 +17,15 @@ const gamesSlice = createSlice({
         state.games = actions.payload
         state.gamesLoading = false
       },
-      filterGames: (state,actions) =>{
+      filterGames: (state,actions) => {
         state.filter = actions.payload
+      },
+      gameReceived: (state,action) =>{
+         state.game = action.payload
       }
     }
 })
 
 
-export const {gamesReceived,gamesLoading,filterGames} = gamesSlice.actions
+export const {gamesReceived,gamesLoading,filterGames,gameReceived} = gamesSlice.actions
 export default gamesSlice.reducer
