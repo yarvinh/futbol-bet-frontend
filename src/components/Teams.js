@@ -9,6 +9,7 @@ const  Teams = (props) => {
    const dispatch = useDispatch()
 
    const [league, setLeague] = useState([])
+   
     useEffect(()=>{
       dispatch(fetchTeams())
     },[])

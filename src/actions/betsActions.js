@@ -1,6 +1,8 @@
+import { gameReceived, gamesLoading } from "../state/gamesReducers"
+
 export const dispatchBets = (params) =>{
     return (dispatch) => {
-    dispatch({ type: 'LOADING_GAME_BETS'})
+    dispatch(gamesLoading())
     fetch(`http://localhost:3000/bets`,
      { 
       method: "POST", 
@@ -13,7 +15,7 @@ export const dispatchBets = (params) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-      dispatch({ type: 'ADD_GAME_BETS', games: response })
+      dispatch(gameReceived(response))
     })
     
   }

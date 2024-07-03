@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom"
 import {useDispatch, useSelector } from "react-redux"
-import Bets from "./games/Bets"
+import Bets from "./bets/Bets"
 import Likes from "./games/Likes"
 import CommentsContainer from "../containers/CommentsContainer"
 import DateAndTime from "./DateAndTime"
@@ -41,11 +41,6 @@ const GameDetail=()=>{
                                         </div>   
                                     )
                                 })}
-                                {/* <img src={teamOne?.logo_url} alt='team-logo' width="20" height="20"/> 
-                                <p><strong>{teamOne?.fc} </strong></p>
-                                <p><strong>VS</strong></p>
-                                <img src={teamTwo?.logo_url} alt='' width="20" height="20"/> 
-                                <p><strong>{teamTwo?.fc}  </strong></p>  */}
                             </div>
                         </Link>
                         <div className="card-footer">
@@ -58,7 +53,7 @@ const GameDetail=()=>{
                     </div>
                     <p>{game.bets?.length} Bets</p>
                     <div className="bets-section bg-light mx-auto my-4 py-2">
-                      {/* {logged_in && game.teams && <Bets currentUser={user.user} teams={game?.teams} team_events={game?.team_events} bets={game?.bets}  game={game} teamOne={teamOne} teamTwo={teamTwo} />} */}
+                      {logged_in && game.teams &&  <Bets currentUser={user.user} game={game} />}
                     </div>  
                 </div>
             </div>

@@ -6,7 +6,7 @@ const teamsSlice = createSlice({
         teams: [],
         teamsLoading: true
     },
-
+    
     reducers: {
         teamsReceived: (state,action)=>{
           state.teams = action.payload

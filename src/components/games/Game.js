@@ -4,7 +4,6 @@ import DateAndTime from '../DateAndTime';
 
 
 const Game = ({game,teamOne,teamTwo})=> {
-
     return (
       <div className="container d-flex justify-content-center">
         <div className="card-container mb-3">
@@ -28,17 +27,14 @@ const Game = ({game,teamOne,teamTwo})=> {
                   </div>
                 </Link>
                 <div className="card-footer">
-                  {/* {date()} */}
                   <DateAndTime date={game.date} time={game.time}/>
               </div>
             </div>
           </div>
           <div >
             <span>{game.bets.length} Bets</span>
- 
           </div>
         </div>
-
     </div>
   
     );

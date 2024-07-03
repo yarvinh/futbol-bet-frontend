@@ -8,9 +8,7 @@ export const fetchEditUser = (user) => {
   
       axios.patch(`http://localhost:3000/users/${user.user_id}`, {user}, {withCredentials: true})
       .then(response=> {
-        console.log(response.data)
         dispatch({ type: 'ADD_USER', user: response.data })
-    
       })
     }
   
