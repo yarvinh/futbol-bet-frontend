@@ -65,6 +65,7 @@ const  App = ()=> {
           </Routes>
          </div> 
         </BrowserRouter>
+        <div className="empty-splace"></div>
     </main>
 
   )

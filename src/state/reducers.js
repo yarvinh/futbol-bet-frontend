@@ -1,16 +1,10 @@
 import { combineReducers } from "redux";
 import teamsReducer  from "./teamsReducer";
 import gamesReducer from "./gamesReducers";
-
+import gameDetailReducers from "./gameDetailReducers"
 //   const GamesReducer = (state = { games: [],filter: 'all',loading: false }, action) => {
     // switch(action.type) {
 
-//         case 'ADD_GAME_BETS':
-//           return {
-//           ...state,
-//           games: action.games,
-//           loading: false
-//         } 
 //         case 'ADD_COMMENTS':
 //           return {
 //           ...state,
@@ -138,6 +132,7 @@ const rootReducer = combineReducers({
   editedMessage: editUserReducer,
   teams: teamsReducer,
   games: gamesReducer,
+  game: gameDetailReducers,
   user: UserReducer,
   errorsOrMsg: errorsOrMsg,
 });

@@ -1,8 +1,8 @@
-import { gamesLoading, gamesReceived, gameReceived} from "../state/gamesReducers";
+import { gameLoading, gameReceived, likeReceived} from "../state/gameDetailReducers";
 
 export const dispatchLikes = (params) =>{
     return (dispatch) => {
-    dispatch(gamesLoading(true))
+    dispatch(gameLoading(true))
       fetch(`http://localhost:3000/likes`,{ 
         method: "POST", 
         headers: { "Content-type": "application/json"  , "Accept": "application/json"
@@ -12,7 +12,8 @@ export const dispatchLikes = (params) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-        dispatch(gameReceived(response))
+      console.log('create like',response)
+        dispatch(likeReceived(response))
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -22,7 +23,7 @@ export const dispatchLikes = (params) =>{
 
 export const dislike = (like) =>{
   return (dispatch) => {
-  dispatch(gamesLoading(true))
+  dispatch(gameLoading(true))
   fetch(`http://localhost:3000/likes/${like.id}`,{ 
     method: "DELETE", 
     headers: { "Content-type": "application/json"  , "Accept": "application/json"
@@ -32,7 +33,8 @@ export const dislike = (like) =>{
   ).then(response => {
     return response.json()
   }).then(response => {
-    dispatch(gameReceived(response))
+    console.log('delete like',response)
+    dispatch(likeReceived(response))
   })
 }
 }

@@ -1,9 +1,10 @@
+import { gameReceived } from "../state/gamesReducers"
+
 export const dispatchReply = (params) =>{
     return (dispatch) => {
-    dispatch({ type: 'LOADING_REPLIES'})
+    // dispatch({ type: 'LOADING_REPLIES'})
     fetch(`http://localhost:3000/replies`,
      { 
- 
       method: "POST", 
       headers: { "Content-type": "application/json"  , "Accept": "application/json"
 
@@ -13,14 +14,13 @@ export const dispatchReply = (params) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-      dispatch({ type: 'ADD_REPLY', games: response })
+      dispatch(gameReceived(response))
     })
   }
 }
 
 export const deleteReply = (params) => {
   return (dispatch) => {
-    dispatch({ type: 'LOADING_REPLIES'})
     fetch(`http://localhost:3000/replies/${params.id}`,
     {
       method: 'DELETE',
@@ -29,7 +29,7 @@ export const deleteReply = (params) => {
     }).then(response => {
       return response.json()
     }).then(response => {
-      dispatch({ type: 'DELETE_REPLY', games: response })
+      dispatch(gameReceived(response))
     })
   }
 }

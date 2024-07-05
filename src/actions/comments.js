@@ -1,9 +1,11 @@
+import { gameReceived, gamesLoading } from "../state/gamesReducers"
+
 export const dispatchComment = (params) =>{
     return (dispatch) => {
-    dispatch({ type: 'LOADING_COMMENTS'})
+
+    dispatch(gamesLoading())
     fetch(`http://localhost:3000/comments`,
      { 
- 
       method: "POST", 
       headers: { "Content-type": "application/json"  , "Accept": "application/json"
 
@@ -13,14 +15,13 @@ export const dispatchComment = (params) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-      dispatch({ type: 'ADD_COMMENTS', games: response })
+      dispatch(gameReceived(response))
     })
   }
 }
 
 export const deleteComment = (params) => {
   return (dispatch) => {
-    dispatch({ type: 'LOADING_COMMENTS'})
     fetch(`http://localhost:3000/comments/${params.id}`,
     {
       method: 'DELETE',
@@ -29,7 +30,7 @@ export const deleteComment = (params) => {
     }).then(response => {
       return response.json()
     }).then(response => {
-      dispatch({ type: 'DELETE_COMMENT', games: response })
+      dispatch(gameReceived(response))
     })
   }
 }

@@ -8,11 +8,15 @@ import { useEffect } from "react"
 import { fetchGame } from "../actions/gameActions"
 
 const GameDetail=()=>{
+    
     const dispatch = useDispatch()
     const {gameId} = useParams()
     const loading = useSelector(state =>  state.loading)
+    const likes = useSelector((state) =>  {
+        return state.games.likes
+    })
     const user = useSelector(state => state.user.user)
-    const game = useSelector(state => state.games.game)
+    const game = useSelector(state => state.game.game)
     const {logged_in} = user
 
     useEffect(()=>{
@@ -49,7 +53,7 @@ const GameDetail=()=>{
                     </div>
                     </div>
                     <div className="likes-section bg-light mx-auto my-2 py-2">
-                        {logged_in && game.likes && <Likes likeType={'game'} likes={game?.likes} gameCommentOrReply={game} user_id={user.user.id} game_id={game?.id}/>}
+                        {logged_in && game.likes && <Likes likeType={'game'} likes={game.likes} gameCommentOrReply={game} user_id={user.user.id} game_id={game?.id}/>}
                     </div>
                     <p>{game.bets?.length} Bets</p>
                     <div className="bets-section bg-light mx-auto my-4 py-2">

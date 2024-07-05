@@ -19,13 +19,16 @@ const gamesSlice = createSlice({
       },
       filterGames: (state,actions) => {
         state.filter = actions.payload
-      },
-      gameReceived: (state,action) =>{
-         state.game = action.payload
       }
     }
 })
 
 
-export const {gamesReceived,gamesLoading,filterGames,gameReceived} = gamesSlice.actions
+export const {
+  gamesReceived,
+  gamesLoading,
+  filterGames,
+  gameReceived,
+  likeReceived
+} = gamesSlice.actions
 export default gamesSlice.reducer

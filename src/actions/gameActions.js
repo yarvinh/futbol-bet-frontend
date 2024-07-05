@@ -1,5 +1,5 @@
-import { gamesLoading, gamesReceived, filterGames, gameReceived} from "../state/gamesReducers"
-
+import { gamesLoading, gamesReceived, filterGames,} from "../state/gamesReducers"
+import { gameReceived,gameLoading } from "../state/gameDetailReducers"
 export const fetchGames = () => {
     return (dispatch) => {
       dispatch(gamesLoading())
@@ -13,7 +13,7 @@ export const fetchGames = () => {
 
 export const fetchGame = (id) => {
   return (dispatch) => {
-    dispatch(gamesLoading())
+    dispatch(gameLoading())
     fetch(`http://localhost:3000/games/${id}`).then(response => {
       return response.json()
     }).then(responseJSON => {
