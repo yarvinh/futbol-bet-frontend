@@ -1,19 +1,19 @@
-import { gameLoading, gameReceived, likeReceived} from "../state/gameDetailReducers";
+import { gameLoading, gameReceived, } from "../state/gameDetailReducers";
+import axios from 'axios'
 
-export const dispatchLikes = (params) =>{
+export const dispatchLikes = ({payLoad,likesReceived}) =>{
     return (dispatch) => {
     dispatch(gameLoading(true))
       fetch(`http://localhost:3000/likes`,{ 
         method: "POST", 
         headers: { "Content-type": "application/json"  , "Accept": "application/json"
      }, 
-     body: JSON.stringify(params)
+     body: JSON.stringify(payLoad)
    }
     ).then(response => {
       return response.json()
     }).then(response => {
-      console.log('create like',response)
-        dispatch(likeReceived(response))
+        dispatch(likesReceived(response))
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -21,20 +21,16 @@ export const dispatchLikes = (params) =>{
   }
 }
 
-export const dislike = (like) =>{
+export const dislike = ({likeId, likesReceived}) =>{
+  console.log(likeId)
   return (dispatch) => {
   dispatch(gameLoading(true))
-  fetch(`http://localhost:3000/likes/${like.id}`,{ 
-    method: "DELETE", 
-    headers: { "Content-type": "application/json"  , "Accept": "application/json"
-  }, 
-   body: JSON.stringify(like)
- }
-  ).then(response => {
-    return response.json()
-  }).then(response => {
+  axios.delete(`http://localhost:3000/likes/${likeId}`,{ 
+   withCredentials: true
+  })
+  .then(response => {
     console.log('delete like',response)
-    dispatch(likeReceived(response))
+    dispatch(likesReceived(response.data))
   })
 }
 }

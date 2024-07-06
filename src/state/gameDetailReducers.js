@@ -4,7 +4,8 @@ const gameSlice = createSlice({
     name: 'game',
     initialState: {
         gameLoading: true,
-        game: {}
+        game: {},
+        gameLikes: []
     },
     reducers: {
       gameLoading: (state)=>{
@@ -15,7 +16,7 @@ const gameSlice = createSlice({
         state.game = action.payload
       },
 
-      likeReceived: (state,action) => {
+      gameLikesReceived: (state,action) => {
         state.game.likes =  action.payload
       }
     }
@@ -25,7 +26,7 @@ const gameSlice = createSlice({
 export const {
   gameLoading,
   gameReceived,
-  likeReceived
+  gameLikesReceived
 } = gameSlice.actions
 
 export default gameSlice.reducer

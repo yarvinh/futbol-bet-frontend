@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import { dispatchLikes, dislike } from '../../actions/likesActions'
 import { LIKED_STYLE, NO_LIKE_STYLE } from '../../consts/likesConst';
 import { useParams } from "react-router";
+import { gameLikesReceived } from "../../state/gameDetailReducers";
 
-const Likes = ({likes,dislike, dispatchLikes, user_id,comment_id, reply_id})=>{
+const Likes = ({likes,dislike, dispatchLikes, user_id,comment_id, reply_id,likesReceived})=>{
     const {gameId} = useParams()
-    console.log(gameId)
-    const handleOnClick = (e) => {
-        const likesParams = {user_id: user_id, game_id: gameId, comment_id: comment_id, reply_id: reply_id}
-        likedIt ? dislike(likedIt) : dispatchLikes(likesParams)
-    }
-
     const likedIt = likes.find(like => like.user_id  === user_id)
+
+    const handleOnClick = (e) => {
+        const payLoad = {user_id: user_id, game_id: gameId, comment_id: comment_id, reply_id: reply_id}
+        likedIt ? dislike({likeId: likedIt.id, likesReceived: gameLikesReceived}) : dispatchLikes({payLoad: payLoad, likesReceived: likesReceived})
+    }
 
     return(
         <div className='like-container'>     
