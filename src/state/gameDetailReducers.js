@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addItemToArray, deleteItemFromArray } from "../heplers/arrayHelper";
 
 const gameSlice = createSlice({
     name: 'game',
@@ -17,7 +18,14 @@ const gameSlice = createSlice({
       },
 
       gameLikesReceived: (state,action) => {
-        state.game.likes =  action.payload
+        if (action.payload.response.like_removed){
+            deleteItemFromArray({array: state.game.likes, id: action.payload.likeId})
+        }else{
+            addItemToArray({array: state.game.likes, item: action.payload.response})  
+        }
+      },
+      betsReceived: (state,action)=>{
+        addItemToArray({array: state.game.bets, item: action.payload}) 
       }
     }
 })
@@ -26,7 +34,8 @@ const gameSlice = createSlice({
 export const {
   gameLoading,
   gameReceived,
-  gameLikesReceived
+  gameLikesReceived,
+  betsReceived
 } = gameSlice.actions
 
 export default gameSlice.reducer

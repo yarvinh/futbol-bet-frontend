@@ -13,7 +13,7 @@ export const dispatchLikes = ({payLoad,likesReceived}) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-        dispatch(likesReceived(response))
+        dispatch(likesReceived({response: response}))
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -22,7 +22,6 @@ export const dispatchLikes = ({payLoad,likesReceived}) =>{
 }
 
 export const dislike = ({likeId, likesReceived}) =>{
-  console.log(likeId)
   return (dispatch) => {
   dispatch(gameLoading(true))
   axios.delete(`http://localhost:3000/likes/${likeId}`,{ 
@@ -30,7 +29,7 @@ export const dislike = ({likeId, likesReceived}) =>{
   })
   .then(response => {
     console.log('delete like',response)
-    dispatch(likesReceived(response.data))
+    dispatch(likesReceived({response: response.data, likeId: likeId}))
   })
 }
 }

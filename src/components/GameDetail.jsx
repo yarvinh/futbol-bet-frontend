@@ -13,14 +13,10 @@ const GameDetail=()=>{
     const dispatch = useDispatch()
     const {gameId} = useParams()
     const loading = useSelector(state =>  state.loading)
-    const likes = useSelector((state) =>  {
-        return state.game.gameLikes
-    })
-    console.log(likes)
     const user = useSelector(state => state.user.user)
     const game = useSelector(state => state.game.game)
     const {logged_in} = user
-
+    console.log(game)
     useEffect(()=>{
        dispatch(fetchGame(gameId))
     },[])
@@ -59,7 +55,7 @@ const GameDetail=()=>{
                     </div>
                     <p>{game.bets?.length} Bets</p>
                     <div className="bets-section bg-light mx-auto my-4 py-2">
-                      {logged_in && game.teams &&  <Bets currentUser={user.user} game={game} />}
+                      {logged_in && game.teams &&  <Bets currentUser={user.user} game={game} bets={game.bets}/>}
                     </div>  
                 </div>
             </div>

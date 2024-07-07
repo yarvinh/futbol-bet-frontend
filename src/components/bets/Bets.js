@@ -1,6 +1,6 @@
 
 import CreateBet from './CreateBet';
-const Bets = ({game,currentUser}) => {
+const Bets = ({game,currentUser,bets}) => {
   
   const teamOneBetSum = () => {
     const bets = [...game.bets]
