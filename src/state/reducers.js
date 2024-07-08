@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import teamsReducer  from "./teamsReducer";
 import gamesReducer from "./gamesReducers";
 import gameDetailReducers from "./gameDetailReducers"
+import commentsReducer from "./commentsReducers"
 //   const GamesReducer = (state = { games: [],filter: 'all',loading: false }, action) => {
     // switch(action.type) {
 
@@ -129,6 +130,7 @@ const errorsOrMsg = (state = { errorsOrMsg: {from: 'none', errors: [], msg: []},
 
 
 const rootReducer = combineReducers({
+  comments: commentsReducer,
   editedMessage: editUserReducer,
   teams: teamsReducer,
   games: gamesReducer,

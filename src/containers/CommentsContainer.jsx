@@ -1,50 +1,30 @@
-import  { useState } from 'react';
-import {dispatchComment} from '../actions/comments'
-import { useDispatch} from 'react-redux';
+import  { useState,useEffect } from 'react';
 import Comment from '../components/comments/Comment';
+import CreateComment from '../components/comments/CreateComment';
+import { useParams } from 'react-router';
+import { fetchComments } from "../actions/comments"
+import { useDispatch, useSelector } from 'react-redux';
 
 const CommentsContainer = ( {game,currentUser,comments,loggedIn} )=> {
+    const commentss = useSelector(state => state.comments)
     const dispatch = useDispatch()
-    const [newComment, setNewComment] = useState({
-        game_id: '',
-        user_id: '',
-        comment: '',
-        displayMoreComments: 3,
-    })
+    const {gameId} = useParams()
+    const [displayMoreComments, setDisplayMoreComments] = useState(3)
 
-    const handleOnSubmit = (e)=>{
-        e.preventDefault()
-        const params = {comment: newComment.comment, user_id: currentUser.id, game_id: game.id}
-        dispatch(dispatchComment(params))
-        setNewComment({
-            ...newComment,
-            comment: ""
-        })
-    }
-
-    const onChangeComment = (e) => {
-        e.preventDefault()
-        e.target.style.height = "1px";
-        e.target.style.height = (e.target.scrollHeight)+"px";
-        setNewComment({
-        ...newComment,
-        comment: e.target.value,
-        })
-
-    }
+    useEffect(()=>{
+        dispatch(fetchComments(gameId))
+    },[])
+  
 
     const displayOnSubmit=(e)=>{
         e.preventDefault()
-        let amount = newComment.displayMoreComments + 10
-        setNewComment({
-            ...newComment,
-            displayMoreComments: amount,
-        })
+        let amount = displayMoreComments.displayMoreComments + 10
+        setDisplayMoreComments(amount)
     }
 
     const display10Comments=()=>{
         const  newCommentsArr = []
-        for (let i = 0; i < newComment.displayMoreComments; i++){
+        for (let i = 0; i < displayMoreComments; i++){
             if(comments[i])
             newCommentsArr.push(comments[i])
         }
@@ -62,16 +42,7 @@ const CommentsContainer = ( {game,currentUser,comments,loggedIn} )=> {
 
     return (
         <section className='comments_container'>
-          <div>
-            <form onSubmit={handleOnSubmit} value={newComment.comment}>
-              <label>What do you think about this game?</label> 
-              <br></br>
-              {loggedIn && <div className='comment_textArea'>
-                <textarea onChange={onChangeComment} row='1' className='auto_height' value={newComment.comment}></textarea> 
-                {<input type='submit' className='buttons'value='Comment'/>}
-              </div>}
-            </form>
-          </div>
+          <CreateComment game={game} loggedIn={loggedIn} currentUser={currentUser}/>
       <div>
         </div>
         <div>
