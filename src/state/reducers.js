@@ -3,38 +3,6 @@ import teamsReducer  from "./teamsReducer";
 import gamesReducer from "./gamesReducers";
 import gameDetailReducers from "./gameDetailReducers"
 import commentsReducer from "./commentsReducers"
-//   const GamesReducer = (state = { games: [],filter: 'all',loading: false }, action) => {
-    // switch(action.type) {
-
-//         case 'ADD_COMMENTS':
-//           return {
-//           ...state,
-//           games: action.games,
-//           loading: false
-//         } 
-//         case 'DELETE_COMMENT':
-//           return {
-//           ...state,
-//           games: action.games,
-//           loading: false
-//         } 
-//         case 'ADD_REPLY':
-//           return {
-//           ...state,
-//           games: action.games,
-//           loading: false
-//         } 
-//         case 'DELETE_REPLY':
-//           return {
-//           ...state,
-//           games: action.games,
-//           loading: false
-//         } 
-//           default:
-//           return state;
-    //     }
-    // }
-
 
   const UserReducer = (state = { user: {}, loading: true }, action) => {
 

@@ -1,5 +1,5 @@
 import { gamesLoading, gamesReceived, filterGames,} from "../state/gamesReducers"
-import { gameReceived,gameLoading } from "../state/gameDetailReducers"
+import { gameReceived, gameLoading } from "../state/gameDetailReducers"
 export const fetchGames = () => {
     return (dispatch) => {
       dispatch(gamesLoading())

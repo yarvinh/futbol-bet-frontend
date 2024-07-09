@@ -28,7 +28,6 @@ export const dislike = ({likeId, likesReceived}) =>{
    withCredentials: true
   })
   .then(response => {
-    console.log('delete like',response)
     dispatch(likesReceived({response: response.data, likeId: likeId}))
   })
 }

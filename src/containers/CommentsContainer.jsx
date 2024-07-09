@@ -5,8 +5,10 @@ import { useParams } from 'react-router';
 import { fetchComments } from "../actions/comments"
 import { useDispatch, useSelector } from 'react-redux';
 
-const CommentsContainer = ( {game,currentUser,comments,loggedIn} )=> {
-    const commentss = useSelector(state => state.comments)
+const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
+
+    const comments = useSelector(state => state.comments.comments)
+
     const dispatch = useDispatch()
     const {gameId} = useParams()
     const [displayMoreComments, setDisplayMoreComments] = useState(3)
@@ -15,11 +17,11 @@ const CommentsContainer = ( {game,currentUser,comments,loggedIn} )=> {
         dispatch(fetchComments(gameId))
     },[])
   
-
     const displayOnSubmit=(e)=>{
         e.preventDefault()
-        let amount = displayMoreComments.displayMoreComments + 10
-        setDisplayMoreComments(amount)
+        setDisplayMoreComments((prev)=>{
+            return prev + 10
+        })
     }
 
     const display10Comments=()=>{
@@ -37,13 +39,12 @@ const CommentsContainer = ( {game,currentUser,comments,loggedIn} )=> {
             <input  className='reload' type='submit' value='Reload more comments'/> 
         </form>
         )
-    
     }
 
     return (
         <section className='comments_container'>
           <CreateComment game={game} loggedIn={loggedIn} currentUser={currentUser}/>
-      <div>
+        <div>
         </div>
         <div>
             {game && display10Comments().map(comment=> <Comment key={comment.id} comment={comment} currentUser={currentUser} loggedIn={loggedIn}/>)}

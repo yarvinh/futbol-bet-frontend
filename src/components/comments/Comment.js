@@ -3,11 +3,13 @@ import { useDispatch } from 'react-redux';
 import Likes from '../games/Likes'
 import { dateAndTime } from '../../heplers/functionsHelpers';
 import RepliesContainer from '../../containers/RepliesContainer';
+import { useParams } from 'react-router';
 
 const Comment = ( {comment,currentUser,loggedIn} )=> {
-  const dispatch = useDispatch()
+  const {gameId} = useParams()
+  const dispatch = useDispatch() 
   const handleDeleteOnClick = (e) => {
-    dispatch(deleteComment( {id: e.target.value}))
+    dispatch(deleteComment( {commentId: comment.id, gameId: gameId}))
   }
 
   return  (    

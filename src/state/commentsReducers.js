@@ -8,18 +8,21 @@ const commentsSlice = createSlice({
        comments: []
     },
 
-    commentsLoading: ((state)=>{
-       state.commentsLoading = true
-    }),
-    commentsReceived: (state,action) => {
-        state.comments = action.payload
-        state.commentsLoading = false
-    },
-    commentReceived: (state,action) => {
-        if (action.payload.response.comment_removed){
-            deleteItemFromArray({array: state.comments, id: action.payload.commentId})
-        }else{
-            addItemToArray({array: state.comments, item: action.payload})  
+    reducers: {
+        commentsLoading: ((state)=>{
+        state.commentsLoading = true
+        }),
+        commentsReceived: (state,action) => {
+            state.comments = action.payload
+            state.commentsLoading = false 
+        },
+        commentReceived: (state,action) => {
+            if (action.payload.response?.comment_removed){
+                deleteItemFromArray({array: state.comments, id: action.payload.id})
+            }else{
+                addItemToArray({array: state.comments, item: action.payload})  
+                state.commentsLoading = false 
+            }
         }
     }
 })

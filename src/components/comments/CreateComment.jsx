@@ -1,12 +1,10 @@
 import { useState } from "react"
 import { useDispatch} from "react-redux"
-import { dispatchComment,fetchComments } from "../../actions/comments"
-import { useEffect } from "react"
-// import { useParams } from "react-router"
+import { dispatchComment} from "../../actions/comments"
+import { useParams } from "react-router"
 
-
-const CreateComment = ({game, loggedIn,currentUser}) => {
-    // const {gameId} = useParams()
+const CreateComment = ({loggedIn,currentUser}) => {
+    const {gameId} = useParams()
     const dispatch = useDispatch()
     const [newComment, setNewComment] = useState({
         game_id: '',
@@ -17,7 +15,7 @@ const CreateComment = ({game, loggedIn,currentUser}) => {
 
     const handleOnSubmit = (e)=>{
         e.preventDefault()
-        const payload = {comment: newComment.comment, user_id: currentUser.id, game_id: game.id}
+        const payload = {comment: newComment.comment, user_id: currentUser.id, game_id: gameId}
         dispatch(dispatchComment(payload))
         setNewComment({
             ...newComment,

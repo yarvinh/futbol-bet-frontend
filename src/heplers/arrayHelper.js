@@ -1,5 +1,5 @@
 export const addItemToArray = ({array, item})=>{
-    return array.push(item)
+    return array.unshift(item)
 }
 
 export const editItemFromArray = ({array,item})=>{
@@ -10,8 +10,12 @@ export const editItemFromArray = ({array,item})=>{
 }
 
 export const deleteItemFromArray = ({array,id})=>{
-    const itemIndex = array.findIndex(i => i.id === id)
-    if (itemIndex)
-       array.splice(itemIndex,1)
+    const itemIndex = array.findIndex((i) => {
+      return i.id === id
+    })
+
+    if(itemIndex !== -1)
+      array.splice(itemIndex,1)
+
   return array
 }
