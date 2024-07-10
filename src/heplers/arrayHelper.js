@@ -19,3 +19,11 @@ export const deleteItemFromArray = ({array,id})=>{
 
   return array
 }
+
+export const findIndexById = ({array,id})=>{
+  const index = array.findIndex(i => i.id === id)
+  if(index !== -1)
+     return index
+  else
+     return false
+}

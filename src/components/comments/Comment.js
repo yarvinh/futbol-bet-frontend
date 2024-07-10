@@ -4,6 +4,7 @@ import Likes from '../games/Likes'
 import { dateAndTime } from '../../heplers/functionsHelpers';
 import RepliesContainer from '../../containers/RepliesContainer';
 import { useParams } from 'react-router';
+import { commentLikesReceived } from '../../state/commentsReducers';
 
 const Comment = ( {comment,currentUser,loggedIn} )=> {
   const {gameId} = useParams()
@@ -11,6 +12,8 @@ const Comment = ( {comment,currentUser,loggedIn} )=> {
   const handleDeleteOnClick = (e) => {
     dispatch(deleteComment( {commentId: comment.id, gameId: gameId}))
   }
+
+ 
 
   return  (    
     <section  className='post' key={comment.id}> 
@@ -23,7 +26,7 @@ const Comment = ( {comment,currentUser,loggedIn} )=> {
       </div> 
       <div>
         <div className='likes'>
-          {loggedIn && <Likes likes={comment.likes} comment_id={comment.id} user_id={currentUser.id} gameCommentOrReply={comment}/>}
+          {loggedIn && <Likes likes={comment.likes} ownerId={{comment_id: comment.id, user_id: currentUser.id}} likesReceived={commentLikesReceived}  comment_id={comment.id} user_id={currentUser.id} gameCommentOrReply={comment}/>}
         </div>
         <RepliesContainer replies={comment.replies_by_date} loggedIn={loggedIn} comment_id={comment.id} currentUser={currentUser} comment={comment}/>
       </div>

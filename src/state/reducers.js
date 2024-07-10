@@ -3,7 +3,7 @@ import teamsReducer  from "./teamsReducer";
 import gamesReducer from "./gamesReducers";
 import gameDetailReducers from "./gameDetailReducers"
 import commentsReducer from "./commentsReducers"
-
+import serverErrorsReducer from "./serverErrors"
   const UserReducer = (state = { user: {}, loading: true }, action) => {
 
     switch(action.type) {
@@ -105,6 +105,7 @@ const rootReducer = combineReducers({
   game: gameDetailReducers,
   user: UserReducer,
   errorsOrMsg: errorsOrMsg,
+  serverErrors: serverErrorsReducer
 });
  
 export default rootReducer;

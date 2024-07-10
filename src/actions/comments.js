@@ -24,6 +24,7 @@ export const dispatchComment = (payload) =>{
     axios.post(`http://localhost:3000/games/${payload.game_id}/comments`,
      payload, { withCredentials: true})
      .then(response => {
+      console.log(response)
       dispatch(commentReceived(response.data))
     })
   }

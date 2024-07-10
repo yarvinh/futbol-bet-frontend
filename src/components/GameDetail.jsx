@@ -50,7 +50,7 @@ const GameDetail=()=>{
                     </div>
                     </div>
                     <div className="likes-section bg-light mx-auto my-2 py-2">
-                        {logged_in && game.likes && <Likes likeType={'game'} likes={game.likes} gameCommentOrReply={game} likesReceived={gameLikesReceived} user_id={user.user.id} game_id={game?.id}/>}
+                        {logged_in && game.likes && <Likes likeType={'game'} likes={game.likes} ownerId={{game_id: gameId, user_id: user.user.id}} gameCommentOrReply={game} likesReceived={gameLikesReceived} user_id={user.user.id} game_id={game?.id}/>}
                     </div>
                     <p>{game.bets?.length} Bets</p>
                     <div className="bets-section bg-light mx-auto my-4 py-2">
