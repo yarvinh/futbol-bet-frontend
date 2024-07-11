@@ -15,7 +15,6 @@ export const dispatchLikes = ({payLoad,likesReceived}) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-      console.log(response)
         dispatch(likesReceived({response: response}))
     })
     .catch((error) => {

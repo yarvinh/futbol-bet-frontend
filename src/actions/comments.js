@@ -1,5 +1,6 @@
 import axios from "axios"
 import { commentsReceived,commentsLoading, commentReceived } from "../state/commentsReducers"
+import { json } from "react-router"
 
 
 export const fetchComments = (gameId) => {
@@ -26,6 +27,9 @@ export const dispatchComment = (payload) =>{
      .then(response => {
       console.log(response)
       dispatch(commentReceived(response.data))
+    })
+    .catch((error)=>{
+       throw json("ninjn")
     })
   }
 }

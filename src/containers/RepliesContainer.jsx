@@ -1,11 +1,13 @@
-import { connect } from 'react-redux';
-import {dispatchReply,deleteReply} from '../actions/replyActions'
+import { connect, useDispatch } from 'react-redux';
+import {dispatchReply,deleteReply, fetchReplies} from '../actions/replyActions'
 import { useState } from 'react';
 import Reply from '../components/comments/Reply';
+import { useParams } from 'react-router';
 
 
-const RepliesContainer = ({dispatchReply,replies,currentUser,comment_id,loggedIn}) => {
-
+const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal}) => {
+  const dispatch = useDispatch()
+  const {gameId} = useParams()
   const [displayReplies, setDisplayReplies] = useState({
         reply: '',
         accordion: 'replies_accordion',
@@ -16,8 +18,8 @@ const RepliesContainer = ({dispatchReply,replies,currentUser,comment_id,loggedIn
 
   const handleOnKeyUp = (e)=>{
     if (e.code  === 'Enter'){
-      const params = {user_id: currentUser.id, comment_id: comment_id, reply: displayReplies.reply }
-      dispatchReply(params)
+      const payload= {user_id: currentUser.id, comment_id: comment_id, reply: displayReplies.reply }
+      dispatch(dispatchReply({payload: payload, gameId: gameId, commentId: comment_id}))
       setDisplayReplies({
         ...displayReplies,
         reply: ''
@@ -36,6 +38,7 @@ const RepliesContainer = ({dispatchReply,replies,currentUser,comment_id,loggedIn
   }
 
   const handleOnclickReply = (e)=>{
+    dispatch(fetchReplies({gameId: gameId, commentId: comment_id}))
     if(displayReplies.accordion !== 'replies_accordion active')
         setDisplayReplies({
             ...displayReplies,
@@ -71,7 +74,7 @@ const RepliesContainer = ({dispatchReply,replies,currentUser,comment_id,loggedIn
 
     return (
       <div>
-        <button onClick={handleOnclickReply} className={displayReplies.accordion}> {`${replies?.length} Replies`} </button>
+        <button onClick={handleOnclickReply} className={displayReplies.accordion}> {`${repliesTotal} Replies`} </button>
         <div className={displayReplies.displayAcordion}>
               {replies && display10Replies().map(reply => <Reply key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} user_id={currentUser?.id}/>)}
               <form onSubmit={displayOnSubmit} >  
@@ -88,7 +91,6 @@ const RepliesContainer = ({dispatchReply,replies,currentUser,comment_id,loggedIn
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchReply: (action) => dispatch(dispatchReply(action)),
     deleteReply: (action) => dispatch(deleteReply(action))
   }
 }

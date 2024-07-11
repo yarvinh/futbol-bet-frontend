@@ -22,8 +22,10 @@ const Bets = ({game,currentUser,bets}) => {
   const teamTwoBetSum = () => {  
     const bets = [...game.bets]
     let  counter = 0
+
     bets.forEach((bet) => { 
-      if (bet.team && game.team[0].id.toString() === bet.team_id.toString()){
+      console.log(bet)
+      if (bet?.team && game?.teams[0].id.toString() === bet?.team_id.toString()){
         counter += bet.amount    
       }else{
         counter += 0  

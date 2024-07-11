@@ -28,7 +28,7 @@ const Comment = ( {comment,currentUser,loggedIn} )=> {
         <div className='likes'>
           {loggedIn && <Likes likes={comment.likes} ownerId={{comment_id: comment.id, user_id: currentUser.id}} likesReceived={commentLikesReceived}  comment_id={comment.id} user_id={currentUser.id} gameCommentOrReply={comment}/>}
         </div>
-        <RepliesContainer replies={comment.replies_by_date} loggedIn={loggedIn} comment_id={comment.id} currentUser={currentUser} comment={comment}/>
+        <RepliesContainer replies={comment.replies} repliesTotal={comment.replies_total} loggedIn={loggedIn} comment_id={comment.id} currentUser={currentUser} comment={comment}/>
       </div>
     </section>
   )
