@@ -1,11 +1,13 @@
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import {dispatchReply,deleteReply, fetchReplies} from '../actions/replyActions'
 import { useState } from 'react';
 import Reply from '../components/comments/Reply';
 import { useParams } from 'react-router';
+import Loading from '../components/Loading';
 
 
-const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal}) => {
+const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,comment}) => {
+  const loading = useSelector(state=> state.comments.repliesLoading)
   const dispatch = useDispatch()
   const {gameId} = useParams()
   const [displayReplies, setDisplayReplies] = useState({
@@ -76,7 +78,8 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal}
       <div>
         <button onClick={handleOnclickReply} className={displayReplies.accordion}> {`${repliesTotal} Replies`} </button>
         <div className={displayReplies.displayAcordion}>
-              {replies && display10Replies().map(reply => <Reply key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} user_id={currentUser?.id}/>)}
+              {replies && display10Replies().map(reply => <Reply key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} commentId={comment_id}/>)}
+               {loading && <Loading/>}
               <form onSubmit={displayOnSubmit} >  
                 <input  className='reload' type='submit' value='Reload more replies'/> 
               </form>
@@ -84,6 +87,7 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal}
                 <form onKeyUp={handleOnKeyUp} >
                   <textarea  onChange={handleOnChange} rows="1" className="auto_height" value={displayReplies.reply}></textarea>
               </form> }
+              
         </div>
       </div>
     );

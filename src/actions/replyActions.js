@@ -32,17 +32,15 @@ export const dispatchReply = ({payload, commentId, gameId}) =>{
   }
 }
 
-export const deleteReply = (params) => {
-  return (dispatch) => {
-    fetch(`http://localhost:3000/replies/${params.id}`,
-    {
-      method: 'DELETE',
-      header: { "Content-type": "application/json"  , "Accept": "application/json"}, 
-      body: JSON.stringify(params)
-    }).then(response => {
-      return response.json()
-    }).then(response => {
-      dispatch(gameReceived(response))
-    })
+export const deleteReply = ({gameId,commentId,replyId}) => {
+  return async (dispatch) => {
+   const response = await  axios.delete(`http://localhost:3000/games/${gameId}/comments/${commentId}/replies/${replyId}`,
+   {withCredentials: true})
+      try {  
+        dispatch(replyReceived(response.data))
+      } catch (error){
+
+      }
+   
   }
 }

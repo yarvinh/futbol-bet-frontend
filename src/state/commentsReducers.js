@@ -6,7 +6,7 @@ const commentsSlice = createSlice({
     initialState: {
        commentsLoading: true,
        comments: [],
-       repliesLoading: true,
+       repliesLoading: false,
     },
 
     reducers: {
@@ -32,7 +32,6 @@ const commentsSlice = createSlice({
                 deleteItemFromArray({array: state.comments[commentIndex].likes, id: action.payload.likeId})
             }else{
                 let commentIndex = findIndexById({array: state.comments, id: action.payload.response?.comment_id})
-
                 addItemToArray({array: state.comments[commentIndex].likes, item: action.payload.response})  
             }
 
@@ -40,15 +39,33 @@ const commentsSlice = createSlice({
         repliesRecieved: (state,action) => {
             let commentIndex = findIndexById({array: state.comments, id: action.payload.commentId})
             state.comments[commentIndex].replies = action.payload.response
+            state.repliesLoading = false
         },
         repliesLoading: (state)=>{
-            state.repliesLoading = false
+            state.repliesLoading = true
         }, 
         replyReceived: (state,action) => {
-            
             let commentIndex = findIndexById({array: state.comments, id: action.payload.comment_id})
-            console.log(commentIndex,action.payload)
-            addItemToArray({array: state.comments[commentIndex].replies, item: action.payload} )
+            if(action.payload.reply_removed){
+              state.comments[commentIndex].replies_total = state.comments[commentIndex].replies_total - 1
+              deleteItemFromArray({array: state.comments[commentIndex].replies, id: action.payload.reply_id})
+            }else if (action.payload.id){
+              state.comments[commentIndex].replies_total = state.comments[commentIndex].replies_total + 1
+              addItemToArray({array: state.comments[commentIndex].replies, item: action.payload} )
+            }
+        },
+        replyLikesReceived: (state, action)=>{
+            let commentIndex = findIndexById({array: state.comments, id: action.payload.comment_id})
+            console.log("Testing ",action.payload)
+            if(action.payload.response.like_removed){
+                const replyIndex = findIndexById({array: state.comments[commentIndex].replies, id: action.payload.reply_id})
+                
+                deleteItemFromArray({array: state.comments[commentIndex].replies[replyIndex], id: action.payload.reply_id})
+            }else if (action.payload.id){
+              state.comments[commentIndex].replies_total = state.comments[commentIndex].replies_total + 1
+              addItemToArray({array: state.comments[commentIndex].replies, item: action.payload} )
+            }
+       
         }
     }
 })
@@ -61,7 +78,8 @@ export const {
     commentLikesReceived,
     repliesRecieved,
     repliesLoading,
-    replyReceived
+    replyReceived,
+    replyLikesReceived
 } = commentsSlice.actions
 
 export default commentsSlice.reducer
