@@ -15,14 +15,17 @@ import GameDetail from './components/GameDetail';
 import { fetchGames } from './actions/gameActions';
 import NavBar from './components/nav-bar/NavBar';
 import NavBarButton from './components/nav-bar/NavButton';
+import ErrorsOrMsg from './components/ErrosOrMsg';
 
 const  App = ()=> {
   const dispatch = useDispatch()
-  const loading = useSelector(state => state.loading)
+  const userLoading = useSelector(state => state.user.userLoading)
+  const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
   const user = useSelector(state => state.user.user?.user )
   const loggedIn = useSelector(state =>  state.user.user && state.user.user.logged_in, )
+  console.log("testing",errorsOrMsg,userLoading)
   const [isDiplay, setIsDisplay] = useState(false)
-
+  
   const handleonclick = (e)=>{
       setIsDisplay((pre)=>!pre)
   }
@@ -52,6 +55,7 @@ const  App = ()=> {
           <NavBarButton handleonclick={handleonclick} isDiplay={isDiplay}/>
         </section>
         {isDiplay && <NavBar handleOnAcordion={handleOnAcordion} loggedIn={loggedIn}/>}
+         {errorsOrMsg.from === "from_server" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
         <div className="App content-container">
           <Routes>
             <Route exact path='/settings' element ={<Settings currentUser={user} loggedIn={loggedIn} />}/>

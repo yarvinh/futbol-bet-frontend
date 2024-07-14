@@ -1,13 +1,17 @@
 import axios from 'axios'
-import ErrorsOrMsg from '../components/ErrosOrMsg'
+import { errorsOrMsgsRecieved } from '../state/errorsOrMsgs'
+import { userReceived } from '../state/userReducer'
+import { SERVER_ERROR } from './errorsConst'
 
 export const createUser = (user) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({ type: 'LOADING_NEW_USER'})
-        axios.post('http://localhost:3000/users', user, {withCredentials: true})
-        .then(response => {
+        try {
+          const response = await axios.post('http://localhost:3000/users', user, {withCredentials: true})
           const errorsOrMsg = response.data.errors_or_messages
-          errorsOrMsg ? dispatch({ type: 'ERRORS_OR_MESSAGES', errorsOrMsg: errorsOrMsg}) : dispatch({ type: 'ADD_NEW_USER', user: response.data})
-      })
+          errorsOrMsg ? dispatch(errorsOrMsgsRecieved(errorsOrMsg)) : dispatch(userReceived(response.data))
+        } catch (error) {
+          dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+        }
     }
   }

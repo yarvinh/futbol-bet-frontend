@@ -1,6 +1,8 @@
 import axios from "axios"
 import { gameReceived } from "../state/gamesReducers"
 import {repliesRecieved,repliesLoading,replyReceived} from "../state/commentsReducers"
+import { serverErrorsRecieved } from "../state/serverErrors"
+import { SERVER_ERROR } from "./errorsConst"
 
 
 export const fetchReplies = ({gameId,commentId})=>{
@@ -10,7 +12,7 @@ export const fetchReplies = ({gameId,commentId})=>{
       const response = await axios.get(`http://localhost:3000/games/${gameId}/comments/${commentId}/replies`,{withCredentials: true})
       dispatch(repliesRecieved({response: response.data, commentId: commentId}))
     } catch (error) {
-
+      dispatch(serverErrorsRecieved(SERVER_ERROR))
     }
   }
 }
@@ -28,7 +30,7 @@ export const dispatchReply = ({payload, commentId, gameId}) =>{
       return response.json()
     }).then(response => {
       dispatch(replyReceived(response))
-    })
+    }).catch( error => dispatch(serverErrorsRecieved(SERVER_ERROR)))
   }
 }
 
@@ -39,7 +41,7 @@ export const deleteReply = ({gameId,commentId,replyId}) => {
       try {  
         dispatch(replyReceived(response.data))
       } catch (error){
-
+        dispatch(serverErrorsRecieved(SERVER_ERROR))
       }
    
   }

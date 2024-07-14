@@ -1,1 +1,1 @@
-export const SERVER_ERROR = ["Something went wrong with the server, please try again later."]
+export const SERVER_ERROR = {from: "from_server" , errors: ["Something went wrong with the server", "please try again later."]}

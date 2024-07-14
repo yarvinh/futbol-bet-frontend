@@ -1,1 +1,0 @@
-export const SERVER_ERRORS = ['Something went wrong with the server. Please try again later']

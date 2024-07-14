@@ -1,6 +1,6 @@
-import React, { Component, useRef } from 'react';
+import  {useRef} from 'react';
 import { useDispatch,useSelector} from 'react-redux';
-import { fetchLogin } from '../../actions/loginActions'
+import { fetchLogin } from '../../actions/userAction'
 import '../../styles/styles.css'
 import {Navigate} from 'react-router-dom'
 import ErrorsOrMsg from '../ErrosOrMsg';

@@ -1,5 +1,6 @@
+import { serverErrorsRecieved } from "../state/serverErrors"
 import  {teamsLoading, teamsReceived } from "../state/teamsReducer"
-import { SERVER_ERRORS } from "./constAction"
+import { SERVER_ERROR } from "./errorsConst"
 
 export const fetchTeams = () => {
     return (dispatch) => {
@@ -11,7 +12,7 @@ export const fetchTeams = () => {
         dispatch(teamsReceived(responseJSON))
       })
       .catch((error)=>{
-        dispatch({ type: 'ERRORS_OR_MESSAGES', ErrorsOrMsg: {from: 'server', errors: SERVER_ERRORS}})
+        dispatch(serverErrorsRecieved(SERVER_ERROR))
       })
     }
   }

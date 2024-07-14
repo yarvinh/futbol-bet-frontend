@@ -1,6 +1,7 @@
 import axios from "axios"
 import { commentsReceived,commentsLoading, commentReceived } from "../state/commentsReducers"
-import { json } from "react-router"
+import { errorsOrMsgsRecieved } from "../state/errorsOrMsgs"
+import { SERVER_ERROR } from "./errorsConst"
 
 
 export const fetchComments = (gameId) => {
@@ -12,7 +13,7 @@ export const fetchComments = (gameId) => {
         dispatch(commentsReceived(response.data))
       })
       .catch((error) => {
-        // dispatch({ type: 'ERRORS_OR_MESSAGES', ErrorsOrMsg: {from: 'server', errors: SERVER_ERRORS}})
+        dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
       })
   }
 }
@@ -25,11 +26,10 @@ export const dispatchComment = (payload) =>{
     axios.post(`http://localhost:3000/games/${payload.game_id}/comments`,
      payload, { withCredentials: true})
      .then(response => {
-      console.log(response)
       dispatch(commentReceived(response.data))
     })
     .catch((error)=>{
-       throw json("ninjn")
+      dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
     })
   }
 }
@@ -39,6 +39,6 @@ export const deleteComment = (payload) => {
     axios.delete(`http://localhost:3000/games/${payload.gameId}/comments/${payload.commentId}`,
     {withCredentials: true}).then(response => {
       dispatch(commentReceived({response: response.data, id: payload.commentId}))
-    })
+    }).catch(error => dispatch(errorsOrMsgsRecieved(SERVER_ERROR)))
   }
 }

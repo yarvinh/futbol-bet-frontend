@@ -1,6 +1,6 @@
 import {useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchLogout } from '../../actions/loginActions'
+import { fetchLogout } from '../../actions/userAction'
 import {Navigate} from 'react-router-dom'
 
 const LogOut = ({user,fetchLogout})=>{

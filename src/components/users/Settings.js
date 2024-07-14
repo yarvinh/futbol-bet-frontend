@@ -1,11 +1,13 @@
 import {useRef } from 'react';
-import { connect } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import { fetchEditUser} from '../../actions/settingsActions'
 import '../../styles/styles.css'
 import ErrorsOrMsg from '../ErrosOrMsg';
 
 
 const Settings = (props) =>{
+    const dipatch = useDispatch()
+    const errorsOrMsg = useSelector(state=>state.user.user?.errors_or_messages)
     const editRef = useRef({
                password: '',
                old_password: '',
@@ -30,8 +32,7 @@ const Settings = (props) =>{
           userInfo = {password: editRef.current.password, old_password: editRef.current.old_password, user_id: props.currentUser.id}
         else
           userInfo = {[type]: editRef.current[type],user_id: props.currentUser.id}
-          console.log(userInfo)
-          props.fetchEditUser(userInfo)  
+          dipatch(fetchEditUser(userInfo))
        editRef.current = {
         new_password: '',
         old_password: '',
@@ -44,9 +45,9 @@ const Settings = (props) =>{
 
     return(
         <div>
-            {props.erroreOrMsg?.from === "update_user" && 
-            <ErrorsOrMsg errorsOrMsg={props.erroreOrMsg.errors || props.erroreOrMsg.msg} 
-            className={props.erroreOrMsg.errors ?"alert alert-danger" : "alert alert-success" }/>}
+            {errorsOrMsg?.from === "update_user" && 
+            <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} 
+            className={errorsOrMsg?.errors ?"alert alert-danger" : "alert alert-success" }/>}
             <div className="container h-100  d-flex flex-column justify-content-center align-items-center">
                 <h4 >Change your password</h4>
                 <form onSubmit={(event) => handleOnSubmit(event,"password")} className="form">
@@ -79,19 +80,4 @@ const Settings = (props) =>{
     );
 };
 
-const mapStateToProps = state => { 
-
-  return {
-     erroreOrMsg: state.user.user?.errors_or_messages,
-     message:  state.editedMessage.message,
-     loading: state.loading
-  }
-}
- 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchEditUser: (action) => dispatch(fetchEditUser(action)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Settings)
+export default Settings

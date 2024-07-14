@@ -5,12 +5,13 @@ import { serverErrorsRecieved } from "../state/serverErrors";
 
 export const dispatchLikes = ({payLoad,likesReceived}) =>{
     return async (dispatch) => {
-      const response = await axios.post(`http://localhost:3000/likes`,payLoad,
-      { 
-       withCredentials: true
-      })
+
 
       try {
+        const response = await axios.post(`http://localhost:3000/likes`,payLoad,
+        { 
+         withCredentials: true
+        })
         dispatch(likesReceived({response: response.data}))
       } catch (error) {
         dispatch(serverErrorsRecieved(SERVER_ERROR))
@@ -27,7 +28,7 @@ export const dislike = ({likeId, likesReceived}) =>{
   })
   .then(response => {
     dispatch(likesReceived({response: response.data, likeId: likeId}))
-  })
+  }).catch( error => dispatch(serverErrorsRecieved(SERVER_ERROR)))
 }
 }
 

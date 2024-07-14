@@ -13,13 +13,11 @@ const Comment = ( {comment,currentUser,loggedIn} )=> {
     dispatch(deleteComment( {commentId: comment.id, gameId: gameId}))
   }
 
- 
-
   return  (    
     <section  className='post' key={comment.id}> 
       <div >
-        {currentUser && comment.user.id === currentUser.id && <button onClick={handleDeleteOnClick} className='delete' value={comment.id}>X</button>}
-        <span >Posted by: {comment.user.name} {dateAndTime(comment.created_at)}</span>
+        {currentUser && comment.user?.id === currentUser.id && <button onClick={handleDeleteOnClick} className='delete' value={comment.id}>X</button>}
+        <span >Posted by: {comment.user?.name} {dateAndTime(comment.created_at)}</span>
       </div>
       <div className='comments'>
         <p>{comment.comment}</p>
@@ -28,7 +26,7 @@ const Comment = ( {comment,currentUser,loggedIn} )=> {
         <div className='likes'>
           {loggedIn && <Likes likes={comment.likes} ownerId={{comment_id: comment.id, user_id: currentUser.id}} likesReceived={commentLikesReceived}  comment_id={comment.id} user_id={currentUser.id} gameCommentOrReply={comment}/>}
         </div>
-        <RepliesContainer comment={comment} replies={comment.replies} repliesTotal={comment.replies_total} loggedIn={loggedIn} comment_id={comment.id} currentUser={currentUser} comment={comment}/>
+        <RepliesContainer replies={comment.replies} repliesTotal={comment.replies_total} loggedIn={loggedIn} comment_id={comment.id} currentUser={currentUser} comment={comment}/>
       </div>
     </section>
   )
