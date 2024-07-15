@@ -23,7 +23,6 @@ const  App = ()=> {
   const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
   const user = useSelector(state => state.user.user?.user )
   const loggedIn = useSelector(state =>  state.user.user && state.user.user.logged_in, )
-  console.log("testing",errorsOrMsg,userLoading)
   const [isDiplay, setIsDisplay] = useState(false)
   
   const handleonclick = (e)=>{

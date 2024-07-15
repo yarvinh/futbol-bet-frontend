@@ -62,6 +62,11 @@ const commentsSlice = createSlice({
                 const replyIndex = findIndexById({array: state.comments[commentIndex].replies, id: action.payload.response.reply_id})
                 addItemToArray({array: state.comments[commentIndex].replies[replyIndex].likes, item: action.payload.response} )
             }
+        },
+        moreLikesReceived: (state,action)=>{
+            let commentIndex = findIndexById({array: state.comments, id: action.payload.commentId})
+            state.comments[commentIndex].replies = state.comments[commentIndex].replies.concat(action.payload.response)
+            state.repliesLoading = false
         }
     }
 })
@@ -74,7 +79,8 @@ export const {
     repliesRecieved,
     repliesLoading,
     replyReceived,
-    replyLikesReceived
+    replyLikesReceived,
+    moreLikesReceived
 } = commentsSlice.actions
 
 export default commentsSlice.reducer

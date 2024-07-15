@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Reply from '../components/comments/Reply';
 import { useParams } from 'react-router';
 import Loading from '../components/Loading';
-
+import {fetchMoreReplies} from '../actions/replyActions'
 
 const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,comment}) => {
   const loading = useSelector(state=> state.comments.repliesLoading)
@@ -53,36 +53,34 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,
         accordion: 'replies_accordion',
         displayAcordion: 'hide_replies'
         })
-
   }
 
-  const displayOnSubmit = (e)=>{
-    e.preventDefault()
-    let amount = displayReplies.displayReplies + 10
-    setDisplayReplies({
-        ...displayReplies,
-        displayReplies: amount,
-    })
-  }
+  // const display10Replies=()=>{
+  //   const  newRepliesArr = []
+  //   for (let i = 0; i < displayReplies.displayReplies; i++){
+  //     if(replies[i])
+  //     newRepliesArr.push(replies[i])
+  //   }
+  //     return newRepliesArr 
+  //   }
 
-  const display10Replies=()=>{
-    const  newRepliesArr = []
-    for (let i = 0; i < displayReplies.displayReplies; i++){
-      if(replies[i])
-      newRepliesArr.push(replies[i])
-    }
-      return newRepliesArr 
+    const handleOnGetMoreReplies = (e) =>{
+      e.preventDefault()
+      dispatch(fetchMoreReplies({gameId: gameId, commentId: comment_id, payload: replies?.length}))
     }
 
     return (
       <div>
         <button onClick={handleOnclickReply} className={displayReplies.accordion}> {`${repliesTotal} Replies`} </button>
         <div className={displayReplies.displayAcordion}>
-              {replies && display10Replies().map(reply => <Reply key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} commentId={comment_id}/>)}
+              {replies?.map(reply => <Reply key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} commentId={comment_id}/>)}
                {loading && <Loading/>}
-              <form onSubmit={displayOnSubmit} >  
-                <input  className='reload' type='submit' value='Reload more replies'/> 
+               <form onSubmit={handleOnGetMoreReplies} >  
+                <input  className='reload' type='submit' value={'Reload more replies'}/> 
               </form>
+              {/* <form onSubmit={displayOnSubmit} >  
+                <input  className='reload' type='submit' value={'Reload more replies'}/> 
+              </form> */}
                 {loggedIn && 
                 <form onKeyUp={handleOnKeyUp} >
                   <textarea  onChange={handleOnChange} rows="1" className="auto_height" value={displayReplies.reply}></textarea>
