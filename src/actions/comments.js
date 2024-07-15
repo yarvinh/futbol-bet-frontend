@@ -4,11 +4,11 @@ import { errorsOrMsgsRecieved } from "../state/errorsOrMsgs"
 import { SERVER_ERROR } from "./errorsConst"
 
 
-export const fetchComments = (gameId) => {
+export const fetchComments = ({gameId,comments_length}) => {
   return (dispatch) => {
       dispatch(commentsLoading())
       axios.get(`http://localhost:3000/games/${gameId}/comments`, 
-      {withCredentials: true})    
+      {params: {comments_length}, withCredentials: true})    
       .then(response => {
         dispatch(commentsReceived(response.data))
       })
