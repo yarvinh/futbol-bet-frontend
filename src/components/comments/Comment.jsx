@@ -1,7 +1,7 @@
 import {deleteComment} from '../../actions/comments'
 import { useDispatch } from 'react-redux';
 import Likes from '../games/Likes'
-import { dateAndTime } from '../../heplers/functionsHelpers';
+import { dateAndTime } from '../../helpers/functionsHelpers';
 import RepliesContainer from '../../containers/RepliesContainer';
 import { useParams } from 'react-router';
 import { commentLikesReceived } from '../../state/commentsReducers';

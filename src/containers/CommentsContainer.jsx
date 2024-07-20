@@ -1,14 +1,13 @@
-import  { useState,useEffect } from 'react';
+import  {useEffect } from 'react';
 import Comment from '../components/comments/Comment';
 import CreateComment from '../components/comments/CreateComment';
 import { useParams } from 'react-router';
-import { fetchComments } from "../actions/comments"
+import { fetchComments, fetchMoreComments } from "../actions/comments"
 import { useDispatch, useSelector } from 'react-redux';
 
 const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
-
+    // const {gameId} useParams()
     const comments = useSelector(state => state.comments.comments)
-
     const dispatch = useDispatch()
     const {gameId} = useParams()
 
@@ -18,7 +17,7 @@ const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
   
     const displayOnSubmit=(e)=>{
         e.preventDefault()
-        dispatch(fetchComments({gameId: gameId, comments_length: comments.length}))
+        dispatch(fetchMoreComments({gameId: gameId, comments_length: comments.length}))
     }
 
     const displayButton = ()=>{

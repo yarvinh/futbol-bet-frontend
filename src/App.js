@@ -11,7 +11,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import LogOut from './components/users/LogOut'
 import './styles/styles.css'
 import Settings from './components/users/Settings';
-import GameDetail from './components/GameDetail';
+import GameDetail from './components/games/GameDetail';
 import { fetchGames } from './actions/gameActions';
 import NavBar from './components/nav-bar/NavBar';
 import NavBarButton from './components/nav-bar/NavButton';
@@ -24,7 +24,6 @@ const  App = ()=> {
   const user = useSelector(state => state.user.user?.user )
   const loggedIn = useSelector(state =>  state.user.user && state.user.user.logged_in, )
   const [isDiplay, setIsDisplay] = useState(false)
-  
   const handleonclick = (e)=>{
       setIsDisplay((pre)=>!pre)
   }

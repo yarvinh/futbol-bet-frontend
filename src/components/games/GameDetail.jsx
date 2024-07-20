@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom"
 import {useDispatch, useSelector } from "react-redux"
-import Bets from "./bets/Bets"
-import Likes from "./games/Likes"
-import CommentsContainer from "../containers/CommentsContainer"
-import DateAndTime from "./DateAndTime"
+import Bets from "../bets/Bets"
+import Likes from "./Likes"
+import CommentsContainer from "../../containers/CommentsContainer"
+import DateAndTime from "../DateAndTime"
 import { useEffect } from "react"
-import { fetchGame } from "../actions/gameActions"
-import { gameLikesReceived } from "../state/gameDetailReducers"
+import { fetchGame } from "../../actions/gameActions"
+import { gameLikesReceived } from "../../state/gameDetailReducers"
 
 const GameDetail=()=>{
     

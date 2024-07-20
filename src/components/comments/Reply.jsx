@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {deleteReply} from '../../actions/replyActions'
 import Likes from '../games/Likes'
-import { dateAndTime } from '../../heplers/functionsHelpers';
+import { dateAndTime } from '../../helpers/functionsHelpers';
 import { useParams } from 'react-router';
 import { replyLikesReceived } from '../../state/commentsReducers';
 

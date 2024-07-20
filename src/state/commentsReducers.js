@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addItemToArray, deleteItemFromArray, findIndexById } from "../heplers/arrayHelper";
+import { addItemToArray, deleteItemFromArray, findIndexById } from "../helpers/arrayHelper";
 
 const commentsSlice = createSlice({
     name: "comments",
@@ -14,9 +14,14 @@ const commentsSlice = createSlice({
         state.commentsLoading = true
         }),
         commentsReceived: (state,action) => {
+            state.comments = action.payload
+        },
+        moreCommentsReceived: (state,action) => {
             state.comments = state.comments.concat(action.payload)
             state.commentsLoading = false 
         },
+
+
         commentReceived: (state,action) => {
             if (action.payload.response?.comment_removed){
                 deleteItemFromArray({array: state.comments, id: action.payload.id})
@@ -63,7 +68,7 @@ const commentsSlice = createSlice({
                 addItemToArray({array: state.comments[commentIndex].replies[replyIndex].likes, item: action.payload.response} )
             }
         },
-        moreLikesReceived: (state,action)=>{
+        moreRepliesReceived: (state,action)=>{
             let commentIndex = findIndexById({array: state.comments, id: action.payload.commentId})
             state.comments[commentIndex].replies = state.comments[commentIndex].replies.concat(action.payload.response)
             state.repliesLoading = false
@@ -80,7 +85,8 @@ export const {
     repliesLoading,
     replyReceived,
     replyLikesReceived,
-    moreLikesReceived
+    moreRepliesReceived,
+    moreCommentsReceived,
 } = commentsSlice.actions
 
 export default commentsSlice.reducer

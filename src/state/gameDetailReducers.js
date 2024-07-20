@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addItemToArray, deleteItemFromArray } from "../heplers/arrayHelper";
+import { addItemToArray, deleteItemFromArray } from "../helpers/arrayHelper";
 
 const gameSlice = createSlice({
     name: 'game',

@@ -55,15 +55,6 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,
         })
   }
 
-  // const display10Replies=()=>{
-  //   const  newRepliesArr = []
-  //   for (let i = 0; i < displayReplies.displayReplies; i++){
-  //     if(replies[i])
-  //     newRepliesArr.push(replies[i])
-  //   }
-  //     return newRepliesArr 
-  //   }
-
     const handleOnGetMoreReplies = (e) =>{
       e.preventDefault()
       dispatch(fetchMoreReplies({gameId: gameId, commentId: comment_id, payload: replies?.length}))
@@ -78,9 +69,6 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,
                <form onSubmit={handleOnGetMoreReplies} >  
                 <input  className='reload' type='submit' value={'Reload more replies'}/> 
               </form>
-              {/* <form onSubmit={displayOnSubmit} >  
-                <input  className='reload' type='submit' value={'Reload more replies'}/> 
-              </form> */}
                 {loggedIn && 
                 <form onKeyUp={handleOnKeyUp} >
                   <textarea  onChange={handleOnChange} rows="1" className="auto_height" value={displayReplies.reply}></textarea>

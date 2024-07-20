@@ -2,6 +2,7 @@ import { gameLoading } from "../state/gameDetailReducers";
 import axios from 'axios'
 import { SERVER_ERROR } from "./errorsConst";
 import { serverErrorsRecieved } from "../state/serverErrors";
+import { token } from "../helpers/token";
 
 export const dispatchLikes = ({payLoad,likesReceived}) =>{
     return async (dispatch) => {
@@ -10,7 +11,8 @@ export const dispatchLikes = ({payLoad,likesReceived}) =>{
       try {
         const response = await axios.post(`http://localhost:3000/likes`,payLoad,
         { 
-         withCredentials: true
+          headers: token(),
+          withCredentials: true
         })
         dispatch(likesReceived({response: response.data}))
       } catch (error) {
@@ -24,7 +26,8 @@ export const dispatchLikes = ({payLoad,likesReceived}) =>{
 export const dislike = ({likeId, likesReceived}) =>{
   return (dispatch) => {
   axios.delete(`http://localhost:3000/likes/${likeId}`,{ 
-   withCredentials: true
+    headers: token(),
+    withCredentials: true
   })
   .then(response => {
     dispatch(likesReceived({response: response.data, likeId: likeId}))
