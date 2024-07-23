@@ -7,14 +7,16 @@ import DateAndTime from "../DateAndTime"
 import { useEffect } from "react"
 import { fetchGame } from "../../actions/gameActions"
 import { gameLikesReceived } from "../../state/gameDetailReducers"
+import Loading from "../Loading"
 
 const GameDetail=()=>{
     
     const dispatch = useDispatch()
     const {gameId} = useParams()
-    const loading = useSelector(state =>  state.loading)
+    const gameLoading = useSelector(state =>  state.game.gameLoading)
     const user = useSelector(state => state.user.user)
     const game = useSelector(state => state.game.game)
+
     const {logged_in} = user
     useEffect(()=>{
        dispatch(fetchGame(gameId))
@@ -34,6 +36,7 @@ const GameDetail=()=>{
                         </div>
                         <Link to={`/games/${game?.id}`}>  
                             <div className="card-body">
+                                {gameLoading && <Loading/>}
                                 {game.teams?.map((team)=>{
                                     return(
                                         <div key={team.id}>

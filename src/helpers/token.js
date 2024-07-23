@@ -16,3 +16,5 @@ export const removeLoginToken = ()=>{
     // localStorage.removeItem('secret_key')
     // localStorage.removeItem('account_type')
 }
+
+export const tokenExist = () => !!localStorage.getItem('token')

@@ -15,12 +15,12 @@ const commentsSlice = createSlice({
         }),
         commentsReceived: (state,action) => {
             state.comments = action.payload
+            state.commentsLoading = false
         },
         moreCommentsReceived: (state,action) => {
             state.comments = state.comments.concat(action.payload)
             state.commentsLoading = false 
         },
-
 
         commentReceived: (state,action) => {
             if (action.payload.response?.comment_removed){

@@ -16,6 +16,8 @@ import { fetchGames } from './actions/gameActions';
 import NavBar from './components/nav-bar/NavBar';
 import NavBarButton from './components/nav-bar/NavButton';
 import ErrorsOrMsg from './components/ErrosOrMsg';
+import { tokenExist } from './helpers/token';
+import Loading from './components/Loading';
 
 const  App = ()=> {
   const dispatch = useDispatch()
@@ -34,7 +36,7 @@ const  App = ()=> {
   }
 
   useEffect(()=>{
-    dispatch(fetchCurrentUser())  
+    tokenExist() && dispatch(fetchCurrentUser())  
     dispatch(fetchGames())
   },[])
 
@@ -52,6 +54,7 @@ const  App = ()=> {
          {loggedIn && !isDiplay && <strong>{user.name}</strong>}
           <NavBarButton handleonclick={handleonclick} isDiplay={isDiplay}/>
         </section>
+        {userLoading && <Loading/>}
         {isDiplay && <NavBar handleOnAcordion={handleOnAcordion} loggedIn={loggedIn}/>}
          {errorsOrMsg.from === "from_server" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
         <div className="App content-container">

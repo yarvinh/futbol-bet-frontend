@@ -3,10 +3,12 @@ import { useDispatch,useSelector} from 'react-redux';
 import { fetchGames,dispatchSetFilter} from '../actions/gameActions'
 import Game from '../components/games/Game'
 import {gameSelector} from '../selectors/gameSelector'
+import Loading from '../components/Loading';
 
 const GamesContainer = (props)=>{
   const  dispatch = useDispatch()
   const games = useSelector(state => gameSelector(state.games.games,state.games.filter))
+  const gamesLoading = useSelector((state => state.games.gamesLoading))
 
   useEffect(()=> {
       dispatch(fetchGames())   
@@ -36,6 +38,7 @@ const GamesContainer = (props)=>{
            <option value='Bundesliga'>Bundesliga</option>
         </select>
         <div>
+          {gamesLoading && <Loading/>}
           {renderGames()} 
         </div>
       </section>

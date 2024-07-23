@@ -4,9 +4,11 @@ import CreateComment from '../components/comments/CreateComment';
 import { useParams } from 'react-router';
 import { fetchComments, fetchMoreComments } from "../actions/comments"
 import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../components/Loading';
 
 const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
     // const {gameId} useParams()
+    const commentsLoading= useSelector(state => state.comments.commentsLoading)
     const comments = useSelector(state => state.comments.comments)
     const dispatch = useDispatch()
     const {gameId} = useParams()
@@ -34,6 +36,7 @@ const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
         <div>
         </div>
         <div>
+            {commentsLoading && <Loading/>}
             {game && comments?.map(comment=> <Comment key={comment.id} comment={comment} currentUser={currentUser} loggedIn={loggedIn}/>)}
             {loggedIn && displayButton()}
         </div>

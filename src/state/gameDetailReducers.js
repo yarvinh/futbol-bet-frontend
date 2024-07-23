@@ -15,6 +15,7 @@ const gameSlice = createSlice({
 
       gameReceived: (state,action) =>{
         state.game = action.payload
+        state.gameLoading = false
       },
 
       gameLikesReceived: (state,action) => {
