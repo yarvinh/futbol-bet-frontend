@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router"
 import { dispatchBets } from "../../actions/betsActions"
 import { useRef } from "react"
-import ErrorsOrMsg from "../../state/errorsOrMsgs"
+import ErrorsOrMsg from "../ErrosOrMsg"
+
 
 const CreateBet = ({game,currentUser})=>{
     const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
@@ -33,9 +34,10 @@ const CreateBet = ({game,currentUser})=>{
             team_id: e.target.value.toString(),
         }
     }
-    // console.log(errorsOrMsg.from, errorsOrMsg.errors)
+
     return (
         <div className='bet_form p-3'>   
+             {errorsOrMsg.from === 'create_bet' && <ErrorsOrMsg errors={[errorsOrMsg.errors]}/>}
             <form onSubmit={handleSubmit}> 
                 <label className="form-label"> Bets </label> 
                 <select className="form-select mx-auto mb-3" onChange={handleTeamChange}>
@@ -46,10 +48,9 @@ const CreateBet = ({game,currentUser})=>{
                 </select>
                 <input className="form-control" type="hidden" name="action"  />
                 <label className="form-label"> Enter amount </label>
-                <input className="form-control" onChange={handleAmountChange} type='number'  />
+                <input className="form-control" onChange={handleAmountChange} min="1" type='number'  />
                 <button type="submit" className="btn btn-primary btn-default my-3">Submit bet</button>
             </form>
-            {errorsOrMsg.from === 'create_bet' && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
         </div>
     )
 }

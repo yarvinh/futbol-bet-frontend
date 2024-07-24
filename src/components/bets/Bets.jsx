@@ -1,10 +1,19 @@
 
+import { useEffect } from 'react';
 import CreateBet from './CreateBet';
-const Bets = ({game,currentUser,bets}) => {
-  
+import { useParams } from 'react-router';
+import { getMyBet } from '../../actions/betsActions';
+import { useDispatch, useSelector } from 'react-redux';
+const Bets = ({game,currentUser}) => {
+  const bet = useSelector(state =>state.bet.bet)
+  console.log(bet)
+  const {gameId} = useParams()
+  const dispatch = useDispatch()
   const teamOneBetSum = () => {
     const bets = [...game.bets]
+
     let counter = 0
+
     bets.forEach((bet) => {
       if (bet.team && game[0] && game.teams[0].id.toString() === bet.team_id.toString()){
         counter  += bet.amount 
@@ -15,7 +24,12 @@ const Bets = ({game,currentUser,bets}) => {
     return counter
   }
 
-  const currentUserBet = game.bets.find((bet)=>{
+  useEffect(()=>{
+    dispatch(getMyBet({userId: currentUser.id, gameId: gameId }))
+  },[])
+
+
+  const betUser = game.bets.find((bet)=>{
     return bet.user_id.toString() === currentUser.id?.toString()
   })
 
@@ -24,7 +38,6 @@ const Bets = ({game,currentUser,bets}) => {
     let  counter = 0
 
     bets.forEach((bet) => { 
-      console.log(bet)
       if (bet?.team && game?.teams[0].id.toString() === bet?.team_id.toString()){
         counter += bet.amount    
       }else{
@@ -43,7 +56,6 @@ const Bets = ({game,currentUser,bets}) => {
   }
 
   const tieBetsTotal=()=>{
-    const bets = [...game.bets]
     let  counter = 0
     game.bets.forEach((bet) => { 
       if (!bet.team){
@@ -74,7 +86,7 @@ const Bets = ({game,currentUser,bets}) => {
   }
 
   const renderBets = () => {
-    if (!currentUserBet && game.status !== "LIVE" && game.pending && game.status !== "FINISH"){   
+    if (!betUser && game.status !== "LIVE" && game.pending && game.status !== "FINISH"){   
       return (
         <div>
           <CreateBet currentUser={currentUser} game={game}/>
@@ -82,16 +94,16 @@ const Bets = ({game,currentUser,bets}) => {
         </div>
         
       )
-    } else if (currentUserBet){
-      const userSelected = currentUserBet && currentUserBet.team && game.teams.find((t)=>{   
-         return  t.id.toString() === currentUserBet.team_id.toString()  
+    } else if (betUser){
+      const userSelected = betUser && betUser.team && game.teams.find((t)=>{   
+         return  t.id.toString() === betUser.team_id.toString()  
       })
         return (
           <div className='bet_review'>
-            <p>You bet: ${currentUserBet.amount}</p>
+            <p>You bet: ${betUser.amount}</p>
             <span>
               You Bet For:
-              {currentUserBet.team ?<img src={userSelected.logo_url} alt='' width="15" height="15"/>: <span>Tie</span>}
+              {betUser.team ?<img src={userSelected.logo_url} alt='' width="15" height="15"/>: <span>Tie</span>}
             </span> 
           </div>
           )   

@@ -6,6 +6,7 @@ import commentsReducer from "./commentsReducers"
 import serverErrorsReducer from "./serverErrors"
 import userReducer from "./userReducer";
 import errorsOrMsgReducer from "./errorsOrMsgs";
+import betReducer from "./betReducer";
 
 
 const rootReducer = combineReducers({
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   game: gameDetailReducers,
   user: userReducer,
   errorsOrMsg: errorsOrMsgReducer,
-  serverErrors: serverErrorsReducer
+  serverErrors: serverErrorsReducer,
+  bet: betReducer
 });
  
 export default rootReducer;
