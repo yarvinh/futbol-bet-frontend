@@ -5,6 +5,7 @@ import DateAndTime from '../DateAndTime';
 
 const Game = ({game,teamOne,teamTwo})=> {
     return (
+      
       <div className="container d-flex justify-content-center">
         <div className="card-container mb-3">
           <div className="card game-card text-center mx-auto my-3" >     

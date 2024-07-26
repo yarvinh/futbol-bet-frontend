@@ -16,7 +16,7 @@ const CreateComment = ({loggedIn,currentUser}) => {
     const handleOnSubmit = (e)=>{
         e.preventDefault()
         const payload = {comment: newComment.comment, user_id: currentUser.id, game_id: gameId}
-        dispatch(dispatchComment(payload))
+        dispatch(dispatchComment({comment: payload}))
         setNewComment({
             ...newComment,
             comment: ""

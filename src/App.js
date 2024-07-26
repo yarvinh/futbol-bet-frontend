@@ -1,4 +1,3 @@
-
 import {useSelector, useDispatch } from 'react-redux';
 import {useEffect, useState } from 'react';
 import './App.css';
@@ -30,33 +29,31 @@ const  App = ()=> {
       setIsDisplay((pre)=>!pre)
   }
 
-  const handleOnAcordion = (e)=>{
+  const handleOnAccordion = (e)=>{
     if (!e.target.className.includes("display"))
       setIsDisplay(false)
   }
 
   useEffect(()=>{
     tokenExist() && dispatch(fetchCurrentUser())  
-    dispatch(fetchGames())
   },[])
 
   const confirmLoggedIn=()=>{
     dispatch(fetchCurrentUser()) 
     return  loggedIn
-
   }
 
   return ( 
     <main id="main">   
-        <BrowserRouter >
+      <BrowserRouter >
         <section className={!isDiplay ?'profile-inf': "none"}>
-         {loggedIn && !isDiplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>}
-         {loggedIn && !isDiplay && <strong>{user.name}</strong>}
+          {loggedIn && !isDiplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>}
+          {loggedIn && !isDiplay && <strong>{user.name}</strong>}
           <NavBarButton handleonclick={handleonclick} isDiplay={isDiplay}/>
         </section>
         {userLoading && <Loading/>}
-        {isDiplay && <NavBar handleOnAcordion={handleOnAcordion} loggedIn={loggedIn}/>}
-         {errorsOrMsg.from === "from_server" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
+        {isDiplay && <NavBar handleOnAcordion={handleOnAccordion} loggedIn={loggedIn}/>}
+        {errorsOrMsg.from === "from_server" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
         <div className="App content-container">
           <Routes>
             <Route exact path='/settings' element ={<Settings currentUser={user} loggedIn={loggedIn} />}/>
@@ -68,9 +65,9 @@ const  App = ()=> {
             <Route exact path='/games' element={<GamesContainer/>}/>
             <Route exact path='/teams' element={<Teams/>}/>
           </Routes>
-         </div> 
-        </BrowserRouter>
-        <div className="empty-splace"></div>
+        </div> 
+      </BrowserRouter>
+      <div className="empty-splace"></div>
     </main>
 
   )

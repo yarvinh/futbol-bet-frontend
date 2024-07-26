@@ -8,7 +8,7 @@ import { betLoading, betReceived } from "../state/betReducer"
 export const dispatchBets = (payload) =>{
     return (dispatch) => {
     dispatch(betLoading())
-    axios.post(`http://localhost:3000/bets`,payload,{headers: token(),withCredentials: true})
+    axios.post(`http://localhost:3000/games/${payload.game_id}/bets`,payload,{headers: token(),withCredentials: true})
     .then(response => {
       const errors = response.data.errors_or_messages
       if (errors){
