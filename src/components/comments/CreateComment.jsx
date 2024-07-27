@@ -2,8 +2,10 @@ import { useState } from "react"
 import { useDispatch} from "react-redux"
 import { dispatchComment} from "../../actions/comments"
 import { useParams } from "react-router"
+import { useRef } from "react"
 
 const CreateComment = ({loggedIn,currentUser}) => {
+    
     const {gameId} = useParams()
     const dispatch = useDispatch()
     const [newComment, setNewComment] = useState({
@@ -12,8 +14,10 @@ const CreateComment = ({loggedIn,currentUser}) => {
         comment: '',
         displayMoreComments: 3,
     })
+    const ref = useRef()
 
     const handleOnSubmit = (e)=>{
+        console.log(ref.current)
         e.preventDefault()
         const payload = {comment: newComment.comment, user_id: currentUser.id, game_id: gameId}
         dispatch(dispatchComment({comment: payload}))
@@ -21,6 +25,7 @@ const CreateComment = ({loggedIn,currentUser}) => {
             ...newComment,
             comment: ""
         })
+        ref.current.style.height = '46px'
     }
 
     const onChangeComment = (e) => {
@@ -40,7 +45,7 @@ const CreateComment = ({loggedIn,currentUser}) => {
             <label>What do you think about this game?</label> 
             <br></br>
             {loggedIn && <div className='comment_textArea'>
-                <textarea onChange={onChangeComment} row='1' className='auto_height' value={newComment.comment}></textarea> 
+                <textarea ref={ref}  onChange={onChangeComment} row='1' className='auto_height' value={newComment.comment}></textarea> 
                 {<input type='submit' className='buttons'value='Comment'/>}
             </div>}
             </form>

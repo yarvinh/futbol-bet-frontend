@@ -1,10 +1,12 @@
 import { connect, useDispatch, useSelector } from 'react-redux';
 import {dispatchReply,deleteReply, fetchReplies} from '../actions/replyActions'
 import { useState } from 'react';
-import Reply from '../components/comments/Reply';
+import Reply from '../components/replies/Reply';
 import { useParams } from 'react-router';
 import Loading from '../components/Loading';
 import {fetchMoreReplies} from '../actions/replyActions'
+import CreateReply from '../components/replies/CreateReply';
+import Input from '../components/forms/Input';
 
 const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,comment}) => {
   const loading = useSelector(state=> state.comments.repliesLoading)
@@ -18,26 +20,26 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,
       }
   )
 
-  const handleOnKeyUp = (e)=>{
-    if (e.code  === 'Enter'){
-      const payload= {user_id: currentUser.id, comment_id: comment_id, reply: displayReplies.reply }
-      dispatch(dispatchReply({payload: payload, gameId: gameId, commentId: comment_id}))
-      setDisplayReplies({
-        ...displayReplies,
-        reply: ''
-      })
-    }
-  }
+  // const handleOnKeyUp = (e)=>{
+  //   if (e.code  === 'Enter'){
+  //     const payload= {user_id: currentUser.id, comment_id: comment_id, reply: displayReplies.reply }
+  //     dispatch(dispatchReply({payload: payload, gameId: gameId, commentId: comment_id}))
+  //     setDisplayReplies({
+  //       ...displayReplies,
+  //       reply: ''
+  //     })
+  //   }
+  // }
 
-  const handleOnChange = (e)=>{
-    e.target.style.height = "2px";
-    e.target.style.height = (e.target.scrollHeight)+"px";
-    setDisplayReplies({
-        ...displayReplies,
-        reply: e.target.value,
+  // const handleOnChange = (e)=>{
+  //   e.target.style.height = "2px";
+  //   e.target.style.height = (e.target.scrollHeight)+"px";
+  //   setDisplayReplies({
+  //       ...displayReplies,
+  //       reply: e.target.value,
 
-    })
-  }
+  //   })
+  // }
 
   const handleOnclickReply = (e)=>{
     dispatch(fetchReplies({gameId: gameId, commentId: comment_id}))
@@ -64,15 +66,13 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,
       <div>
         <button onClick={handleOnclickReply} className={displayReplies.accordion}> {`${repliesTotal} Replies`} </button>
         <div className={displayReplies.displayAcordion}>
+              {loggedIn && <Input currentUser={currentUser} comment_id={comment_id}/>}
+              {/* {loggedIn && <CreateReply currentUser={currentUser} comment_id={comment_id}/>} */}
               {replies?.map(reply => <Reply key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} commentId={comment_id}/>)}
                {loading && <Loading/>}
                <form onSubmit={handleOnGetMoreReplies} >  
                 <input  className='reload' type='submit' value={'Reload more replies'}/> 
               </form>
-                {loggedIn && 
-                <form onKeyUp={handleOnKeyUp} >
-                  <textarea  onChange={handleOnChange} rows="1" className="auto_height" value={displayReplies.reply}></textarea>
-              </form> }
               
         </div>
       </div>
