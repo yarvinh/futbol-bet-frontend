@@ -17,7 +17,6 @@ const CreateComment = ({loggedIn,currentUser}) => {
     const ref = useRef()
 
     const handleOnSubmit = (e)=>{
-        console.log(ref.current)
         e.preventDefault()
         const payload = {comment: newComment.comment, user_id: currentUser.id, game_id: gameId}
         dispatch(dispatchComment({comment: payload}))
