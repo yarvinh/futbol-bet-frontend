@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  /* height:100vh; */
 }
 
 .App-logo {
@@ -43,8 +42,6 @@
   background-color: #0d6efd;
   color: white;
   cursor: pointer;
-   /* cursor: pointer; */
-  /* padding: 8px; */
   width: 100%;
   border-width: 0px;
   border-style: solid;
@@ -75,7 +72,6 @@
 
 .display_replies {
   display: block;
-
 }
 
 .post { 
@@ -158,12 +154,9 @@
 .auto_height { 
   background-color: whitesmoke;
   margin-top: 10px;
-  /* height: 30px; */
-  /* margin-left: 12px; */
-  /* margin-bottom: 1rem; */
   width: 80%;
   height: 60px;
-  min-height: 30px;
+  min-height: 60px;
   border-width: 5px;
   border-style: solid;
   border-color:  white;
@@ -195,11 +188,9 @@
   background-color: white;
   margin-bottom: 1rem;
   width: 80%;
-  /* min-height: 46px; */
   border-style: solid;
   border-color:  white;
   border-radius: .8rem;
-  /* font-size: 16px; */
   box-shadow: 1px 1px 3px 0px rgb(176, 173, 173)
 }
 
@@ -290,10 +281,6 @@
 }
 
 .input-file{
-  /* bottom: 0; */
-  /* outline: none; */
-  /* color:transparent; */
-  /* box-sizing: border-box; */
   padding: 15px 120px;
   cursor: pointer;
   transition: 0.5s;
@@ -309,11 +296,37 @@
 .emojis{
   background-color: white;
   border-color:  white;
-  /* margin: 3px; */
   border-width: 0px;
   font-size: 16px;
 }
 
 .text-area-emojis-container{
   display: flex;
+}
+
+.emojis-wraper{
+  /* max-height: 200px; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  float: right;
+  /* min-width: 150px; */
+  max-width: 200px;
+  position: absolute;
+  background-color: white;
+  border-radius: .5rem;
+  box-shadow: 1px 1px 3px 0px rgb(176, 173, 173);
+  padding: 4px;
+  z-index: 10;
+}
+
+.display-none{
+  display: none;
+}
+
+.emojis-img{
+  width: 20px;
+  background-color: white;
+  padding-bottom: 10px;
 }

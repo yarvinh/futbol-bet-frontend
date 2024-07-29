@@ -1,14 +1,25 @@
-import { POPULAR_EMOJIS } from "../../consts/emojis"
+import { useState } from "react"
+import { OriginalSmileys, POPULAR_EMOJIS } from "../../consts/emojis"
 
 const Emojis = ({handleOnClick}) =>{
-    '&#128557;'
-    const emoji = String.fromCharCode('&#128557;')
+
+    const [isDiplay, setIsDisplay] = useState(false)
+
+    const handleOnAccordion = (e)=>{
+        setIsDisplay((pre)=>!pre)
+    }
+
     return(
-        <div className="emojis-wraper">
-            {POPULAR_EMOJIS.map((emoji,index)=>{
-                return <button key={index} onClick={handleOnClick} type="button" className="emojis" name="reply" value={String.fromCodePoint( emoji )}>{String.fromCodePoint( emoji )}</button> 
-            })}
-        </div>
+        <section onClick={handleOnAccordion} >
+            <button className="emojis" type="button">
+                <img src="/happy.png" className="emojis-img" alt="smyling emoji" ></img>
+            </button>
+            <div className={!isDiplay ? 'display-none' : 'emojis-wraper'}>
+                {OriginalSmileys().map((emoji,index)=>{
+                    return <button key={index} onClick={handleOnClick} type="button" className="emojis display" name="reply" value={String.fromCodePoint( emoji )}>{String.fromCodePoint( emoji )}</button> 
+                })}
+            </div>
+        </section>
     )
 }
 

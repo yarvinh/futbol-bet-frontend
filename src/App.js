@@ -11,12 +11,12 @@ import LogOut from './components/users/LogOut'
 import './styles/styles.css'
 import Settings from './components/users/Settings';
 import GameDetail from './components/games/GameDetail';
-import { fetchGames } from './actions/gameActions';
 import NavBar from './components/nav-bar/NavBar';
 import NavBarButton from './components/nav-bar/NavButton';
 import ErrorsOrMsg from './components/ErrosOrMsg';
 import { tokenExist } from './helpers/token';
 import Loading from './components/Loading';
+import { displayElement } from './actions/displayElementActions';
 
 const  App = ()=> {
   const dispatch = useDispatch()
@@ -24,16 +24,9 @@ const  App = ()=> {
   const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
   const user = useSelector(state => state.user.user?.user )
   const loggedIn = useSelector(state =>  state.user.user && state.user.user.logged_in, )
-  const [isDiplay, setIsDisplay] = useState(false)
-  const handleonclick = (e)=>{
-      setIsDisplay((pre)=>!pre)
-  }
+  const isDisplay = useSelector(state=> state.isDisplay)
 
-  const handleOnAccordion = (e)=>{
-    if (!e.target.className.includes("display"))
-      setIsDisplay(false)
-  }
-
+  console.log(isDisplay)
   useEffect(()=>{
     tokenExist() && dispatch(fetchCurrentUser())  
   },[])
@@ -46,13 +39,13 @@ const  App = ()=> {
   return ( 
     <main id="main">   
       <BrowserRouter >
-        <section className={!isDiplay ?'profile-inf': "none"}>
-          {loggedIn && !isDiplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>}
-          {loggedIn && !isDiplay && <strong>{user.name}</strong>}
-          <NavBarButton handleonclick={handleonclick} isDiplay={isDiplay}/>
+        <section className={isDisplay.className}>
+          {loggedIn && !isDisplay.isDisplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>}
+          {loggedIn && !isDisplay.isDisplay && <strong>{user.name}</strong>}
+          <NavBarButton/>
         </section>
         {userLoading && <Loading/>}
-        {isDiplay && <NavBar handleOnAcordion={handleOnAccordion} loggedIn={loggedIn}/>}
+        {isDisplay.isDisplay && <NavBar  loggedIn={loggedIn}/>}
         {errorsOrMsg.from === "from_server" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
         <div className="App content-container">
           <Routes>

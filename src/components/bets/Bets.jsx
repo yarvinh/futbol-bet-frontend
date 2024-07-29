@@ -106,7 +106,7 @@ const Bets = ({game,currentUser}) => {
   //       // )   
   //     // }
   //   // }
-   console.log(!bet.id, game.status !== "LIVE", game.pending, game.status !== "FINISH")
+
     return (
       <section>
         {!bet?.id && game.status !== "LIVE" && game.status !== "FINISH" && <CreateBet currentUser={currentUser} game={game}/>}

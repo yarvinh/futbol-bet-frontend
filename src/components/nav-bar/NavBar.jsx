@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom"
 import "../../styles/nav-bar.css"
+import { useDispatch } from "react-redux"
+import { displayElement } from "../../actions/displayElementActions"
 
-const NavBar=({loggedIn,handleOnAcordion})=>{
+const NavBar=({loggedIn})=>{
+    const dispatch = useDispatch()
+
+    const handleOnClick = (e)=>{
+        if (!e.target.className.includes("display"))
+          dispatch(displayElement('profile-inf'))
+    }
+
     return (
-        <section onClick={handleOnAcordion} className="nav-bar-container close">
+        <section onClick={handleOnClick} className="nav-bar-container close">
             <nav className="display nav-bar">
                 <ul className="display"> 
                     <li className="nav-bar-links display"><Link to='/games' className="nav-bar-links">Games</Link></li>

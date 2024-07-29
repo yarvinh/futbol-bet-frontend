@@ -1,13 +1,23 @@
-const NavBarButton = ({handleonclick,isDiplay})=>{
-    if(isDiplay)
+import { useDispatch, useSelector } from "react-redux"
+import { displayElement } from "../../actions/displayElementActions"
+
+const NavBarButton = ()=>{
+    const dispatch = useDispatch()
+    const isDisplay = useSelector(state => state.isDisplay)
+    const handleOnclick = (e)=>{
+        !isDisplay.isDisplay ? dispatch(displayElement('none')) : dispatch(displayElement('profile-inf'))
+    }
+  
+    
+    if(isDisplay.isDisplay )
         return (
-            <div onClick={handleonclick} className="nav-button-active">
+            <div onClick={handleOnclick} className="nav-button-active">
                 <img src="../close.svg" id="nav-bar-x" alt="X close icon"/>
             </div>
         )
     else
         return(
-            <div onClick={handleonclick} className="nav-button">
+            <div onClick={handleOnclick} className="nav-button">
                 <div className="nav-button-line"></div>
                 <div className="nav-button-line"></div>
                 <div className="nav-button-line"></div> 

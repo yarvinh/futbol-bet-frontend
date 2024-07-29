@@ -7,6 +7,8 @@ import serverErrorsReducer from "./serverErrors"
 import userReducer from "./userReducer";
 import errorsOrMsgReducer from "./errorsOrMsgs";
 import betReducer from "./betReducer";
+import displayElementReducer from "./displayElementReducer";
+
 
 
 const rootReducer = combineReducers({
@@ -17,7 +19,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   errorsOrMsg: errorsOrMsgReducer,
   serverErrors: serverErrorsReducer,
-  bet: betReducer
+  bet: betReducer,
+  isDisplay: displayElementReducer
 });
  
 export default rootReducer;
