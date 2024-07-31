@@ -7,6 +7,7 @@ const commentsSlice = createSlice({
        commentsLoading: true,
        comments: [],
        repliesLoading: false,
+       reply: {}
     },
 
     reducers: {
@@ -73,6 +74,7 @@ const commentsSlice = createSlice({
             state.comments[commentIndex].replies = state.comments[commentIndex].replies.concat(action.payload.response)
             state.repliesLoading = false
         }
+
     }
 })
 

@@ -1,17 +1,19 @@
-import { connect, useDispatch, useSelector } from 'react-redux';
-import {dispatchReply,deleteReply, fetchReplies} from '../actions/replyActions'
+import { useDispatch, useSelector } from 'react-redux';
+import {fetchReplies} from '../actions/replyActions'
 import { useState } from 'react';
 import Reply from '../components/replies/Reply';
 import { useParams } from 'react-router';
 import Loading from '../components/Loading';
 import {fetchMoreReplies} from '../actions/replyActions'
-import CreateReply from '../components/replies/CreateReply';
 import Input from '../components/forms/Input';
+import { useRef } from 'react';
 
-const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,comment}) => {
+const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,lastReply}) => {
   const loading = useSelector(state=> state.comments.repliesLoading)
+
   const dispatch = useDispatch()
   const {gameId} = useParams()
+  const ref = useRef()
   const [displayReplies, setDisplayReplies] = useState({
         reply: '',
         accordion: 'replies_accordion',
@@ -19,28 +21,7 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,
         displayReplies: 3,
       }
   )
-
-  // const handleOnKeyUp = (e)=>{
-  //   if (e.code  === 'Enter'){
-  //     const payload= {user_id: currentUser.id, comment_id: comment_id, reply: displayReplies.reply }
-  //     dispatch(dispatchReply({payload: payload, gameId: gameId, commentId: comment_id}))
-  //     setDisplayReplies({
-  //       ...displayReplies,
-  //       reply: ''
-  //     })
-  //   }
-  // }
-
-  // const handleOnChange = (e)=>{
-  //   e.target.style.height = "2px";
-  //   e.target.style.height = (e.target.scrollHeight)+"px";
-  //   setDisplayReplies({
-  //       ...displayReplies,
-  //       reply: e.target.value,
-
-  //   })
-  // }
-
+  
   const handleOnclickReply = (e)=>{
     dispatch(fetchReplies({gameId: gameId, commentId: comment_id}))
     if(displayReplies.accordion !== 'replies_accordion active')
@@ -61,28 +42,23 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,
       e.preventDefault()
       dispatch(fetchMoreReplies({gameId: gameId, commentId: comment_id, payload: replies?.length}))
     }
-
+    const container = ref.current
     return (
-      <div>
+
+      <section className=''>
         <button onClick={handleOnclickReply} className={displayReplies.accordion}> {`${repliesTotal} Replies`} </button>
         <div className={displayReplies.displayAcordion}>
-              {loggedIn && <Input currentUser={currentUser} comment_id={comment_id}/>}
-              {/* {loggedIn && <CreateReply currentUser={currentUser} comment_id={comment_id}/>} */}
-              {replies?.map(reply => <Reply key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} commentId={comment_id}/>)}
+          <div ref={ref} className='replies_wraper'> 
+              {replies?.map(reply => <Reply lastReply={lastReply} key={reply?.id} reply={reply} currentUser={currentUser} loggedIn={loggedIn} commentId={comment_id}/>)}
                {loading && <Loading/>}
-               <form onSubmit={handleOnGetMoreReplies} >  
-                <input  className='reload' type='submit' value={'Reload more replies'}/> 
-              </form>
-              
+               <form onSubmit={handleOnGetMoreReplies} className="reload" >  
+                <input  className='reload-input' type='submit' value={'Load more replies'}/> 
+              </form> 
+          </div>
+          {loggedIn && <Input container={container} currentUser={currentUser} comment_id={comment_id}/>}
         </div>
-      </div>
+      </section>
     );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    deleteReply: (action) => dispatch(deleteReply(action))
-  }
-}
-  
-export default connect(null, mapDispatchToProps)(RepliesContainer )
+export default RepliesContainer

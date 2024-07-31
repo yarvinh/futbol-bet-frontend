@@ -1,12 +1,14 @@
-import { displayElementReceived } from "../state/displayElementReducer"
+import { displayElementReceived, displayEmojis } from "../state/displayElementReducer"
 
 export const displayElement = (payload) => {
 
     return async (dispatch) =>{
-        try {
           dispatch(displayElementReceived(payload))
-        } catch (error){
-            console.log(error)
-        }
+    }
+}
+
+export const displayEmojisAction = (payload) => {
+    return async (dispatch) =>{
+        dispatch(displayEmojis(payload))
     }
 }

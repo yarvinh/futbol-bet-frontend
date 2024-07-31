@@ -1,5 +1,6 @@
 export const addItemToArray = ({array, item})=>{
-    return array.unshift(item)
+    // return array.unshift(item)
+    return array.push(item)
 }
 
 export const editItemFromArray = ({array,item})=>{
@@ -26,4 +27,10 @@ export const findIndexById = ({array,id})=>{
      return index
   else
      return false
+}
+
+export const findItemById = ({array,id})=>{
+  console.log(parseInt(id,10),array)
+  const item = array.find(i => i.id === parseInt(id,10))
+  return item
 }

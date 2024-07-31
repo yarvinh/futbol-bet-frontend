@@ -1,5 +1,5 @@
 import {useSelector, useDispatch } from 'react-redux';
-import {useEffect, useState } from 'react';
+import {useEffect} from 'react';
 import './App.css';
 import Teams from './components/Teams'
 import GamesContainer from './containers/GamesContainer'
@@ -16,7 +16,7 @@ import NavBarButton from './components/nav-bar/NavButton';
 import ErrorsOrMsg from './components/ErrosOrMsg';
 import { tokenExist } from './helpers/token';
 import Loading from './components/Loading';
-import { displayElement } from './actions/displayElementActions';
+import { displayEmojisAction } from './actions/displayElementActions';
 
 const  App = ()=> {
   const dispatch = useDispatch()
@@ -26,16 +26,20 @@ const  App = ()=> {
   const loggedIn = useSelector(state =>  state.user.user && state.user.user.logged_in, )
   const isDisplay = useSelector(state=> state.isDisplay)
 
-  console.log(isDisplay)
   useEffect(()=>{
     tokenExist() && dispatch(fetchCurrentUser())  
   },[])
+
+  const handleOnClick = (e) =>{
+      isDisplay.emojisDisplay && !e.target.className.includes("display") && dispatch(displayEmojisAction())
+  
+  }
 
   const confirmLoggedIn=()=>{
     dispatch(fetchCurrentUser()) 
     return  loggedIn
   }
-
+ 
   return ( 
     <main id="main">   
       <BrowserRouter >
@@ -47,7 +51,7 @@ const  App = ()=> {
         {userLoading && <Loading/>}
         {isDisplay.isDisplay && <NavBar  loggedIn={loggedIn}/>}
         {errorsOrMsg.from === "from_server" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
-        <div className="App content-container">
+        <div onClick={handleOnClick} className="App content-container">
           <Routes>
             <Route exact path='/settings' element ={<Settings currentUser={user} loggedIn={loggedIn} />}/>
             <Route exact path='/games/:gameId' element ={<GameDetail />}/>

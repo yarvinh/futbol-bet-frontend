@@ -5,7 +5,8 @@ import { dispatchReply } from "../../actions/replyActions";
 import { useRef } from "react";
 import Emojis from "./Emojis";
 
-const Input = ({currentUser, comment_id})=>{
+const Input = ({currentUser, comment_id,container})=>{
+    // console.log(container)
     const {gameId} = useParams()
     const dispatch = useDispatch()
     const ref = useRef()
@@ -19,7 +20,7 @@ const Input = ({currentUser, comment_id})=>{
   }
  
     const handleOnChange = (e)=>{
-        console.log(e)
+        // console.log(e)
         if(e.which === 13)
           e.preventDefault()
         e.target.style.height = "1px";
@@ -28,12 +29,19 @@ const Input = ({currentUser, comment_id})=>{
     }
     
     const handleOnKeyUp = (e)=>{
+         console.log(container.scrollHeight)
         if (e.code  === 'Enter'){
+
             const payload= {user_id: currentUser.id, comment_id: comment_id, reply: reply }
             dispatch(dispatchReply({payload: {reply: payload}, gameId: gameId, commentId: comment_id}))
             setReply('')
             ref.current.style.height = "1px"
             setImage(null)
+            // container.scrollIntoView({ behavior: "smooth" })
+            // e.target.style.height = "1px";
+            // e.target.style.height = (e.target.scrollHeight)+"px";
+            container.scrollTop = '100px'
+            
         }
     }
 
