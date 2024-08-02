@@ -6,29 +6,29 @@ import { useParams } from 'react-router';
 import { replyLikesReceived } from '../../state/commentsReducers';
 import { useEffect, useRef } from 'react';
 
-const Reply = ({reply,currentUser,loggedIn,commentId}) => {
-  const {gameId} = useParams()
+
+const Reply = ({reply,currentUser,loggedIn,commentId,}) => {
+  console.log(reply.images)
   const dispatch = useDispatch()
-  const ref = useRef()
+  const {gameId} = useParams()
   const handleOnClick = (e)=>{
     const params = {gameId: gameId, commentId: commentId ,replyId: reply.id}
     dispatch(deleteReply(params))
   }
 
-  useEffect(()=>{
-    // console.log(lastReply.id === reply.id)
-    // if(lastReply.id === reply.id)
-    //   ref.current.scrollIntoView({behavior: "smooth"})
-  },[])
-
   return (
-    <div ref={ref} className='replies' key={reply.id}> 
+    <div className='replies' key={reply.id}> 
       <div>
         {currentUser && reply.user.id === currentUser.id && <button onClick={handleOnClick} className='delete' value={reply.id}>x</button>}
-        <span >Reply by: {reply.user.name} {dateAndTime(reply.created_at)}</span>
+        <span >{reply.user.name} {dateAndTime(reply.created_at)}</span>
       </div>
       <div className='reply'>
-        <p >{reply.reply}</p>
+          {reply.images?.length > 0 && <div className='images-container'>
+            {reply.images.map((img)=>{
+              return <img src={img.image_url} className="chat-img" key={img.id} alt="reply image"  />
+            })}
+          </div>}
+          <p >{reply.reply}</p>
       </div> 
       <div>
         <div>
@@ -38,5 +38,7 @@ const Reply = ({reply,currentUser,loggedIn,commentId}) => {
     </div>  
   )
 };
+
+
 
 export default Reply

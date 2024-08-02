@@ -30,7 +30,7 @@ export const findIndexById = ({array,id})=>{
 }
 
 export const findItemById = ({array,id})=>{
-  console.log(parseInt(id,10),array)
+  // console.log(parseInt(id,10),array)
   const item = array.find(i => i.id === parseInt(id,10))
   return item
 }

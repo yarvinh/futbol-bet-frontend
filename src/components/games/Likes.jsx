@@ -16,7 +16,7 @@ const Likes = ({likes,dislike, dispatchLikes, user_id, comment_id, reply_id,like
         <div className='like-container'>     
             <div className='like'>
                 <img onClick={handleOnClick} src='/instagram-likes.svg'  style={likedIt? NO_LIKE_STYLE : LIKED_STYLE } /> 
-            </div>
+            </div>   
             <span> Likes {likes.length}</span>
         </div>
     )

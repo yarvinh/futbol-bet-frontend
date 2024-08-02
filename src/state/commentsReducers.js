@@ -31,6 +31,7 @@ const commentsSlice = createSlice({
                 state.commentsLoading = false 
             }
         },
+
         commentLikesReceived: (state,action)=>{ 
             if (action.payload.response.like_removed) {
                 let commentIndex = findIndexById({array: state.comments, id: action.payload.response.comment_id})
@@ -40,20 +41,24 @@ const commentsSlice = createSlice({
                 addItemToArray({array: state.comments[commentIndex].likes, item: action.payload.response})  
             }
         },
+
         repliesRecieved: (state,action) => {
             let commentIndex = findIndexById({array: state.comments, id: action.payload.commentId})
             state.comments[commentIndex].replies = action.payload.response
             state.repliesLoading = false
         },
+
         repliesLoading: (state)=>{
             state.repliesLoading = true
         }, 
+        
         replyReceived: (state,action) => {
             let commentIndex = findIndexById({array: state.comments, id: action.payload.comment_id})
             if(action.payload.reply_removed){
               state.comments[commentIndex].replies_total = state.comments[commentIndex].replies_total - 1
               deleteItemFromArray({array: state.comments[commentIndex].replies, id: action.payload.reply_id})
             }else if (action.payload.id){
+              state.reply = action.payload
               state.comments[commentIndex].replies_total = state.comments[commentIndex].replies_total + 1
               addItemToArray({array: state.comments[commentIndex].replies, item: action.payload} )
             }

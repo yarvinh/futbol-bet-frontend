@@ -5,28 +5,13 @@ import { dateAndTime } from '../../helpers/functionsHelpers';
 import RepliesContainer from '../../containers/RepliesContainer';
 import { useParams } from 'react-router';
 import { commentLikesReceived } from '../../state/commentsReducers';
-import { fetchReplies } from '../../actions/replyActions';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const Comment = ( {comment,currentUser,loggedIn} )=> {
   const {gameId} = useParams()
   const dispatch = useDispatch() 
-  const [displayReplies, setDisplayReplies] = useState({
-    reply: '',
-    accordion: 'replies_accordion',
-    displayAcordion: 'hide_replies',
-    displayReplies: 3,
-  }
-)
 
   const handleDeleteOnClick = (e) => {
     dispatch(deleteComment( {commentId: comment.id, gameId: gameId}))
-  }
-
-  const handleOnclickReply = (e)=>{
-    dispatch(fetchReplies({gameId: gameId, commentId: comment.id}))
-
   }
 
   return  (    
@@ -43,8 +28,7 @@ const Comment = ( {comment,currentUser,loggedIn} )=> {
           {loggedIn && <Likes likes={comment.likes} ownerId={{comment_id: comment.id, user_id: currentUser.id}} likesReceived={commentLikesReceived}  comment_id={comment.id} user_id={currentUser.id} gameCommentOrReply={comment}/>}
         </div>
         {/* <button onClick={handleOnclickReply} > {`${comment.replies_total} Replies`} </button> */}
-        {/* <Link to={`comments/${comment.id}/replies`} className='replies-link'>Replies</Link> */}
-        <RepliesContainer replies={comment.replies} repliesTotal={comment.replies_total} loggedIn={loggedIn} comment_id={comment.id} currentUser={currentUser} comment={comment}/>
+        <RepliesContainer comment={comment} replies={comment.replies} repliesTotal={comment.replies_total} loggedIn={loggedIn} comment_id={comment.id} currentUser={currentUser} />
       </div>
     </section>
   )

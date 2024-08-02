@@ -354,3 +354,41 @@
   background-color: white;
   padding-bottom: 10px;
 }
+
+
+#go-to-bottom {
+  position: absolute;
+  top: 100px;
+  /* Without this, the button will be aligned to the top of the page
+  instead of bottom of navbar when scrolled */
+  scroll-margin-top: 600px;
+  overflow: hidden;
+}
+
+.images-container{
+  /* position: relative; */
+  /* display: flex; */
+   /* width: 200px; */
+  height: 200px; 
+  /* overflow: hidden; */
+  flex-wrap: wrap;
+  flex-direction: row;
+  row-gap: 10px;
+  overflow-x:scroll;
+  /* background-color: #282c34; */
+  scroll-snap-align: start;
+  flex-wrap: wrap;
+  scroll-behavior: smooth;
+}
+
+.chat-img{
+  /* position:absolute; */
+  /* background-color: #282c34; */
+  padding: 5px;
+  width: 200px;
+  /* height: 100%; */
+  /* width: 100%; */
+  aspect-ratio: 16/15;
+  /* object-fit: contain ;  */
+  /* position:relative;  */
+}
