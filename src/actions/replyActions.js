@@ -15,10 +15,11 @@ export const fetchReplies = ({gameId,commentId})=>{
     }
   }
 }
-export const dispatchReply = ({payload, commentId, gameId,reply}) =>{
+export const dispatchReply = ({path,reply,payload}) =>{
+  console.log(payload)
   return async (dispatch) => {
       try {
-        const response  = await axios.post(`http://localhost:3000/games/${gameId}/comments/${commentId}/replies`,payload,{ withCredentials: true, params:{reply: reply } ,headers: token('multipart/form-data')})
+        const response  = await axios.post(`http://localhost:3000/${path}`,payload,{ withCredentials: true, params:{reply: reply } ,headers: token('multipart/form-data')})
         dispatch(replyReceived(response.data))
       } catch (error){
         dispatch(serverErrorsRecieved(SERVER_ERROR))

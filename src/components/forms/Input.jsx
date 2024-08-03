@@ -1,20 +1,16 @@
 import { useRef, useState } from "react";
 import { useDispatch} from "react-redux";
-import { useParams } from "react-router";
-import { dispatchReply } from "../../actions/replyActions";
 import imageCompression from 'browser-image-compression';
 import Emojis from "./Emojis";
+import './style.css';
 
-const Input = ({currentUser, comment_id})=>{
-    const {gameId} = useParams()
+const Input = ({submitButton, ids, createAction, name, path})=>{
     const dispatch = useDispatch()
-    const [reply, setReply] = useState("")
+    const [inputValue, setInputValue] = useState("")
     const [image, setImage] = useState(null)
-
     const imagesRef = useRef([])
 
     const handleOnImg = (e) =>{
-
         if (e.target.files && e.target.files[0]) {
             setImage(URL.createObjectURL(e.target.files[0]));
         }
@@ -30,23 +26,28 @@ const Input = ({currentUser, comment_id})=>{
             const compressedFile = await imageCompression(file, options);      
             formData.append("images[]", compressedFile);  
         })
-
         imagesRef.current = formData
     }
  
     const handleOnChange = (e)=>{
-        if(e.which === 13)
+        if(e.which === 13 && !submitButton)
           e.preventDefault()
         e.target.style.height = "1px";
         e.target.style.height = (e.target.scrollHeight)+"px";
-        setReply(e.target.value,)
+        setInputValue(e.target.value,)
     }
 
     const handleOnKeyUp = (e)=>{
-        if (e.code  === 'Enter'){
-            const payload = {user_id: currentUser.id, comment_id: comment_id, reply: reply }
-            dispatch(dispatchReply({payload: imagesRef.current, reply: payload ,gameId: gameId, commentId: comment_id }))
-            setReply('')
+        if (e.code  === 'Enter' && !submitButton){
+            dispatch(createAction({
+                payload:imagesRef.current,
+                [name]: {
+                    ...ids,
+                    [name]: inputValue
+                },
+                path: path
+            }))
+            setInputValue('')
             setImage(null)
             imagesRef.current = []
             e.target.style.height = "1px";  
@@ -54,26 +55,40 @@ const Input = ({currentUser, comment_id})=>{
     }
 
     const handleOnClick=(e)=>{
-        setReply((pre)=>{
+        inputValue((pre)=>{
             return `${pre} ${e.target.value}`
         })
     }
 
+    const handleOnSubmit = (e)=>{
+        e.preventDefault()
+        dispatch(createAction({
+            payload:imagesRef.current,
+            [name]: {
+                ...ids,
+                [name]: inputValue
+            },
+            path: path
+        }))
+        setImage(null)
+        setInputValue('')
+    }
+
     return(
         <div >
-            <form className="reply-form" onKeyUp={handleOnKeyUp} >
+            <form className="reply-form" onSubmit={handleOnSubmit} onKeyUp={handleOnKeyUp} >
                 {image && <img id="blah" className="comment-and-reply-image" src={image} alt="your image" />}
-                <textarea  onKeyPress={handleOnChange} onChange={handleOnChange} rows="1" className="reply-input standar-input" value={reply}></textarea> 
+                <textarea  onKeyPress={handleOnChange} onChange={handleOnChange} rows="1" className="reply-input standar-input" value={inputValue}></textarea> 
+                {submitButton && <input className="comment-submit-button" type="submit" value="Submit"/>}
                 <div className="text-area-emojis-container">
                     <div className="input-container">
                         <input onChange={handleOnImg} name="images"   multiple className='input-file' type="file" accept="image/png, image/jpeg"/>
                     </div>
                     <Emojis handleOnClick={handleOnClick}/>
-                </div>
+                </div> 
             </form> 
         </div>
     )
 }
-
 
 export default Input

@@ -22,11 +22,11 @@ const Reply = ({reply,currentUser,loggedIn,commentId,}) => {
         {currentUser && reply.user.id === currentUser.id && <button onClick={handleOnClick} className='delete' value={reply.id}>x</button>}
         <span >{reply.user.name} {dateAndTime(reply.created_at)}</span>
       </div>
-      <div className='reply'>
-          {reply.images?.length > 0 && <div className='images-container'>
-            {reply.images.map((img)=>{
-              return <img src={img.image_url} className="chat-img" key={img.id} alt="reply image"  />
-            })}
+          <div className='reply'>
+            {reply.images?.length > 0 && <div className='images-container'>
+              {reply.images.map((img)=>{
+                return <img src={img.image_url} className="chat-img" key={img.id} alt="reply image"  />
+              })}
           </div>}
           <p >{reply.reply}</p>
       </div> 

@@ -18,5 +18,8 @@ const compressImages = (files,name,imagesRef) =>{
 }
 
 const getImg = (files) => {
+    if (files && files[0]) {
+        setImage(URL.createObjectURL(files[0]));
+    }
 
 }

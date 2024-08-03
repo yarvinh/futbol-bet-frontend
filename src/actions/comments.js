@@ -35,11 +35,11 @@ export const fetchMoreComments = ({gameId,comments_length}) => {
 
 
 
-export const dispatchComment = (payload) =>{
+export const dispatchComment = ({path, comment, payload}) =>{
     return (dispatch) => {
     dispatch(commentsLoading())
-    axios.post(`http://localhost:3000/games/${payload.comment.game_id}/comments`,
-     payload, {headers: token(), withCredentials: true})
+    axios.post(`http://localhost:3000/${path}`,
+     payload, {headers: token('multipart/form-data'), params:{comment: comment} ,withCredentials: true})
      .then(response => {
       dispatch(commentReceived(response.data))
     })

@@ -61,7 +61,7 @@ const GameDetail=()=>{
                     </div>  
                 </div>
             </div>
-                {game.id && <CommentsContainer comments={game.comments_by_date} game={game} currentUser={user.user}  loggedIn={user.logged_in} />}
+            {game.id && <CommentsContainer comments={game.comments_by_date} game={game} currentUser={user.user}  loggedIn={user.logged_in} />}
         </section>
         
     );

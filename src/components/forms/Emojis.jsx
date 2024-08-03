@@ -1,7 +1,9 @@
-import { useState } from "react"
+
 import { OriginalSmileys} from "../../consts/emojis"
 import { useDispatch, useSelector } from "react-redux"
 import { displayEmojisAction } from "../../actions/displayElementActions"
+import happyFace from "./photos/happy.png"
+import './style.css';
 
 const Emojis = ({handleOnClick}) =>{
     const isDisplay = useSelector(state => state.isDisplay.emojisDisplay)
@@ -13,7 +15,7 @@ const Emojis = ({handleOnClick}) =>{
     return(
         <section  >
             <button onClick={handleOnAccordion} className="emojis" type="button">
-                <img src="/happy.png" className="emojis-img" alt="smyling emoji" ></img>
+                <img src={happyFace} className="emojis-img" alt="smyling emoji" ></img>
             </button>
             <div className={!isDisplay ? 'display-none' : 'emojis-wraper display'}>
                 {OriginalSmileys().map((emoji,index)=>{

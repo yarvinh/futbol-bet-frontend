@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {fetchReplies} from '../actions/replyActions'
+import {dispatchReply, fetchReplies} from '../actions/replyActions'
 import { useEffect, useState } from 'react';
 import Reply from '../components/replies/Reply';
 import { useParams } from 'react-router';
@@ -57,7 +57,11 @@ const RepliesContainer = ({replies,currentUser,comment_id,loggedIn,repliesTotal,
                 <input  className='reload-input' type='submit' value={'Load more replies'}/> 
               </form> 
           </div>
-          {loggedIn && <Input  repliesTotal={repliesTotal}  currentUser={currentUser} comment_id={comment_id}/>}
+          {loggedIn && <Input name="reply" 
+            createAction={dispatchReply} 
+            path={`games/${gameId}/comments/${comment_id}/replies`} 
+            ids={{user_id: currentUser.id, comment_id: comment_id}} 
+          />}
         </div>
         <div ref={ref} ></div>
       </section>

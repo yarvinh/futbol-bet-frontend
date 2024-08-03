@@ -10,7 +10,7 @@ const CommentDetails = () => {
         return findItemById({array: state.comments.comments, id: commentId})
     })
 
-    // console.log(comment)
+
 
     return (
         <section>
