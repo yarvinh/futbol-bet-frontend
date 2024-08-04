@@ -6,6 +6,7 @@ import RepliesContainer from '../../containers/RepliesContainer';
 import { useParams } from 'react-router';
 import { commentLikesReceived } from '../../state/commentsReducers';
 import { useState } from 'react';
+import ImagesCarrusel from '../carrusel/ImagesCarrusel';
 
 const Comment = ( {comment,currentUser,loggedIn} )=> {
   const {gameId} = useParams()
@@ -25,11 +26,12 @@ const Comment = ( {comment,currentUser,loggedIn} )=> {
         <span >Posted by: {comment.user?.name} {dateAndTime(comment.created_at)}</span>
       </div>
       <div className='comments'>
-          {comment.images?.length > 0 && <div className='images-container'>
+          {/* {comment.images?.length > 0 && <div className='images-container'>
               {comment.images.map((img)=>{
                 return <img src={img.image_url} className="chat-img" key={img.id} alt="reply image"  />
               })}
-          </div>}
+          </div>} */}
+          <ImagesCarrusel images={comment.images}/>
         <p>{comment.comment}</p>
       </div> 
       <div>
