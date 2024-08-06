@@ -5,9 +5,8 @@ const NavBarButton = ()=>{
     const dispatch = useDispatch()
     const isDisplay = useSelector(state => state.isDisplay)
     const handleOnclick = (e)=>{
-        !isDisplay.isDisplay ? dispatch(displayElement('none')) : dispatch(displayElement('profile-inf'))
+        !isDisplay.isDisplay ? dispatch(displayElement('nav-button-active')) : dispatch(displayElement('profile-inf'))
     }
-  
     
     if(isDisplay.isDisplay )
         return (
