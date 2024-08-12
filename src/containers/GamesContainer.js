@@ -4,6 +4,7 @@ import { fetchGames,dispatchSetFilter} from '../actions/gameActions'
 import Game from '../components/games/Game'
 import {gameSelector} from '../selectors/gameSelector'
 import Loading from '../components/Loading';
+import ImagesCarousel from '../components/carousel/ImagesCarousel';
 
 const GamesContainer = (props)=>{
   const  dispatch = useDispatch()

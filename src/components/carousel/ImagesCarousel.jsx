@@ -14,7 +14,7 @@ const ImagesCarousel = ({images}) => {
     const handleOnMouseOver = (e)=>{
         let prevElementId = '0'
         const currentElementId = e.target.id.split("-")[1]
-
+         
         if(e.relatedTarget?.className.includes("is-here"))
           prevElementId = e.relatedTarget.id?.split("-")[1]
 
@@ -23,13 +23,13 @@ const ImagesCarousel = ({images}) => {
         currentElement.style.backgroundColor = "blue";
         prev.current = currentElement
 
-        if(e.relatedTarget?.className.includes("is-here"))
+        if(e.relatedTarget?.className.includes("is-here") && prevElement)
           prevElement.style.backgroundColor = "black";
        
     } 
 
    const handleOnTouchStart = (e)=>{
-     console.log(e.target)
+     console.log(e)
    }
 
 
@@ -39,16 +39,18 @@ const ImagesCarousel = ({images}) => {
            <div className="slider-wrapper">
             <div  className="slider">
                  {images.map((img,index)=>{
-                    // return <Image key={img.id} img={img} index={index}/>
-                    return <img onTouchEnd={handleOnTouchStart} onMouseOver={handleOnMouseOver}  src={img.image_url} id={`slider-${index}`} className="chat-img is-here" key={img.id} alt="reply image"/>
-                    //  return <img src={img.image_url} id={`slider-${index}`} className="chat-img" key={img.id} alt="reply image"/>
+                     return (
+                        <img {...(images.length > 1  && {onMouseOver: handleOnMouseOver })}   src={img.image_url} id={`slider-${img.id}`} className="chat-img is-here" key={index} alt="reply image"/>
+                     )
                  })}
             </div>
            </div>
         </div>
         <div className="slider-nav">
-            {images.map((image,index)=>{
-               return <a ref={prev} onClick={handleOnClick} className="onclick" key={index} id={`slider-nav-${index}`} href={`#slider-${index}`}/>
+            {images.length > 1 && images.map((image,index)=>{
+               return(
+                  <a ref={prev} onClick={handleOnClick}  key={index} className="onclick"  id={`slider-nav-${image.id}`} href={`#slider-${image.id}`}/>
+               )
             })}
         </div>
     </section>
