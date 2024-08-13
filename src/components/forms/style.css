@@ -103,7 +103,9 @@
   margin-top: 1rem;
   margin-left: 1rem;
   width: 100px;
-  border-radius: .5rem;
+  height: 100px;
+  object-fit:contain;
+  box-shadow: 1px 1px 3px 0px rgb(176, 173, 173)
 }
 
 .input-file{

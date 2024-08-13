@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { userLoading, userReceived } from '../state/userReducer'
 import { errorsOrMsgsRecieved } from '../state/errorsOrMsgs'
-import { SERVER_ERROR } from './errorsConst'
+import { SERVER_ERROR, serverErrors } from './errorsConst'
 import { removeLoginToken, token } from '../helpers/token'
 
   export const fetchCurrentUser = () => {
@@ -12,7 +12,11 @@ import { removeLoginToken, token } from '../helpers/token'
           const errors = response.data.errors_or_messages
           errors ? dispatch(errorsOrMsgsRecieved(errors)) : dispatch(userReceived(response.data))
         } catch (error) {
-          dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+          dispatch(userLoading())
+          if(error.response?.status === 401)
+            dispatch(errorsOrMsgsRecieved(error.response.data.errors_or_messages))
+          else
+            dispatch(errorsOrMsgsRecieved(serverErrors(error.message)))
         }
     }
   }
@@ -20,16 +24,18 @@ import { removeLoginToken, token } from '../helpers/token'
   export const fetchLogin = (user) => {
     return async (dispatch) => {
       dispatch(userLoading())
-        
         try {
           const response = await axios.post('http://localhost:3000/login', {user}, {withCredentials: true})
-          const errorsOrMsg = response.data.errors_or_messages
           if(response.data.token){
             localStorage.setItem("token", response.data.token);
           }
-          errorsOrMsg ? dispatch(errorsOrMsgsRecieved(errorsOrMsg)) : dispatch(userReceived(response.data))
+           dispatch(userReceived(response.data))
         } catch(error){
-          dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+          dispatch(userLoading())
+          if(error.response?.status === 401)
+            dispatch(errorsOrMsgsRecieved(error.response.data.errors_or_messages))
+          else
+            dispatch(errorsOrMsgsRecieved(serverErrors(error.message)))
         }
     }
   }
@@ -42,7 +48,6 @@ import { removeLoginToken, token } from '../helpers/token'
       try {
         const response = await axios.post('http://localhost:3000/signout', {user}, {withCredentials: true})
         dispatch( userReceived(response.data))
-        
       } catch (error)  {
         dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
       }

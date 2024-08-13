@@ -10,13 +10,13 @@ export const dispatchBets = (payload) =>{
     dispatch(betLoading())
     axios.post(`http://localhost:3000/games/${payload.game_id}/bets`,payload,{headers: token(),withCredentials: true})
     .then(response => {
-      const errors = response.data.errors_or_messages
-      if (errors){
-        dispatch(errorsOrMsgsRecieved(errors))
-      }else{
-        dispatch(betReceived(response.data))
-      }
-    }).catch(error => dispatch(errorsOrMsgsRecieved(SERVER_ERROR)))
+      dispatch(betReceived(response))
+    }).catch(error => {
+      if(error.response)
+         dispatch(errorsOrMsgsRecieved(error.response.data.errors_or_messages))
+      else
+        dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+    })
     
   }
 }
@@ -33,7 +33,10 @@ export const getMyBet = ({gameId})=>{
       else if (errors)
         dispatch(errorsOrMsgsRecieved(response.data))
     } catch (error){
-      dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+      if(error.response)
+        dispatch(errorsOrMsgsRecieved(error.response.data.errors_or_messages))
+      else
+        dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
     }
   }
 }

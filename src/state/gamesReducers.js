@@ -5,13 +5,13 @@ const gamesSlice = createSlice({
     name: 'games',
     initialState: {
         games: [],
-        gamesLoading: true,
+        gamesLoading: false,
         filter: "all",
         game: {}
     },
     reducers: {
       gamesLoading: (state)=>{
-          state.gamesLoading = true
+          state.gamesLoading = !state.gamesLoading
       },
       gamesReceived: (state,actions)=>{
         state.games = actions.payload

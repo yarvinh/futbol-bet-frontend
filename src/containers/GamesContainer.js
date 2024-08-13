@@ -10,7 +10,7 @@ const GamesContainer = (props)=>{
   const  dispatch = useDispatch()
   const games = useSelector(state => gameSelector(state.games.games,state.games.filter))
   const gamesLoading = useSelector((state => state.games.gamesLoading))
-
+  // console.log(gamesLoading)
   useEffect(()=> {
       dispatch(fetchGames())   
   },[])

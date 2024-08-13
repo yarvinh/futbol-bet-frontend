@@ -41,7 +41,7 @@ const CreateBet = ({game,currentUser})=>{
             <form onSubmit={handleSubmit}> 
                 <label className="form-label"> Bets </label> 
                 <select className="form-select mx-auto mb-3" onChange={handleTeamChange}>
-                    <option value=''>Bet Obtions</option>
+                    <option value=''>Bet Options</option>
                     <option value='tie'>Tie</option>
                     <option value={game.teams[0].id}>{game.teams[0].fc}</option>
                     <option value={game.teams[1].id}>{game.teams[1].fc}</option>

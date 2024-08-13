@@ -10,7 +10,7 @@ const userSlice = createSlice({
 
     reducers: {
         userLoading: (state)=>{
-            state.userLoading = true
+            state.userLoading = !state.userLoading
         },
         userReceived: (state,action)=>{
             state.user = action.payload

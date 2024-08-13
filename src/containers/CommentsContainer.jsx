@@ -36,6 +36,7 @@ const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
           
         <div className='comment-form-container'>
             {loggedIn && <Input 
+            upLoadImages={true}
             name='comment' 
             path={`games/${gameId}/comments`} 
             createAction={dispatchComment} 

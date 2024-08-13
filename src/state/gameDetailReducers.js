@@ -4,13 +4,13 @@ import { addItemToArray, deleteItemFromArray } from "../helpers/arrayHelper";
 const gameSlice = createSlice({
     name: 'game',
     initialState: {
-        gameLoading: true,
+        gameLoading: false,
         game: {},
         gameLikes: []
     },
     reducers: {
       gameLoading: (state)=>{
-          state.gameLoading = true
+        state.gameLoading = !state.gameLoading
       },
 
       gameReceived: (state,action) =>{

@@ -3,23 +3,26 @@ import { useDispatch} from "react-redux";
 import imageCompression from 'browser-image-compression';
 import Emojis from "./Emojis";
 import './style.css';
+import { v4 as uuidv4 } from 'uuid';
 
-const Input = ({submitButton, ids, createAction, name, path})=>{
+const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     const dispatch = useDispatch()
     const [inputValue, setInputValue] = useState("")
-    const [image, setImage] = useState(null)
+    const [imageUrl, setImageUrl] = useState([])
     const imagesRef = useRef([])
-
     const handleOnImg = (e) =>{
         if (e.target.files && e.target.files[0]) {
-            setImage(URL.createObjectURL(e.target.files[0]));
+            const imgsUrl = Array.from(e.target.files).map((img) => {
+                return URL.createObjectURL(img)
+            })
+            setImageUrl(imgsUrl);
         }
 
         const options = {
             maxSizeMB: 1,
             maxWidthOrHeight: 1920,
             useWebWorker: true
-       }
+        }
 
         const formData = new FormData(); 
         Array.from(e.target.files).forEach(async (file)=>{   
@@ -48,14 +51,14 @@ const Input = ({submitButton, ids, createAction, name, path})=>{
                 path: path
             }))
             setInputValue('')
-            setImage(null)
+            setImageUrl([])
             imagesRef.current = []
             e.target.style.height = "1px";  
         }
     }
 
     const handleOnClick=(e)=>{
-        inputValue((pre)=>{
+        setInputValue((pre)=>{
             return `${pre} ${e.target.value}`
         })
     }
@@ -70,20 +73,23 @@ const Input = ({submitButton, ids, createAction, name, path})=>{
             },
             path: path
         }))
-        setImage(null)
+        setImageUrl([])
         setInputValue('')
     }
 
     return(
         <div >
             <form className="reply-form" onSubmit={handleOnSubmit} onKeyUp={handleOnKeyUp} >
-                {image && <img id="blah" className="comment-and-reply-image" src={image} alt="your image" />}
+                {imageUrl && imageUrl.map((url)=>{
+                    return <img id="blah" key={uuidv4()} className="comment-and-reply-image" src={url} alt="your image" />
+                })}
+
                 <textarea  onKeyPress={handleOnChange} onChange={handleOnChange} rows="1" className="reply-input standar-input" value={inputValue}></textarea> 
                 {submitButton && <input className="comment-submit-button" type="submit" value="Submit"/>}
                 <div className="text-area-emojis-container">
-                    <div className="input-container">
+                    {upLoadImages && <div className="input-container">
                         <input onChange={handleOnImg} name="images"   multiple className='input-file' type="file" accept="image/png, image/jpeg"/>
-                    </div>
+                    </div>}
                     <Emojis handleOnClick={handleOnClick}/>
                 </div> 
             </form> 

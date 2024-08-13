@@ -1,7 +1,7 @@
 import { gamesLoading, gamesReceived, filterGames,} from "../state/gamesReducers"
 import { gameReceived, gameLoading } from "../state/gameDetailReducers"
 import { errorsOrMsgsRecieved } from "../state/errorsOrMsgs"
-import { SERVER_ERROR } from "./errorsConst"
+import { SERVER_ERROR, serverErrors } from "./errorsConst"
 export const fetchGames = () => {
     return (dispatch) => {
       dispatch(gamesLoading())
@@ -10,7 +10,8 @@ export const fetchGames = () => {
       }).then(responseJSON => {
           dispatch(gamesReceived(responseJSON))
       }).catch(error=>{
-        dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+        dispatch(gamesLoading())
+        dispatch(errorsOrMsgsRecieved(serverErrors(error.message)))
       })
     }
 }
@@ -23,7 +24,8 @@ export const fetchGame = (id) => {
     }).then(responseJSON => {
         dispatch(gameReceived(responseJSON))
     }).catch(error => {
-      dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+      dispatch(gameLoading())
+      dispatch(errorsOrMsgsRecieved(serverErrors(error.message)))
     })
   }
 }
