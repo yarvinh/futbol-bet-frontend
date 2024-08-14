@@ -4,7 +4,7 @@ import { addItemToArray, deleteItemFromArray, findIndexById } from "../helpers/a
 const commentsSlice = createSlice({
     name: "comments",
     initialState: {
-       commentsLoading: true,
+       commentsLoading: false,
        comments: [],
        repliesLoading: false,
        reply: {}
@@ -12,7 +12,7 @@ const commentsSlice = createSlice({
 
     reducers: {
         commentsLoading: ((state)=>{
-        state.commentsLoading = true
+           state.commentsLoading = !state.commentsLoading
         }),
         commentsReceived: (state,action) => {
             state.comments = action.payload

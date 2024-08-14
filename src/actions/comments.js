@@ -14,7 +14,11 @@ export const fetchComments = ({gameId,comments_length}) => {
         dispatch(commentsReceived(response.data))
       })
       .catch((error) => {
-        dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+        dispatch(commentsLoading())
+        if(error.response)
+          dispatch(errorsOrMsgsRecieved(error.response.data.errors_or_messages))
+        else
+          dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
       })
   }
 }
@@ -28,7 +32,11 @@ export const fetchMoreComments = ({gameId,comments_length}) => {
         dispatch(moreCommentsReceived(response.data))
       })
       .catch((error) => {
-        dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+        dispatch(commentsLoading())
+        if (error.response)
+          dispatch(errorsOrMsgsRecieved(error.response.data.errors_or_messages))
+        else
+          dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
       })
   }
 }
@@ -44,16 +52,25 @@ export const dispatchComment = ({path, comment, payload}) =>{
       dispatch(commentReceived(response.data))
     })
     .catch((error)=>{
-      dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+      if(error.response?.data.errors_or_messages)
+        dispatch(errorsOrMsgsRecieved(error.response.data.errors_or_messages))
+      else
+        dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
     })
   }
 }
 
 export const deleteComment = (payload) => {
-  return (dispatch) => {
-    axios.delete(`http://localhost:3000/games/${payload.gameId}/comments/${payload.commentId}`,
-    {headers: token() ,withCredentials: true}).then(response => {
+  return async (dispatch) => {
+    try{
+      const response = await axios.delete(`http://localhost:3000/games/${payload.gameId}/comments/${payload.commentId}`,
+      {headers: token() ,withCredentials: true})
       dispatch(commentReceived({response: response.data, id: payload.commentId}))
-    }).catch(error => dispatch(errorsOrMsgsRecieved(SERVER_ERROR)))
+    }catch (error){
+      if (error.response?.data.errors_or_messages)
+        dispatch(errorsOrMsgsRecieved(error.response?.data.errors_or_messages))
+      else
+        dispatch(errorsOrMsgsRecieved(SERVER_ERROR))
+    }
   }
 }

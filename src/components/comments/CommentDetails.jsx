@@ -6,7 +6,6 @@ const CommentDetails = () => {
     const {commentId} = useParams()
   
     const comment = useSelector((state)=>{
-        console.log(state)
         return findItemById({array: state.comments.comments, id: commentId})
     })
 

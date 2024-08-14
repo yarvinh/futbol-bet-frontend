@@ -6,8 +6,6 @@ import { token } from "../helpers/token";
 
 export const dispatchLikes = ({payLoad,likesReceived}) =>{
     return async (dispatch) => {
-
-
       try {
         const response = await axios.post(`http://localhost:3000/likes`,payLoad,
         { 
@@ -17,7 +15,6 @@ export const dispatchLikes = ({payLoad,likesReceived}) =>{
         dispatch(likesReceived({response: response.data}))
       } catch (error) {
         dispatch(serverErrorsRecieved(SERVER_ERROR))
-        new Error("Something went wrong with the server, please try again later.")
       }
    }
   

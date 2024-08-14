@@ -10,7 +10,6 @@ import { gameLikesReceived } from "../../state/gameDetailReducers"
 import Loading from "../Loading"
 
 const GameDetail=()=>{
-    
     const dispatch = useDispatch()
     const {gameId} = useParams()
     const gameLoading = useSelector(state =>  state.game.gameLoading)

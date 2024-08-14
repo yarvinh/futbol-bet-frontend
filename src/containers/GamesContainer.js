@@ -5,12 +5,13 @@ import Game from '../components/games/Game'
 import {gameSelector} from '../selectors/gameSelector'
 import Loading from '../components/Loading';
 import ImagesCarousel from '../components/carousel/ImagesCarousel';
+import ErrorsOrMsg from '../components/ErrosOrMsg';
 
 const GamesContainer = (props)=>{
   const  dispatch = useDispatch()
   const games = useSelector(state => gameSelector(state.games.games,state.games.filter))
   const gamesLoading = useSelector((state => state.games.gamesLoading))
-  // console.log(gamesLoading)
+  const errorsOrMsg =  useSelector(state=> state.errorsOrMsg.errorsOrMsg)
   useEffect(()=> {
       dispatch(fetchGames())   
   },[])
@@ -29,6 +30,7 @@ const GamesContainer = (props)=>{
 
      return (
        <section className='games-container'>
+        {errorsOrMsg.from.includes("game") && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
         <select onChange={onClickHandle} className="form-select  mx-auto"> 
            <option value='all'>All</option>
            <option value='Champion League'>UEFA Champion league</option>

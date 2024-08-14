@@ -1,5 +1,4 @@
 const ErrorsOrMsg = ({errors,msg,className})=>{
-   console.log(errors)
    if(errors){
       return(
          <div className="alert alert-danger">
