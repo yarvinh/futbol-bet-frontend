@@ -3,12 +3,13 @@ import { gameReceived, gameLoading } from "../state/gameDetailReducers"
 import { errorsOrMsgsRecieved } from "../state/errorsOrMsgs"
 import {  serverErrors } from "./errorsConst"
 import axios from "axios"
+import { baseUrl } from "../helpers/urlAndPaths"
 
 export const fetchGames = () => {
     return async (dispatch) => {
       dispatch(gamesLoading())
       try {
-       const response = await axios.get('http://localhost:3000/games')
+       const response = await axios.get(`${baseUrl()}/games`)
        dispatch(gamesReceived(response.data))
       }catch (error){
         dispatch(gamesLoading())
@@ -21,7 +22,7 @@ export const fetchGame = (id) => {
   return async (dispatch) => {
     dispatch(gameLoading())
     try {
-      const response = await axios.get(`http://localhost:3000/games/${id}`)
+      const response = await axios.get(`${baseUrl()}/games/${id}`)
       dispatch(gameReceived(response.data))
     }catch (error){
       dispatch(gameLoading())

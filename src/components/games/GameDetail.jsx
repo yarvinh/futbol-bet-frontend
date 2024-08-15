@@ -8,6 +8,7 @@ import { useEffect } from "react"
 import { fetchGame } from "../../actions/gameActions"
 import { gameLikesReceived } from "../../state/gameDetailReducers"
 import Loading from "../Loading"
+import ErrorsOrMsg from "../ErrosOrMsg"
 
 const GameDetail=()=>{
     const dispatch = useDispatch()
@@ -15,7 +16,8 @@ const GameDetail=()=>{
     const gameLoading = useSelector(state =>  state.game.gameLoading)
     const user = useSelector(state => state.user.user)
     const game = useSelector(state => state.game.game)
-
+    const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
+    console.log(errorsOrMsg)
     const {logged_in} = user
     useEffect(()=>{
        dispatch(fetchGame(gameId))
@@ -60,6 +62,7 @@ const GameDetail=()=>{
                     </div>  
                 </div>
             </div>
+            {errorsOrMsg.from.includes('like') && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
             {game.id && <CommentsContainer comments={game.comments_by_date} game={game} currentUser={user.user}  loggedIn={user.logged_in} />}
         </section>
         

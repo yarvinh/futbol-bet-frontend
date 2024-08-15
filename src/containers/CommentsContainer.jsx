@@ -16,7 +16,6 @@ const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
     useEffect(()=>{
         dispatch(fetchComments({gameId: gameId, comments_length: 0}))
     },[])
-  
     const displayOnSubmit=(e)=>{
         e.preventDefault()
         dispatch(fetchMoreComments({gameId: gameId, comments_length: comments.length}))
@@ -42,7 +41,8 @@ const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
                 submitButton={true} 
                 currentUser={currentUser}/>}
             </div>
-            {errorsOrMsg.from.includes("comment") && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
+            {errorsOrMsg.from.includes("comment") || errorsOrMsg.from.includes("reply") ?
+             <ErrorsOrMsg errors={errorsOrMsg.errors}/> : null}
             <div>
                 {commentsLoading && <Loading/>}
                 {game && comments?.map(comment=> <Comment key={comment.id} comment={comment} currentUser={currentUser} loggedIn={loggedIn}/>)}

@@ -49,7 +49,7 @@ const commentsSlice = createSlice({
         },
 
         repliesLoading: (state)=>{
-            state.repliesLoading = true
+            state.repliesLoading = !state.repliesLoading
         }, 
         
         replyReceived: (state,action) => {

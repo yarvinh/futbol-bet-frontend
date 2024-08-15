@@ -8,7 +8,7 @@ const betSlice =  createSlice({
     },
     reducers: {
         betLoading: (state)=>{
-            state.betLoading = true
+            state.betLoading = !state.betLoading
         },
         betReceived: (state,action)=>{
             state.bet = action.payload

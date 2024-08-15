@@ -4,7 +4,7 @@ const teamsSlice = createSlice({
     name: 'teams',
     initialState: {
         teams: [],
-        teamsLoading: true
+        teamsLoading: false
     },
     
     reducers: {
@@ -12,8 +12,8 @@ const teamsSlice = createSlice({
           state.teams = action.payload
           state.teamsLoading = false
         },
-        teamsLoading: (state,action) => {
-           state.teamsLoading = action.payload
+        teamsLoading: (state) => {
+           state.teamsLoading = !state.teamsLoading
         }
     }
 })

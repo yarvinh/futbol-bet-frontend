@@ -1,18 +1,20 @@
-import { serverErrorsRecieved } from "../state/serverErrors"
+import { serverErrors } from "../helpers/errorHelpers"
+import { baseUrl } from "../helpers/urlAndPaths"
+import { errorsOrMsgsRecieved } from "../state/errorsOrMsgs"
 import  {teamsLoading, teamsReceived } from "../state/teamsReducer"
-import { SERVER_ERROR } from "./errorsConst"
 
 export const fetchTeams = () => {
     return (dispatch) => {
-      dispatch(teamsLoading(true))
-      fetch('http://localhost:3000/teams').then(response => {
+      dispatch(teamsLoading())
+      fetch(`${baseUrl()}/teams`).then(response => {
         return response.json()
       }).then(responseJSON => {
         dispatch(teamsLoading(false))
         dispatch(teamsReceived(responseJSON))
       })
       .catch((error)=>{
-        dispatch(serverErrorsRecieved(SERVER_ERROR))
+        dispatch(teamsLoading())
+        dispatch(errorsOrMsgsRecieved(serverErrors(error)))
       })
     }
   }
