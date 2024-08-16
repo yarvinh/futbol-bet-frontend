@@ -80,9 +80,16 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     return(
         <div >
             <form className="reply-form" onSubmit={handleOnSubmit} onKeyUp={handleOnKeyUp} >
-                {imageUrl && imageUrl.map((url)=>{
-                    return <img id="blah" key={uuidv4()} className="comment-and-reply-image" src={url} alt="your image" />
-                })}
+                {imageUrl.length > 0 && <div className="payload-images">
+                    {imageUrl.map((url)=>{
+                        return (
+                            <div className="image-frame" key={uuidv4()}>
+                                <img src="../close.svg" className='delete-image' alt="X delete reply"/>
+                                <img id="blah"  className="comment-and-reply-image" src={url} alt="your image" /> 
+                            </div>
+                        )
+                    })}
+                </div>}
 
                 <textarea  onKeyPress={handleOnChange} onChange={handleOnChange} rows="1" className="reply-input standar-input" value={inputValue}></textarea> 
                 {submitButton && <input className="comment-submit-button" type="submit" value="Submit"/>}

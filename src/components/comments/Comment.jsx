@@ -14,19 +14,13 @@ const Comment = ( {comment,currentUser,loggedIn} )=> {
     dispatch(deleteComment( {commentId: comment.id, gameId: gameId}))
   }
 
-  const handleOnFocus = (e)=>{
-    console.log("testing",e.target)
-   }
-
-
-
   return  (    
     <section className='post' key={comment.id}> 
       <div >
-        {currentUser && comment.user?.id === currentUser.id && <button onClick={handleDeleteOnClick} className='delete' value={comment.id}>X</button>}
+        {currentUser && comment.user?.id === currentUser.id && <img src="../close.svg" onClick={handleDeleteOnClick} className='x-delete' alt="X delete reply"/>}
         <span >Posted by: {comment.user?.name} {dateAndTime(comment.created_at)}</span>
       </div>
-      <div onScroll={handleOnFocus} className='comments'>
+      <div  className='comments'>
           {comment.images.length > 0 && <ImagesCarousel images={comment.images}/>}
         <p>{comment.comment}</p>
       </div> 

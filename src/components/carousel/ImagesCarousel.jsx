@@ -28,11 +28,6 @@ const ImagesCarousel = ({images}) => {
        
     } 
 
-   const handleOnTouchStart = (e)=>{
-     console.log(e)
-   }
-
-
    return(
     <section>
         <div className="images-conainer">

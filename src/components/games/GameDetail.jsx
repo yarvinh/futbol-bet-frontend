@@ -17,7 +17,6 @@ const GameDetail=()=>{
     const user = useSelector(state => state.user.user)
     const game = useSelector(state => state.game.game)
     const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
-    console.log(errorsOrMsg)
     const {logged_in} = user
     useEffect(()=>{
        dispatch(fetchGame(gameId))

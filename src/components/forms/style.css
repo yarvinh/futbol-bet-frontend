@@ -100,12 +100,14 @@
 }
 
 .comment-and-reply-image{
-  margin-top: 1rem;
-  margin-left: 1rem;
+  /* margin-top: 1rem; */
+  /* margin-bottom: 1rem; */
+  /* display: flex; */
+
   width: 100px;
   height: 100px;
   object-fit:contain;
-  box-shadow: 1px 1px 3px 0px rgb(176, 173, 173)
+  /* box-shadow: 1px 1px 3px 0px rgb(176, 173, 173) */
 }
 
 .input-file{
@@ -123,4 +125,32 @@
   overflow: hidden;
    margin-left: 12px;
    margin-bottom: 5px;
+}
+
+.delete-image{
+ 
+  width: 16px;
+  cursor: pointer;
+  position: absolute;
+  /* float: right; */
+  /* top: 15px; */
+  background-color: black;
+  border-radius: .5rem;
+  right: 41%;
+}
+
+.payload-images{
+  margin-left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+}
+
+.image-frame{
+  gap: 1rem;
+  position: relative;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  box-shadow: 1px 1px 3px 0px rgb(176, 173, 173);
 }

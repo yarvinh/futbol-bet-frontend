@@ -18,7 +18,8 @@ const Reply = ({reply,currentUser,loggedIn,commentId,}) => {
   return (
     <div className='replies' key={reply.id}> 
       <div>
-        {currentUser && reply.user.id === currentUser.id && <button onClick={handleOnClick} className='delete' value={reply.id}>x</button>}
+        {/* {currentUser && reply.user.id === currentUser.id && <button onClick={handleOnClick} className='delete' value={reply.id}>x</button>} */}
+        {currentUser && reply.user.id === currentUser.id && <img src="../close.svg" onClick={handleOnClick} className='x-delete' alt="X delete reply"/>}
         <span >{reply.user.name} {dateAndTime(reply.created_at)}</span>
       </div>
         <div className='reply'>
