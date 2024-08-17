@@ -6,29 +6,24 @@ import './style.css';
 import { v4 as uuidv4 } from 'uuid';
 
 const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
-
+    
     const dispatch = useDispatch()
     const [inputValue, setInputValue] = useState("")
     const [imageUrl, setImageUrl] = useState([])
-    const imagesRef = useRef([])
     const imagesPayload = useRef([])
-
+    
     const handleOnImg = (e) =>{
+        console.log(e)
         const imgsArray = Array.from(e.target.files)
-        if (e.target.files && e.target.files[0]) {
-            const imgsUrl = imgsArray.map(img => URL.createObjectURL(img))
-            setImageUrl(imgsUrl);
-        }
-
-        imagesRef.current = imgsArray
-
         const options = {
-            maxSizeMB: 1,
+            maxSizeMB: .1,
             maxWidthOrHeight: 1920,
             useWebWorker: true
         }
-        imagesRef.current.forEach(async (file)=>{   
+        imgsArray.forEach(async (file)=>{   
             const compressedFile = await imageCompression(file, options);  
+            const imgUrl = URL.createObjectURL(compressedFile)
+            setImageUrl(prev => [...prev, imgUrl])
             imagesPayload.current.push(compressedFile)
         })
     }
@@ -44,7 +39,6 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     const handleOnKeyUp = (e)=>{
         if (e.code  === 'Enter' && !submitButton){
             dispatch(createAction({
-                payload: imagesRef.current,
                 [name]: {
                     ...ids,
                     [name]: inputValue
@@ -58,15 +52,13 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     }
 
     const handleOnClick=(e)=>{
-        setInputValue((pre)=>{
-            return `${pre} ${e.target.value}`
-        })
+        setInputValue(pre => `${pre} ${e.target.value}`)
     }
 
     const handleOnSubmit = (e)=>{
         e.preventDefault()
         const formData = new FormData(); 
-        imagesRef.current.forEach(async file =>formData.append("images[]", file) )
+        imagesPayload.current.forEach(async file => formData.append("images[]", file) )
         dispatch(createAction({
             payload: formData ,
             [name]: {
@@ -81,8 +73,8 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     }
 
     const handleOnClickRemove = (e) =>{
-        imagesRef.current.splice(e.target.name, 1)
-        const modifiedImgsUrl = imagesRef.current.map(img => URL.createObjectURL(img))
+        imagesPayload.current.splice(e.target.name, 1)
+        const modifiedImgsUrl = imagesPayload.current.map(img => URL.createObjectURL(img))
         setImageUrl( modifiedImgsUrl);
     }
 

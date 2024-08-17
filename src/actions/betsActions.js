@@ -10,7 +10,7 @@ export const dispatchBets = (payload) =>{
     dispatch(betLoading())
     axios.post(`${baseUrl()}/games/${payload.game_id}/bets`,payload,{headers: token(),withCredentials: true})
     .then(response => {
-      dispatch(betReceived(response))
+      dispatch(betReceived(response.data))
     }).catch(error => {
       dispatch(betLoading())
       dispatch(errorsOrMsgsRecieved(serverErrors(error)))
