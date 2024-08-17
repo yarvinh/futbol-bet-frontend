@@ -6,30 +6,31 @@ import './style.css';
 import { v4 as uuidv4 } from 'uuid';
 
 const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
+
     const dispatch = useDispatch()
     const [inputValue, setInputValue] = useState("")
     const [imageUrl, setImageUrl] = useState([])
     const imagesRef = useRef([])
+    const imagesPayload = useRef([])
+
     const handleOnImg = (e) =>{
+        const imgsArray = Array.from(e.target.files)
         if (e.target.files && e.target.files[0]) {
-            const imgsUrl = Array.from(e.target.files).map((img) => {
-                return URL.createObjectURL(img)
-            })
+            const imgsUrl = imgsArray.map(img => URL.createObjectURL(img))
             setImageUrl(imgsUrl);
         }
+
+        imagesRef.current = imgsArray
 
         const options = {
             maxSizeMB: 1,
             maxWidthOrHeight: 1920,
             useWebWorker: true
         }
-
-        const formData = new FormData(); 
-        Array.from(e.target.files).forEach(async (file)=>{   
-            const compressedFile = await imageCompression(file, options);      
-            formData.append("images[]", compressedFile);  
+        imagesRef.current.forEach(async (file)=>{   
+            const compressedFile = await imageCompression(file, options);  
+            imagesPayload.current.push(compressedFile)
         })
-        imagesRef.current = formData
     }
  
     const handleOnChange = (e)=>{
@@ -43,7 +44,7 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     const handleOnKeyUp = (e)=>{
         if (e.code  === 'Enter' && !submitButton){
             dispatch(createAction({
-                payload:imagesRef.current,
+                payload: imagesRef.current,
                 [name]: {
                     ...ids,
                     [name]: inputValue
@@ -52,7 +53,6 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
             }))
             setInputValue('')
             setImageUrl([])
-            imagesRef.current = []
             e.target.style.height = "1px";  
         }
     }
@@ -65,32 +65,40 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
 
     const handleOnSubmit = (e)=>{
         e.preventDefault()
+        const formData = new FormData(); 
+        imagesRef.current.forEach(async file =>formData.append("images[]", file) )
         dispatch(createAction({
-            payload:imagesRef.current,
+            payload: formData ,
             [name]: {
                 ...ids,
                 [name]: inputValue
             },
             path: path
         }))
+        imagesPayload.current = []
         setImageUrl([])
         setInputValue('')
+    }
+
+    const handleOnClickRemove = (e) =>{
+        imagesRef.current.splice(e.target.name, 1)
+        const modifiedImgsUrl = imagesRef.current.map(img => URL.createObjectURL(img))
+        setImageUrl( modifiedImgsUrl);
     }
 
     return(
         <div >
             <form className="reply-form" onSubmit={handleOnSubmit} onKeyUp={handleOnKeyUp} >
                 {imageUrl.length > 0 && <div className="payload-images">
-                    {imageUrl.map((url)=>{
+                    {imageUrl.map((url,index)=>{
                         return (
                             <div className="image-frame" key={uuidv4()}>
-                                <img src="../close.svg" className='delete-image' alt="X delete reply"/>
+                                <img src="../close.svg" onClick={handleOnClickRemove} name={index} className='delete-image' alt="X delete reply"/>
                                 <img id="blah"  className="comment-and-reply-image" src={url} alt="your image" /> 
                             </div>
                         )
                     })}
                 </div>}
-
                 <textarea  onKeyPress={handleOnChange} onChange={handleOnChange} rows="1" className="reply-input standar-input" value={inputValue}></textarea> 
                 {submitButton && <input className="comment-submit-button" type="submit" value="Submit"/>}
                 <div className="text-area-emojis-container">

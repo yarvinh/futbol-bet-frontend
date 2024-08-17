@@ -100,14 +100,9 @@
 }
 
 .comment-and-reply-image{
-  /* margin-top: 1rem; */
-  /* margin-bottom: 1rem; */
-  /* display: flex; */
-
   width: 100px;
   height: 100px;
   object-fit:contain;
-  /* box-shadow: 1px 1px 3px 0px rgb(176, 173, 173) */
 }
 
 .input-file{
@@ -128,15 +123,14 @@
 }
 
 .delete-image{
- 
+  filter: invert(100%) sepia(97%) saturate(13%) hue-rotate(237deg) brightness(104%) contrast(104%);
   width: 16px;
   cursor: pointer;
   position: absolute;
-  /* float: right; */
-  /* top: 15px; */
-  background-color: black;
+  background-color: rgb(243, 249, 243);
   border-radius: .5rem;
-  right: 41%;
+  right: 42%;
+ 
 }
 
 .payload-images{
@@ -144,7 +138,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-
 }
 
 .image-frame{
