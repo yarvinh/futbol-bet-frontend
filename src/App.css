@@ -271,4 +271,29 @@
   cursor: pointer;
 }
 
+.img-form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.submit-image{
+  position: relative;
+  margin-left: 10px;
+  width: 100px;
+  background-color: #0d6efd;
+  color: white;
+  bottom: 15px;
+  opacity: .8;
+  transition: .4s;
+}
+
+.submit-image:hover{
+  opacity: 1;
+}
+
+.sellect-img{
+  margin-left: 10px;
+ /* background-color: #0d6efd; */
+}
 

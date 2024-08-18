@@ -5,7 +5,7 @@ const User = (props) =>{
 if (props.user){
     return (
        <div className="d-flex flex-column  align-items-start justify-content-start">
-        <p>  Welcome, {props.user.name}</p>
+        <p> Welcome, {props.user.name}</p>
         <p>You Have ${props.user.coins}</p>
       </div>
     );

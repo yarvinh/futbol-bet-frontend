@@ -39,12 +39,13 @@ const  App = ()=> {
     dispatch(fetchCurrentUser()) 
     return  loggedIn
   }
- 
+  console.log(user)
   return ( 
     <main id="main">   
       <BrowserRouter >
         <section className={isDisplay.className}>
-          {loggedIn && !isDisplay.isDisplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>}
+          {user?.image && !isDisplay.isDisplay && <img src={user.image.image_url} className="profile-image" alt="profile image"/>}
+          {/* {loggedIn && !isDisplay.isDisplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>} */}
           {loggedIn && !isDisplay.isDisplay && <strong>{user.name}</strong>}
           <NavBarButton/>
         </section>

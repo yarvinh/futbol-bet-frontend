@@ -3,6 +3,7 @@ import {  useDispatch, useSelector } from 'react-redux';
 import { fetchEditUser} from '../../actions/settingsActions'
 import '../../styles/styles.css'
 import ErrorsOrMsg from '../ErrosOrMsg';
+import CreateImages from './CreateImages';
 
 
 const Settings = (props) =>{
@@ -48,6 +49,7 @@ const Settings = (props) =>{
             {errorsOrMsg?.from === "update_user" && 
             <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} 
             className={errorsOrMsg?.errors ?"alert alert-danger" : "alert alert-success" }/>}
+            <CreateImages/>
             <div className="container h-100  d-flex flex-column justify-content-center align-items-center">
                 <h4 >Change your password</h4>
                 <form onSubmit={(event) => handleOnSubmit(event,"password")} className="form">
