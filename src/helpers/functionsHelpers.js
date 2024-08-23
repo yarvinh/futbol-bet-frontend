@@ -8,3 +8,11 @@ export const dateAndTime =(d)=>{
         </div>
     )
 }
+
+export const compressImg = (maxSizeMb)=>{
+    return {
+        maxSizeMB: maxSizeMb,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true
+    }
+}

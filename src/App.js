@@ -32,14 +32,12 @@ const  App = ()=> {
 
   const handleOnClick = (e) =>{
       isDisplay.emojisDisplay && !e.target.className.includes("display") && dispatch(displayEmojisAction())
-  
   }
 
   const confirmLoggedIn=()=>{
     dispatch(fetchCurrentUser()) 
     return  loggedIn
   }
-  console.log(user)
   return ( 
     <main id="main">   
       <BrowserRouter >
@@ -67,7 +65,6 @@ const  App = ()=> {
       </BrowserRouter>
       <div className="empty-splace"></div>
     </main>
-
   )
 }
 

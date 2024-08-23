@@ -8,7 +8,7 @@ import CreateImages from './CreateImages';
 
 const Settings = (props) =>{
     const dipatch = useDispatch()
-    const errorsOrMsg = useSelector(state=>state.user.user?.errors_or_messages)
+    const errorsOrMsg = useSelector(state=>state.errorsOrMsg.errorsOrMsg)
     const editRef = useRef({
                password: '',
                old_password: '',
@@ -43,12 +43,11 @@ const Settings = (props) =>{
         update_type: ''
        }   
     }
-
+    console.log(errorsOrMsg.errors?.length > 0)
     return(
         <div>
-            {errorsOrMsg?.from === "update_user" && 
-            <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} 
-            className={errorsOrMsg?.errors ?"alert alert-danger" : "alert alert-success" }/>}
+            {errorsOrMsg?.from.includes("user") && 
+            <ErrorsOrMsg {...(errorsOrMsg.errors?.length > 0 ? {errors: errorsOrMsg?.errors } : {msg: errorsOrMsg?.msg})}  />}
             <CreateImages/>
             <div className="container h-100  d-flex flex-column justify-content-center align-items-center">
                 <h4 >Change your password</h4>

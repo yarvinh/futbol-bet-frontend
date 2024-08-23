@@ -2,18 +2,19 @@ import { useRef } from "react"
 import { useDispatch } from "react-redux"
 import {createImg} from "../../actions/settingsActions"
 import imageCompression from 'browser-image-compression';
+import { compressImg } from "../../helpers/functionsHelpers";
 
 const CreateImages = () => {
     const dispatch = useDispatch()
     const imgRef = useRef({})
 
     const handleOnChange = async (e) => {
-        const options = {
-            maxSizeMB: .1,
-            maxWidthOrHeight: 1920,
-            useWebWorker: true
-        }
-        const compressedFile =  await imageCompression(e.target.files[0], options);  
+        // const options = {
+        //     maxSizeMB: .1,
+        //     maxWidthOrHeight: 1920,
+        //     useWebWorker: true
+        // }
+        const compressedFile =  await imageCompression(e.target.files[0], compressImg(.1));  
         // const imgUrl = URL.createObjectURL(compressedFile)
         imgRef.current = compressedFile
     }

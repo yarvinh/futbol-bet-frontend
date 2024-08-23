@@ -4,6 +4,7 @@ import imageCompression from 'browser-image-compression';
 import Emojis from "./Emojis";
 import './style.css';
 import { v4 as uuidv4 } from 'uuid';
+import { compressImg } from "../../helpers/functionsHelpers";
 
 const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     
@@ -13,15 +14,9 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     const imagesPayload = useRef([])
     
     const handleOnImg = (e) =>{
-        console.log(e)
         const imgsArray = Array.from(e.target.files)
-        const options = {
-            maxSizeMB: .1,
-            maxWidthOrHeight: 1920,
-            useWebWorker: true
-        }
         imgsArray.forEach(async (file)=>{   
-            const compressedFile = await imageCompression(file, options);  
+            const compressedFile = await imageCompression(file, compressImg(.1));  
             const imgUrl = URL.createObjectURL(compressedFile)
             setImageUrl(prev => [...prev, imgUrl])
             imagesPayload.current.push(compressedFile)
