@@ -6,7 +6,7 @@ import './style.css';
 import { v4 as uuidv4 } from 'uuid';
 import { compressImg } from "../../helpers/functionsHelpers";
 
-const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
+const Input = ({submitButton, ids, createAction, name, path, upLoadImages}) => {
     
     const dispatch = useDispatch()
     const [inputValue, setInputValue] = useState("")
@@ -74,7 +74,6 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
     }
 
     return(
-        <div >
             <form className="reply-form" onSubmit={handleOnSubmit} onKeyUp={handleOnKeyUp} >
                 {imageUrl.length > 0 && <div className="payload-images">
                     {imageUrl.map((url,index)=>{
@@ -95,7 +94,6 @@ const Input = ({submitButton, ids, createAction, name, path, upLoadImages})=>{
                     <Emojis handleOnClick={handleOnClick}/>
                 </div> 
             </form> 
-        </div>
     )
 }
 

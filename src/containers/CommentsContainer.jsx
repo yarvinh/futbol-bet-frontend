@@ -24,7 +24,7 @@ const CommentsContainer = ( {game, currentUser,loggedIn} )=> {
     const displayButton = ()=>{
         return (
         <form onSubmit={displayOnSubmit} >  
-            <input  className='reload' type='submit' value='Reload more comments'/> 
+            <input  className='reload' type='submit' value='More comments'/> 
         </form>
         )
     }

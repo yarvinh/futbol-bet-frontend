@@ -4,19 +4,21 @@ import { fetchGames,dispatchSetFilter} from '../actions/gameActions'
 import Game from '../components/games/Game'
 import {gameSelector} from '../selectors/gameSelector'
 import Loading from '../components/Loading';
-import ImagesCarousel from '../components/carousel/ImagesCarousel';
 import ErrorsOrMsg from '../components/ErrosOrMsg';
+import { fetchLeagues } from '../actions/leaguesActions';
 
 const GamesContainer = (props)=>{
   const  dispatch = useDispatch()
   const games = useSelector(state => gameSelector(state.games.games,state.games.filter))
   const gamesLoading = useSelector((state => state.games.gamesLoading))
+  const leagues = useSelector(state => state.leagues.leagues)
   const errorsOrMsg =  useSelector(state=> state.errorsOrMsg.errorsOrMsg)
   useEffect(()=> {
-      dispatch(fetchGames())   
+      dispatch(fetchGames())  
+      dispatch(fetchLeagues()) 
   },[])
 
-   const onClickHandle = (e) => {
+   const handleOnChange = (e) => {
      dispatch(dispatchSetFilter(e.target.value))
    }
 
@@ -31,14 +33,11 @@ const GamesContainer = (props)=>{
      return (
        <section className='games-container'>
         {errorsOrMsg.from.includes("game") && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
-        <select onChange={onClickHandle} className="form-select  mx-auto"> 
+        <select onChange={handleOnChange} className="form-select  mx-auto"> 
            <option value='all'>All</option>
-           <option value='Champion League'>UEFA Champion league</option>
-           <option value='Premier League'>Premier league</option>
-           <option value='La Liga'>La Liga Santander</option>
-           <option value='Serie A'>Serie A</option>
-           <option value='Ligue 1'>Ligue 1</option>
-           <option value='Bundesliga'>Bundesliga</option>
+           {leagues.map((league)=>{
+              return <option key={league.id} value={league.id}>{league.name}</option>
+           })}
         </select>
         <div>
           {gamesLoading && <Loading/>}

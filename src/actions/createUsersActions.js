@@ -13,7 +13,8 @@ export const createUser = (user) => {
             localStorage.setItem("token", response.data.token);
           }
           const errorsOrMsg = response.data.errors_or_messages
-          errorsOrMsg ? dispatch(errorsOrMsgsRecieved(errorsOrMsg)) : dispatch(userReceived(response.data))
+          dispatch(errorsOrMsgsRecieved(errorsOrMsg)) 
+          dispatch(userReceived(response.data))
         } catch (error) {
           dispatch(errorsOrMsgsRecieved(serverErrors(error)))
         }

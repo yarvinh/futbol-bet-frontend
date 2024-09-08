@@ -48,17 +48,10 @@ const GameDetail=()=>{
                             </div>
                         </Link>
                         <div className="card-footer">
-                            {/* <div className="likes-section bg-light mx-auto my-2 py-2"> */}
-                               {/* {logged_in && game.likes && <Likes likeType={'game'} likes={game.likes} ownerId={{game_id: gameId, user_id: user.user.id}} gameCommentOrReply={game} likesReceived={gameLikesReceived} user_id={user.user.id} game_id={game?.id}/>} */}
-                            {/* </div> */}
                             {game.date && <DateAndTime date={game.date} time={game.time}/>}
                         </div>
                     </div>
                     </div>
-                    {/* <div className="likes-section bg-light mx-auto my-2 py-2">
-                        {logged_in && game.likes && <Likes likeType={'game'} likes={game.likes} ownerId={{game_id: gameId, user_id: user.user.id}} gameCommentOrReply={game} likesReceived={gameLikesReceived} user_id={user.user.id} game_id={game?.id}/>}
-                    </div> */}
-                    {/* <p>{game.bets?.length} Bets</p> */}
                     <div className="bets-section bg-light mx-auto my-4 ">
                       {logged_in && game.teams &&  <Bets currentUser={user.user} game={game} bets={game.bets}/>}
                       <div className="likes-section bg-light mx-auto my-2 py-2">
@@ -69,7 +62,6 @@ const GameDetail=()=>{
             </div>
             {errorsOrMsg.from.includes('like') && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
             {game.id && <CommentsContainer comments={game.comments_by_date} game={game} currentUser={user.user}  loggedIn={user.logged_in} />}
-            
         </section>
         
     );
