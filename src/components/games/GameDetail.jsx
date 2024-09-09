@@ -10,7 +10,7 @@ import { gameLikesReceived } from "../../state/gameDetailReducers"
 import Loading from "../Loading"
 import ErrorsOrMsg from "../ErrosOrMsg"
 
-const GameDetail=()=>{
+const GameDetail=(props)=>{
     const dispatch = useDispatch()
     const {gameId} = useParams()
     const gameLoading = useSelector(state =>  state.game.gameLoading)
@@ -62,6 +62,7 @@ const GameDetail=()=>{
             </div>
             {errorsOrMsg.from.includes('like') && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
             {game.id && <CommentsContainer comments={game.comments_by_date} game={game} currentUser={user.user}  loggedIn={user.logged_in} />}
+
         </section>
         
     );
