@@ -4,7 +4,6 @@ import {  useParams } from "react-router-dom"
 import { getTeam } from "../../actions/teamActions"
 // import Team from "./Team"
 import GamesContainer from "../../containers/GamesContainer"
-
 const TeamDetail = () => {
     const {teamId} = useParams()
     const team = useSelector(state => state.team.team)
@@ -21,7 +20,7 @@ const TeamDetail = () => {
              <h3>{team.stadium}</h3>
           </div>
 
-           <GamesContainer/>
+           <GamesContainer games={team.games}/>
         </section>
     )
 }

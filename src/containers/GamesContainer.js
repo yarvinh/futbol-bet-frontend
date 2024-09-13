@@ -11,13 +11,17 @@ import { useParams } from 'react-router';
 const GamesContainer = (props)=>{
   const {teamId} = useParams()
   const  dispatch = useDispatch()
-  const games = useSelector(state => gameSelector(state.games.games,state.games.filter))
+  let games = []
+  let allGames = useSelector(state => gameSelector(state.games.games,state.games.filter))
+  teamId ? games = props.games : games = allGames
   const gamesLoading = useSelector((state => state.games.gamesLoading))
   const leagues = useSelector(state => state.leagues.leagues)
   const errorsOrMsg =  useSelector(state=> state.errorsOrMsg.errorsOrMsg)
   useEffect(()=> {
-      dispatch(fetchGames())  
-      dispatch(fetchLeagues()) 
+      if (!teamId){
+        dispatch(fetchGames())  
+        dispatch(fetchLeagues()) 
+      }
   },[])
 
    const handleOnChange = (e) => {
