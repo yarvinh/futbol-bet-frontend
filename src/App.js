@@ -61,7 +61,7 @@ const  App = ()=> {
             <Route exact path='/signup'element={<UsersContainer />}/>
             <Route exact path='/games' element={<GamesContainer/>}/>
             <Route exact path='/teams' element={<TeamsContainer/>}/>
-            <Route exact path='/teams/:team_id' element={<TeamDetail/>} />
+            <Route exact path='/teams/:teamId' element={<TeamDetail/>} />
           </Routes>
         </div> 
       </BrowserRouter>

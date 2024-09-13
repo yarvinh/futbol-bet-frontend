@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import teamReducer  from "./teamReducer";
 import teamsReducer  from "./teamsReducer";
 import gamesReducer from "./gamesReducers";
 import gameDetailReducers from "./gameDetailReducers"
@@ -14,6 +15,7 @@ import leaguesReducer from "./leaguesReducer"
 const rootReducer = combineReducers({
   comments: commentsReducer,
   teams: teamsReducer,
+  team: teamReducer,
   games: gamesReducer,
   game: gameDetailReducers,
   user: userReducer,

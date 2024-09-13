@@ -297,3 +297,15 @@
  /* background-color: #0d6efd; */
 }
 
+.arena{
+  max-width: 200px;
+}
+
+.team-Wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  box-shadow: 1px 1px 3px 0px rgb(176, 173, 173);
+
+}

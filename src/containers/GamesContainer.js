@@ -6,8 +6,10 @@ import {gameSelector} from '../selectors/gameSelector'
 import Loading from '../components/Loading';
 import ErrorsOrMsg from '../components/ErrosOrMsg';
 import { fetchLeagues } from '../actions/leaguesActions';
+import { useParams } from 'react-router';
 
 const GamesContainer = (props)=>{
+  const {teamId} = useParams()
   const  dispatch = useDispatch()
   const games = useSelector(state => gameSelector(state.games.games,state.games.filter))
   const gamesLoading = useSelector((state => state.games.gamesLoading))
@@ -33,12 +35,12 @@ const GamesContainer = (props)=>{
      return (
        <section className='games-container'>
         {errorsOrMsg.from.includes("game") && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
-        <select onChange={handleOnChange} className="form-select  mx-auto"> 
+        {!teamId && <select onChange={handleOnChange} className="form-select  mx-auto"> 
            <option value='all'>All</option>
            {leagues.map((league)=>{
               return <option key={league.id} value={league.id}>{league.name}</option>
            })}
-        </select>
+        </select>}
         <div>
           {gamesLoading && <Loading/>}
           {renderGames()} 
