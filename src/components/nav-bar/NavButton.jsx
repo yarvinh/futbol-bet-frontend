@@ -11,7 +11,7 @@ const NavBarButton = ()=>{
     if(isDisplay.isDisplay )
         return (
             <div onClick={handleOnclick} className="nav-button-active">
-                <img src="../close.svg" id="nav-bar-x" alt="X close icon"/>
+                <img src="/close.svg" id="nav-bar-x" alt="X close icon"/>
             </div>
         )
     else

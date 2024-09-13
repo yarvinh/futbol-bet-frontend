@@ -25,7 +25,7 @@ const GamesContainer = (props)=>{
    const renderGames = ()=>{
         return games?.map((game)=>{
             return (      
-             <Game teamEvents={game.team_events} fetchCurrentUser={props.fetchCurrentUser} loggedIn={props.loggedIn} key={game.id} currentUser={props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
+             <Game key={game.id} teamEvents={game.team_events} fetchCurrentUser={props.fetchCurrentUser} loggedIn={props.loggedIn} currentUser={props.currentUser} game={game} />
             )
         })
    }

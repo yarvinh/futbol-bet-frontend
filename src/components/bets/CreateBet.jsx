@@ -43,8 +43,7 @@ const CreateBet = ({game,currentUser})=>{
                 <select className="form-select mx-auto mb-3" onChange={handleTeamChange}>
                     <option value=''>Bet Options</option>
                     <option value='tie'>Tie</option>
-                    <option value={game.teams[0].id}>{game.teams[0].fc}</option>
-                    <option value={game.teams[1].id}>{game.teams[1].fc}</option>
+                    {game.teams.map(team => <option key={team.id} value={team.id}>{team.fc}</option>)}
                 </select>
                 <input className="form-control" type="hidden" name="action"  />
                 <label className="form-label"> Enter amount </label>

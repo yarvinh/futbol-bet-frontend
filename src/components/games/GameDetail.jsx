@@ -10,7 +10,7 @@ import { gameLikesReceived } from "../../state/gameDetailReducers"
 import Loading from "../Loading"
 import ErrorsOrMsg from "../ErrosOrMsg"
 
-const GameDetail=()=>{
+const GameDetail = ()=>{
     const dispatch = useDispatch()
     const {gameId} = useParams()
     const gameLoading = useSelector(state =>  state.game.gameLoading)
@@ -54,9 +54,9 @@ const GameDetail=()=>{
                     </div>
                     <div className="bets-section bg-light mx-auto my-4 ">
                       {logged_in && game.teams &&  <Bets currentUser={user.user} game={game} bets={game.bets}/>}
-                      <div className="likes-section bg-light mx-auto my-2 py-2">
-                        {logged_in && game.likes && <Likes likeType={'game'} likes={game.likes} ownerId={{game_id: gameId, user_id: user.user.id}} gameCommentOrReply={game} likesReceived={gameLikesReceived} user_id={user.user.id} game_id={game?.id}/>}
-                     </div>
+                       {logged_in && game.likes && <div className="likes-section bg-light mx-auto my-2 py-2">
+                       <Likes likeType={'game'} likes={game.likes} ownerId={{game_id: gameId, user_id: user.user.id}} gameCommentOrReply={game} likesReceived={gameLikesReceived} user_id={user.user.id} game_id={game?.id}/>
+                    </div>}
                     </div>  
                 </div>
             </div>
