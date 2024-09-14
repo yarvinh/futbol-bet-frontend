@@ -1,7 +1,6 @@
 import {useSelector, useDispatch } from 'react-redux';
 import {useEffect} from 'react';
 import './App.css';
-import GamesContainer from './containers/GamesContainer'
 import UsersContainer from './containers/UsersContainer'
 import Login from './components/users/Login'
 import { fetchCurrentUser} from './actions/userAction'
@@ -18,6 +17,7 @@ import Loading from './components/Loading';
 import { displayEmojisAction } from './actions/displayElementActions';
 import TeamsContainer from './containers/TeamsContainer';
 import TeamDetail from './components/teams/TeamDetail';
+import Home from './components/Home';
 
 const  App = ()=> {
   const dispatch = useDispatch()
@@ -59,7 +59,7 @@ const  App = ()=> {
             <Route exact path='/login' element={<Login  confirmLoggedIn={confirmLoggedIn}/>}>
             </Route>
             <Route exact path='/signup'element={<UsersContainer />}/>
-            <Route exact path='/games' element={<GamesContainer/>}/>
+            <Route exact path='/' element={<Home/>}/>
             <Route exact path='/teams' element={<TeamsContainer/>}/>
             <Route exact path='/teams/:teamId' element={<TeamDetail/>} />
           </Routes>

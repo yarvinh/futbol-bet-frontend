@@ -1,37 +1,25 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
-const Home = (props) => {
+import React, { useEffect } from 'react';
+import GamesContainer from '../containers/GamesContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGames } from '../actions/gameActions';
+import { fetchLeagues } from '../actions/leaguesActions';
+import { gameSelector } from '../selectors/gameSelector';
+const Home = () => {
+  const  dispatch = useDispatch()
+  const  games = useSelector(state => gameSelector(state.games.games,state.games.filter))
+  const leagues = useSelector(state => state.leagues.leagues)
+  useEffect(()=> {
+        dispatch(fetchGames())  
+        dispatch(fetchLeagues()) 
+  },[])
 
-    if(props.loggedIn){
-       return (
-           <div>
-               <Link to='/signout'>Sign Out</Link> 
-               {games()}
-           </div>
-       )
-    } else {
-       return (
-           <div>
-               {games()}
-               <div>
-                  <Link to='/login'>Log In</Link>
-                  <Link to='/signup'>Sign Up</Link>  
-               </div>
-              
-            </div>
-        );
-    }
+  return (
+    <section>
+        <GamesContainer games={games} leagues={leagues}/>
+    </section>
+  )
 };
 
 
 
-
-const games = () => {
-    return (
-        <div> 
-            <Link to='/games'>Games</Link>
-            <Link to='/teams'>Teams</Link>
-        </div>
-    )
-}
 export default Home;
