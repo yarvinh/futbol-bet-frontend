@@ -38,7 +38,7 @@ const Login = ()=>{
             <button  className="my-4 btn btn-primary" type="submit">Login</button>
           </form>
           {errorsOrMsg.from === 'login' && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
-          {user?.user?.logged_in && <Navigate to='/games'/> }     
+          {user?.user?.logged_in && <Navigate to='/'/> }     
         </section>
     );
 

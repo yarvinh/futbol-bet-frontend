@@ -15,7 +15,7 @@ const NavBar=({loggedIn})=>{
         <section onClick={handleOnClick} className="nav-bar-container close">
             <nav className="display nav-bar">
                 <ul className="display"> 
-                    <li className="nav-bar-links display"><Link to='/games' className="nav-bar-links">Games</Link></li>
+                    <li className="nav-bar-links display"><Link to='/' className="nav-bar-links">Games</Link></li>
                     <li className="nav-bar-links display"><Link to='/teams' className="nav-bar-links">Teams</Link></li>
                     {!loggedIn ? <li className="nav-bar-links display"><Link to='/login' className="nav-bar-links">Log In</Link></li> :  <li className="display"><Link to='/signout' className="nav-bar-links">Sign Out</Link></li>  }
                     {!loggedIn && <li className="nav-bar-links display"><Link to='/signup' className="nav-bar-links">Sign Up</Link> </li>} 
