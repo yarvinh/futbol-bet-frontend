@@ -4,6 +4,7 @@ import CreateBet from './CreateBet';
 import { useParams } from 'react-router';
 import { getMyBet } from '../../actions/betsActions';
 import { useDispatch, useSelector } from 'react-redux';
+
 const Bets = ({game,currentUser}) => {
   const bet = useSelector(state =>state.bet.bet)
   const {gameId} = useParams()

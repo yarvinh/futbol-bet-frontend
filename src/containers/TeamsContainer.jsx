@@ -21,34 +21,20 @@ const  TeamsContainer = () => {
       dispatch(fetchTeams(e.target.value))
    }
 
-//    const renderTeams = ()=>{
-//        return teams.map((team)=>{
-//            return (    
-//             <div className="card team-card my-2" key={team.id}>
-//                 <div className="card-header"><img src={team.logo_url} alt='' width="20" height="20"/> </div>
-//                 <div className="card-body"> 
-//                   <p > {team.fc} </p>  
-//                 </div>
-//              </div>  
-     
-//            )
-//        })
-//    }
-
-    return (
-      <div>   
-          <select onChange={onClickHandle} className="form-select form-select mx-auto"> 
-            <option  value='no-competition'>Select Competition</option>
-            <option  value='all'>All teams</option>
-            {leagues.map((league)=>{
-              return <option key={league.id} value={league.id}> {league.name}</option>
-            })}
-          </select> 
-        <ul className="d-flex flex-column align-items-center justify-content-center teams">
-           {teams.map(team => <Team key={team.id} team={team} />)}
-        </ul>
-      </div>
-    );
+  return (
+    <div>   
+        <select onChange={onClickHandle} className="form-select form-select mx-auto"> 
+          <option  value='no-competition'>Select Competition</option>
+          <option  value='all'>All teams</option>
+          {leagues.map((league)=>{
+            return <option key={league.id} value={league.id}> {league.name}</option>
+          })}
+        </select> 
+      <ul className="d-flex flex-column align-items-center justify-content-center teams">
+          {teams.map(team => <Team key={team.id} team={team} />)}
+      </ul>
+    </div>
+  );
   
 };
 

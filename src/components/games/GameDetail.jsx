@@ -18,6 +18,7 @@ const GameDetail = ()=>{
     const game = useSelector(state => state.game.game)
     const errorsOrMsg = useSelector(state => state.errorsOrMsg.errorsOrMsg)
     const {logged_in} = user
+
     useEffect(()=>{
        dispatch(fetchGame(gameId))
     },[])
@@ -34,26 +35,33 @@ const GameDetail = ()=>{
                         <div className="status">
                             {game?.status === "LIVE" ? <p className='live'> {game?.status} </p> : <p> {game?.status}</p>}
                         </div>
-                        <Link to={`/games/${game?.id}`}>  
                             <div className="card-body">
                                 {gameLoading && <Loading/>}
                                 {game.teams?.map((team)=>{
                                     return(
-                                        <div key={team.id}>
+                                        <Link to={`/teams/${team.id}`} key={team.id}>
                                           <img src={team.logo_url} alt='team-logo' width="20" height="20"/> 
                                           <p><strong>{team?.fc} </strong></p>
-                                        </div>   
+                                        </Link>
                                     )
                                 })}
                             </div>
-                        </Link>
                         <div className="card-footer">
                             {game.date && <DateAndTime date={game.date} time={game.time}/>}
                         </div>
                     </div>
                     </div>
                     <div className="bets-section bg-light mx-auto my-4 ">
-                      {logged_in && game.teams &&  <Bets currentUser={user.user} game={game} bets={game.bets}/>}
+                      {logged_in && game.teams && game.status !== "finished" && <Bets currentUser={user.user} game={game} bets={game.bets}/>}
+                      {game.winner && <div>
+                        <p>Winner <br/>
+                        <Link to={`/teams/${game.winner.id}`}>
+                            <strong>{game.winner?.fc} </strong>
+                            <img src={game.winner.logo_url} alt='team-logo' width="20" height="20"/>  
+                        </Link>
+                        </p>
+                      </div>}
+                       {game.status === "finished" && !game.winner && <p>Game Result: Tied</p>}
                        {logged_in && game.likes && <div className="likes-section bg-light mx-auto my-2 py-2">
                        <Likes likeType={'game'} likes={game.likes} ownerId={{game_id: gameId, user_id: user.user.id}} gameCommentOrReply={game} likesReceived={gameLikesReceived} user_id={user.user.id} game_id={game?.id}/>
                     </div>}
@@ -62,7 +70,6 @@ const GameDetail = ()=>{
             </div>
             {errorsOrMsg.from.includes('like') && <ErrorsOrMsg errors={errorsOrMsg.errors}/>}
             {game.id && <CommentsContainer comments={game.comments_by_date} game={game} currentUser={user.user}  loggedIn={user.logged_in} />}
-
         </section>
         
     );
